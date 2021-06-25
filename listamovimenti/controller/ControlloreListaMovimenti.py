@@ -1,9 +1,9 @@
-from listamovimenticassa.model.ListaMovimentiCassa import ListaMovimentiCassa
+from listamovimenti.model.ListaMovimenti import ListaMovimenti
 
 
-class ControlloreListaMovimentiCassa():
+class ControlloreListaMovimenti():
     def __init__(self):
-        self.model = ListaMovimentiCassa()
+        self.model = ListaMovimenti()
 
     def aggiungi_movimento(self, movimento):
         self.model.aggiungi_movimento(movimento)

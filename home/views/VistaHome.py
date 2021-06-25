@@ -7,7 +7,7 @@ from calendario.Calendario import Calendario
 from dipendente.controller.ControlloreDipendente import ControlloreDipendente
 from listaclienti.views.VistaListaClienti import VistaListaClienti
 from listadipendenti.views.VistaListaDipendenti import VistaListaDipendenti
-from listamovimenticassa.views.VistaListaMovimentiCassa import VistaListaMovimentiCassa
+from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
 
 
 class VistaHome(QWidget):
@@ -124,7 +124,7 @@ class VistaHome(QWidget):
 
     def go_gestione_cassa(self):
         #self.close()
-        self.vista_lista_movimenti = VistaListaMovimentiCassa()
+        self.vista_lista_movimenti = VistaListaMovimenti()
         return self.vista_lista_movimenti.show()
 
     def funz_esci(self):

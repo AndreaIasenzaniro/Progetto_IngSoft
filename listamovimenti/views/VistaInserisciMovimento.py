@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout, QLabel, QLineEdit
 
-from movimentocassa.model.MovimentoCassa import MovimentoCassa
+from movimento.model.Movimento import Movimento
 
 
-class VistaInserisciMovimentoCassa(QWidget):
+class VistaInserisciMovimento(QWidget):
     def __init__(self, controller, callback, parent = None):
-        super(VistaInserisciMovimentoCassa, self).__init__(parent)
+        super(VistaInserisciMovimento, self).__init__(parent)
         self.controller = controller
         self.callback = callback
         self.info = {}
@@ -19,7 +19,7 @@ class VistaInserisciMovimentoCassa(QWidget):
 
         self.v_layout.addLayout(self.get_label_line("Data","Data","gg/mm/aaa"))
         self.v_layout.addLayout(self.get_label_line("Descrizione", "Descrizione", "descrzione"))
-        self.v_layout.addLayout(self.get_label_line("Prezzo", "Prezzo", "importo"))
+        self.v_layout.addLayout(self.get_label_line("Importo", "Importo", "importo"))
 
         self.v_layout.addWidget(btn_ok)
         self.v_layout.addWidget(btn_annulla)
@@ -38,12 +38,21 @@ class VistaInserisciMovimentoCassa(QWidget):
     def aggiugni_movimento(self):
         data = self.info["Data"].text()
         descrizione = self.info["Descrizione"].text()
-        prezzo = self.info["Prezzo"].text()
+        importo = self.info["Importo"].text()
 
-        if data == "" or descrizione == "" or prezzo == "":
+        from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
+        controller = ControlloreListaMovimenti()
+        lista = controller.get_lista_movimenti()
+        if not lista:
+            indice = 0
+        else:
+            indice = len(lista)
+
+        if data == "" or descrizione == "" or importo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.aggiungi_movimento(MovimentoCassa(data, descrizione, prezzo))
+            self.controller.aggiungi_movimento(Movimento(indice, data, descrizione, importo))
+            print(indice)
             self.callback()
             self.close()

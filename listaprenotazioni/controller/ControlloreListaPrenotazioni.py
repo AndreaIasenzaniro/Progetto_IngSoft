@@ -13,7 +13,7 @@ class ControlloreListaPrenotazioni():
         self.model.rimuovi_dalla_lista(prenotazione)
 
     def ordina(self, lista):
-        self.model.ordina(lista)
+        self.model.ordina_clienti(lista)
 
     def get_lista_prenotazioni(self):
         return self.model.get_lista_prenotazioni()

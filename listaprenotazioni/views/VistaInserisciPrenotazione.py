@@ -33,7 +33,6 @@ class VistaInserisciPrenotazione(QWidget):
 
         print(QDate.currentDate())
 
-
         self.data_label = QLabel("Data")
         self.v_layout.addWidget(self.data_label)
         self.btn_data = QPushButton("Inserisci data")

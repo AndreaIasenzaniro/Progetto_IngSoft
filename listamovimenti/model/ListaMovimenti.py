@@ -2,11 +2,11 @@ import os
 import pickle
 
 
-class ListaMovimentiCassa():
+class ListaMovimenti():
     def __init__(self):
         self.lista_movimenti = []
-        if os.path.isfile('listamovimenticassa/data/lista_movimenti_salvata.pickle'):
-            with open('listamovimenticassa/data/lista_movimenti_salvata.pickle', 'rb') as f:
+        if os.path.isfile('listamovimenti/data/lista_movimenti_salvata.pickle'):
+            with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'rb') as f:
                 self.lista_movimenti = pickle.load(f)
 
     def aggiungi_movimento(self, movimento):
@@ -23,7 +23,7 @@ class ListaMovimentiCassa():
         self.lista_movimenti.remove(list(filter(is_selected_movimento, self.lista_movimenti))[0])
 
     def movimento_ordinato(self, lista):
-        lista.sort(key=lambda x: x.data, reverse=False)
+        lista.sort(key=lambda x: x.data_movimento, reverse=False)
 
     def get_movimento_by_index(self, index):
         return self.lista_movimenti[index]
@@ -32,6 +32,6 @@ class ListaMovimentiCassa():
         return self.lista_movimenti
 
     def save_data(self):
-        with open('listamovimenticassa/data/lista_movimenti_salvata.pickle', 'wb') as handle:
+        with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_movimenti, handle, pickle.HIGHEST_PROTOCOL)
 

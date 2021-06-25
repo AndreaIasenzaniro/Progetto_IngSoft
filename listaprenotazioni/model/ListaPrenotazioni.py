@@ -16,7 +16,7 @@ class ListaPrenotazioni():
     def rimuovi_dalla_lista(self, prenotazione):
         self.lista_prenotazioni.remove(prenotazione)
 
-    def ordina(self, lista):
+    def ordina_clienti(self, lista):
         lista.sort(key=lambda x:x.ora_inizio, reverse = False)
 
     def rimuovi_prenotazione_by_id(self, id):
