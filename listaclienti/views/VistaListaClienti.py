@@ -19,31 +19,27 @@ class VistaListaClienti(QWidget):
         self.controller = ControlloreListaClienti()
 
         self.h_layout = QHBoxLayout()
-        #self.list_view = QListView()
+
         #crea tabella
         self.createTable()
         #per non modificare self.list_view in table_view
         self.list_view = self.tableWidget
         self.h_layout.addWidget(self.tableWidget)
-        self.setLayout(self.h_layout)
-
-        #self.update_ui()
-        #h_layout.addWidget(self.list_view)
 
         buttons_layout = QVBoxLayout()
         open_button = QPushButton("Apri")
         #open_button.setStyleSheet("background-color: cyan; font-size: 15px; font-weight: bold;")
-        open_button.clicked.connect(self.showSelectedInfo)
+        open_button.clicked.connect(self.show_selected_info_click)
         buttons_layout.addWidget(open_button)
 
         edit_button = QPushButton("Modifica")
         #edit_button.setStyleSheet("background-color: green; font-size: 15px; font-weight: bold;")
-        edit_button.clicked.connect(self.showClienteModificato)
+        edit_button.clicked.connect(self.show_modifica_cliente_click)
         buttons_layout.addWidget(edit_button)
 
         new_button = QPushButton("Nuovo")
         #new_button.setStyleSheet("background-color: #00ff00; font-size: 15px; font-weight: bold;")
-        new_button.clicked.connect(self.showNewCliente)
+        new_button.clicked.connect(self.show_nuovo_cliente_click)
         buttons_layout.addWidget(new_button)
         buttons_layout.addStretch()
 
@@ -59,17 +55,17 @@ class VistaListaClienti(QWidget):
         self.setLayout(self.h_layout)
         self.setWindowTitle("Lista Clienti")
 
-    def showSelectedInfo(self):
+    def show_selected_info_click(self):
         try:
-            self.selected_elimina = self.list_view.selectedIndexes()[0].row()
-            cliente_selezionato = self.controller.get_cliente_by_index(self.selected_elimina)
+            self.selected = self.list_view.selectedIndexes()[0].row()
+            cliente_selezionato = self.controller.get_cliente_by_index(self.selected)
             self.vista_cliente = VistaCliente(cliente_selezionato, self.controller.elimina_cliente_by_id, self.update_elimina)
             self.vista_cliente.show()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un cliente da visualizzare.', QMessageBox.Ok, QMessageBox.Ok)
 
 
-    def showClienteModificato(self):
+    def show_modifica_cliente_click(self):
         try:
             self.selected_mod = self.list_view.selectedIndexes()[0].row()
             cliente_selezionato = self.controller.get_cliente_by_index(self.selected_mod)
@@ -79,28 +75,9 @@ class VistaListaClienti(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un cliente da modificare.', QMessageBox.Ok, QMessageBox.Ok)
 
 
-    def showNewCliente(self):
+    def show_nuovo_cliente_click(self):
         self.vista_inserisci_cliente = VistaInserisciCliente(self.controller, self.update_new)
         self.vista_inserisci_cliente.show()
-
-
-    '''    def update_ui(self):
-        self.listview_model = QStandardItemModel(self.list_view)
-        self.controller.cliente_ordinato(self.controller.get_lista_dei_clienti())
-        self.i = 0
-        for cliente in self.controller.get_lista_dei_clienti():
-            self.i += 1
-            item = QStandardItem()
-            item.setText(cliente.nome + " " + cliente.cognome)
-            item.setEditable(False)
-            if self.i % 2:
-                item.setBackground(QBrush(Qt.lightGray))
-            font = item.font()
-            font.setPointSize(12)
-            item.setFont(font)
-            self.listview_model.appendRow(item)
-#        self.list_view.setModel(self.listview_model)
-    '''
 
     def funz_indietro(self):
         from home.views.VistaHome import VistaHome
@@ -114,12 +91,8 @@ class VistaListaClienti(QWidget):
     #Create table
     def createTable(self):
         self.tableWidget = QTableWidget()
-        #self.tableWidget = QTableView()
-
         # Row count
         self.tableWidget.setRowCount(len(self.controller.get_lista_dei_clienti()))
-        rows = self.controller.get_lista_dei_clienti()
-
         # Column count
         self.tableWidget.setColumnCount(5)
         columns = ['Cognome', 'Nome', 'Codice fiscale', 'Abbonamento', 'Certificato']
@@ -147,7 +120,7 @@ class VistaListaClienti(QWidget):
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def update_elimina(self):
-        riga = self.selected_elimina
+        riga = self.selected
         self.tableWidget.removeRow(riga)
 
     def update_new(self):

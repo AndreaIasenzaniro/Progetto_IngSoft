@@ -5,8 +5,7 @@ import pickle
 class ListaClienti():
     def __init__(self):
         super(ListaClienti, self).__init__()
-        self.lista_clienti\
-            = []
+        self.lista_clienti = []
         if os.path.isfile('listaclienti/data/lista_clienti_salvata.pickle'):
             with open('listaclienti/data/lista_clienti_salvata.pickle', 'rb') as f:
                 self.lista_clienti = pickle.load(f)

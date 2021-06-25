@@ -1,0 +1,37 @@
+import os
+import pickle
+
+
+class ListaMovimentiCassa():
+    def __init__(self):
+        self.lista_movimenti = []
+        if os.path.isfile('listamovimenticassa/data/lista_movimenti_salvata.pickle'):
+            with open('listamovimenticassa/data/lista_movimenti_salvata.pickle', 'rb') as f:
+                self.lista_movimenti = pickle.load(f)
+
+    def aggiungi_movimento(self, movimento):
+        self.lista_movimenti.append(movimento)
+
+    def rimuovi_movimento(self, prenotazione):
+        self.lista_movimenti.remove(prenotazione)
+
+    def elimina_movimento_by_id(self, id):
+        def is_selected_movimento(movimento):
+            if movimento.id == id:
+                return True
+            return False
+        self.lista_movimenti.remove(list(filter(is_selected_movimento, self.lista_movimenti))[0])
+
+    def movimento_ordinato(self, lista):
+        lista.sort(key=lambda x: x.data, reverse=False)
+
+    def get_movimento_by_index(self, index):
+        return self.lista_movimenti[index]
+
+    def get_lista_movimenti(self):
+        return self.lista_movimenti
+
+    def save_data(self):
+        with open('listamovimenticassa/data/lista_movimenti_salvata.pickle', 'wb') as handle:
+            pickle.dump(self.lista_movimenti, handle, pickle.HIGHEST_PROTOCOL)
+

@@ -7,6 +7,7 @@ from calendario.Calendario import Calendario
 from dipendente.controller.ControlloreDipendente import ControlloreDipendente
 from listaclienti.views.VistaListaClienti import VistaListaClienti
 from listadipendenti.views.VistaListaDipendenti import VistaListaDipendenti
+from listamovimenticassa.views.VistaListaMovimentiCassa import VistaListaMovimentiCassa
 
 
 class VistaHome(QWidget):
@@ -43,6 +44,8 @@ class VistaHome(QWidget):
             self.layout_admin.addWidget(self.pulsante_con_nome("Gestione dipendenti", self.go_lista_dipendenti), 3, 1)
             self.layout_admin.addWidget(QLabel("<font size = '3'> <b> Area palestra </b> </font>"), 4, 0)
             self.layout_admin.addWidget(self.pulsante_con_nome("Gestione Palestra", self.go_gestione_palestra), 4, 1)
+            self.layout_admin.addWidget(QLabel("<font size = '3'> <b> Area Gestione Cassa </b> </font>"), 5, 0)
+            self.layout_admin.addWidget(self.pulsante_con_nome("Gestione movimenti cassa", self.go_gestione_cassa), 5, 1)
             self.layout_admin.addWidget(self.pulsante_con_nome("Esci", self.funz_esci), 6, 2)
             self.setLayout(self.layout_admin)
         elif Login.autorizzazione_accesso=="Dipendente":
@@ -118,6 +121,11 @@ class VistaHome(QWidget):
             self.cal = Calendario()
             self.close()
             return self.cal.show()
+
+    def go_gestione_cassa(self):
+        #self.close()
+        self.vista_lista_movimenti = VistaListaMovimentiCassa()
+        return self.vista_lista_movimenti.show()
 
     def funz_esci(self):
         from home.login.Login import Login
