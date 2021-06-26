@@ -17,7 +17,7 @@ class ControllorePrenotazione():
         return self.model.documento
 
     def get_campo_tipo(self):
-        return self.model.campo.tipo_abb_selezionato
+        return self.model.campo.tipo
 
     def get_campo_num(self):
         return self.model.campo.numero

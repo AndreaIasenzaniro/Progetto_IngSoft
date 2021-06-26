@@ -33,7 +33,7 @@ class VistaListaPrenotazioni(QWidget):
         self.lista_selezionata = []
         for prenotazione in self.controller.get_lista_prenotazioni():
             from home.views.VistaHome import VistaHome
-            if prenotazione.campo.tipo_abb_selezionato == VistaHome.selezione_campo and prenotazione.data == self.data_selezionata:
+            if prenotazione.campo.tipo == VistaHome.selezione_campo and prenotazione.data == self.data_selezionata:
                 self.lista_selezionata.append(prenotazione)
             else:
                 pass
@@ -50,13 +50,13 @@ class VistaListaPrenotazioni(QWidget):
             self.listview_model.appendRow(item)
         self.list_view.setModel(self.listview_model)
     def show_selected_info(self):
-        try:
+        #try:
             selected = self.list_view.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lista_selezionata[selected]
             self.vista_prenotazione = VistaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_ui)
             self.vista_prenotazione.show()
-        except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
+        #except:
+            #QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
     def get_lista_index(self, index, lista):
         return lista[index]
     def closeEvent(self, event):

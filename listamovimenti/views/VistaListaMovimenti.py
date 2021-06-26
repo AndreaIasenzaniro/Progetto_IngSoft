@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QStandardItemModel
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QListView, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listamovimenti.views.VistaInserisciMovimento import VistaInserisciMovimento
@@ -34,14 +34,14 @@ class VistaListaMovimenti(QWidget):
         self.v_layout.addWidget(btn_modifica)
         self.v_layout.addWidget(btn_apri)
 
-
-
         self.setLayout(self.v_layout)
 
     def show_movimento_selezionato_click(self):
         #try:
             self.selected = self.list_view.selectedIndexes()[0].row()
+            print(self.selected)
             movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
+            print(movimento_selezionato)
             self.vista_movimento = VistaMovimento(movimento_selezionato, self.controller.elimina_movimento_by_id, self.update_elimina)
             self.vista_movimento.show()
         #except:
@@ -60,7 +60,7 @@ class VistaListaMovimenti(QWidget):
             #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.id))
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
-            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.importo))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
     def update_elimina(self):
@@ -90,7 +90,7 @@ class VistaListaMovimenti(QWidget):
             #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.id))
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
-            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.importo))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
     def update_modifica(self):
@@ -100,7 +100,7 @@ class VistaListaMovimenti(QWidget):
             #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.id))
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
-            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.importo))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
     def update_elimina(self):

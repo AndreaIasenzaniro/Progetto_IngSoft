@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout, QLabel, QLineEdit
 
+from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from movimento.model.Movimento import Movimento
 
 
@@ -40,19 +41,18 @@ class VistaInserisciMovimento(QWidget):
         descrizione = self.info["Descrizione"].text()
         importo = self.info["Importo"].text()
 
-        from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
-        controller = ControlloreListaMovimenti()
+        '''controller = ControlloreListaMovimenti()
         lista = controller.get_lista_movimenti()
         if not lista:
             indice = 0
         else:
-            indice = len(lista)
+            indice = len(lista)'''
 
         if data == "" or descrizione == "" or importo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.aggiungi_movimento(Movimento(indice, data, descrizione, importo))
-            print(indice)
+            self.controller.aggiungi_movimento(Movimento( data, descrizione, importo))
+
             self.callback()
             self.close()

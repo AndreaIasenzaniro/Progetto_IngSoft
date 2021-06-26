@@ -131,7 +131,7 @@ class VistaInserisciPrenotazione(QWidget):
                 for prenotazione_esistente in self.c.get_lista_prenotazioni():
                     print("Scorro la lista")
                     if self.confronta(prenotazione_esistente.data, self.prenotazione.data):
-                        if self.confronta(prenotazione_esistente.campo.tipo_abb_selezionato, self.prenotazione.campo.tipo_abb_selezionato):
+                        if self.confronta(prenotazione_esistente.campo.tipo, self.prenotazione.campo.tipo):
                             if self.confronta(prenotazione_esistente.campo.numero, self.prenotazione.campo.numero):
                                 if prenotazione_esistente.ora_inizio <= self.prenotazione.ora_inizio \
                                     and self.prenotazione.ora_inizio < prenotazione_esistente.ora_fine:
