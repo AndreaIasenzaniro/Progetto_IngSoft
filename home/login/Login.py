@@ -11,13 +11,12 @@ class Login(QWidget):
     accesso_utente = None
     autorizzazione = None
     def __init__(self, parent = None):
-
         super(Login, self).__init__(parent)
 
-        #self.setStyleSheet("background-color: #f5fffa;")
         self.setWindowTitle('Login - Centro Polisportivo')
         self.setFixedSize(380,300)
         self.controller = ControlloreListaDipendenti()
+        self.setStyleSheet("background-color: Azure;")
 
         # definisco un layout verticale per il login
         login_layout = QVBoxLayout()

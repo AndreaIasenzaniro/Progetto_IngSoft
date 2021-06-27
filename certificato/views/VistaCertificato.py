@@ -16,13 +16,13 @@ class VistaCertificato(QWidget):
         if self.controller.isValido():
             h_lay_certificato.addWidget(QLabel("Il certificato medico scade in data: " + self.controller.getScadenza()))
         else:
-            h_lay_certificato.addWidget(QLabel("Inserire data scadenza del certificato."))
+            h_lay_certificato.addWidget(QLabel("Inserire la data di scadenza del certificato."))
             self.scadenza = QLineEdit()
             self.scadenza.setPlaceholderText("gg/mm/aaaa")
             h_lay_certificato.addWidget(self.scadenza)
             orizLayout = QHBoxLayout()
             inserisci = QPushButton("Aggiungi")
-            inserisci.clicked.connect(self.aggiungiCertificatoClick)
+            inserisci.clicked.connect(self.aggiungi_certificato_click)
             orizLayout.addWidget(inserisci)
             '''annulla = QPushButton("Annulla")
             annulla.clicked.connect(self.close)
@@ -31,7 +31,7 @@ class VistaCertificato(QWidget):
 
         self.setLayout(h_lay_certificato)
 
-    def aggiungiCertificatoClick(self):
+    def aggiungi_certificato_click(self):
         try:
             date = datetime.strptime(self.scadenza.text(), '%d/%m/%Y')
             dateUnix = datetime.timestamp(date)
