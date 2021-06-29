@@ -18,7 +18,7 @@ class VistaHome(QWidget):
         super(VistaHome, self).__init__(parent)
 
         #self.setFixedSize(800, 500)
-        #self.move(350, 150)
+        self.move(350, 150)
 
         from home.login.Login import Login
         self.controller = ControlloreDipendente(Login.accesso_utente)

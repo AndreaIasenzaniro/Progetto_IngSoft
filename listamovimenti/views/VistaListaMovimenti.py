@@ -17,6 +17,7 @@ class VistaListaMovimenti(QWidget):
 
         self.create_table()
         self.list_view = self.tableWidget
+        self.v_layout.addWidget(VistaInserisciMovimento(self.controller, self.update_nuovo))
         self.v_layout.addWidget(self.tableWidget)
 
         #self.update_ui()
@@ -27,10 +28,10 @@ class VistaListaMovimenti(QWidget):
         btn_modifica = QPushButton("Modifica")
         btn_modifica.clicked.connect(self.show_modifica_movimento_click)
 
-        btn_nuovo = QPushButton("Nuovo")
-        btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
+        #btn_nuovo = QPushButton("Nuovo")
+        #btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
 
-        self.v_layout.addWidget(btn_nuovo)
+        #self.v_layout.addWidget(btn_nuovo)
         self.v_layout.addWidget(btn_modifica)
         self.v_layout.addWidget(btn_apri)
 
@@ -77,9 +78,10 @@ class VistaListaMovimenti(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da modificare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
 
-    def show_nuovo_movimento_click(self):
+    '''def show_nuovo_movimento_click(self):
         self.vista_inserisci_movimento = VistaInserisciMovimento(self.controller, self.update_nuovo)
-        self.vista_inserisci_movimento.show()
+        #self.vista_inserisci_movimento.show()
+        self.v_layout.addWidget(self.vista_inserisci_movimento)'''
 
     def update_nuovo(self):
         m = len(self.controller.get_lista_movimenti())

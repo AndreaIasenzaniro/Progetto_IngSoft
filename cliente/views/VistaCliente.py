@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayo
 from abbonamento.views.VistaAbbonamento import VistaAbbonamento
 from certificato.views.VistaCertificato import VistaCertificato
 from cliente.controller.ControlloreCliente import ControlloreCliente
+from listaclienti.controller.ControlloreListaClienti import ControlloreListaClienti
 
 
 class VistaCliente(QWidget):
@@ -69,7 +70,7 @@ class VistaCliente(QWidget):
         # layout di visualizzazione per pulsanti
         h_lay_btn = QHBoxLayout()
         btn_chiudi = QPushButton("Chiudi")
-        btn_chiudi.clicked.connect(self.close)
+        btn_chiudi.clicked.connect(self.funz_chiudi)
         btn_elimina = QPushButton("Elimina")
         btn_elimina.clicked.connect(self.elimina_cliente_click)
         h_lay_btn.addWidget(btn_chiudi)
@@ -107,3 +108,7 @@ class VistaCliente(QWidget):
         self.elimina_cliente(self.controller.get_id_cliente())
         self.elimina_callback()
         self.close()
+
+    def funz_chiudi(self):
+        self.close()
+        ControlloreListaClienti().saveData()
