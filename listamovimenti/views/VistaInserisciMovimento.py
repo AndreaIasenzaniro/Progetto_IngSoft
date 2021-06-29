@@ -40,20 +40,32 @@ class VistaInserisciMovimento(QWidget):
         self.calendario.setGridVisible(True)
 
         self.v1_layout.addWidget(self.calendario)
-
         self.btn_conferma = QPushButton("Conferma")
         self.btn_conferma.clicked.connect(self.window.close)
         self.v1_layout.addWidget(self.btn_conferma)
-        try:
-            data_selezionata = self.calendario.selectedDate()
-            self.data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
-            #data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
-            #self.info["Data"] = data_selezionata_formattata
-        except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data', QMessageBox.Ok, QMessageBox.Ok)
 
         self.window.setLayout(self.v1_layout)
         self.window.show()
+
+    def data_selezionata(self):
+        oggi = datetime.today()
+        oggi_formattato = oggi.strftime("%d/%m/%Y")
+        oggi_formattato_per_unix = datetime.strptime(oggi_formattato, '%d/%m/%Y')
+        oggi_unix = datetime.timestamp(oggi_formattato_per_unix)
+        print("Oggi: " + str(oggi_unix))
+        try:
+            data_selezionata = self.calendario.selectedDate()
+            data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
+            data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
+            data_timestamp = datetime.timestamp(data_selezionata_formattata)
+
+            if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
+                self.calendario.close()
+                return data
+            else:
+                return None
+        except:
+            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
 
     def get_label_line(self, label, tipo, placeholder):
         layout = QHBoxLayout()
@@ -67,11 +79,12 @@ class VistaInserisciMovimento(QWidget):
     def aggiugni_movimento(self):
         descrizione = self.info["Descrizione"].text()
         importo = self.info["Importo"].text()
-        if self.data == "" or descrizione == "" or importo == "":
+        data = self.data_selezionata()
+        if descrizione == "" or importo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.aggiungi_movimento(Movimento(self.data, descrizione, importo))
+            self.controller.aggiungi_movimento(Movimento(data, descrizione, importo))
 
             self.controller.save_data()
             self.callback()

@@ -35,6 +35,8 @@ class VistaListaMovimenti(QWidget):
         self.v_layout.addWidget(btn_modifica)
         self.v_layout.addWidget(btn_apri)
 
+        self.saldo = self.controller.saldo()
+
         self.setLayout(self.v_layout)
 
     def show_movimento_selezionato_click(self):

@@ -38,3 +38,14 @@ class Prenotazione():
             ora = ora + 1
             self.ora_fine = "{}:{}".format(ora, minuti)
             return self.ora_fine
+
+    def prezzi_campi(self):
+        if self.campo.tipo == "Calcio":
+            prezzo = 80
+            return prezzo
+        elif self.campo.tipo == "Calcetto":
+            prezzo = 50
+            return prezzo
+        else:
+            prezzo = 40
+            return prezzo

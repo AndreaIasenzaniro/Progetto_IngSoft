@@ -6,7 +6,9 @@ from datetime import  datetime
 import time
 
 from campo.model.Campo import Campo
+from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listaprenotazioni.controller.ControlloreListaPrenotazioni import ControlloreListaPrenotazioni
+from movimento.model.Movimento import Movimento
 from prenotazione.model.Prenotazione import Prenotazione
 
 
@@ -17,6 +19,7 @@ class VistaInserisciPrenotazione(QWidget):
         self.callback = callback
         self.info = {}
         self.c = ControlloreListaPrenotazioni()
+        self.controlloreMov = ControlloreListaMovimenti()
 
         self.combo_ora = QComboBox()
 
@@ -51,6 +54,7 @@ class VistaInserisciPrenotazione(QWidget):
         btn_ok.setStyleSheet("background-color: #90ee90; font-size: 15px; font-weight: bold;")
         btn_ok.setShortcut("Return")
         btn_ok.clicked.connect(self.add_prenotazione)
+        #btn_ok.clicked.connect(self.aggiungi_movimento)
         self.v_layout.addWidget(btn_ok)
 
         # creazione pulsante di annullamento dell'inserimento
@@ -61,7 +65,9 @@ class VistaInserisciPrenotazione(QWidget):
         self.v_layout.addWidget(btn_annulla)
 
         self.setLayout(self.v_layout)
-        self.setWindowTitle("Nuovo Dipendente")
+        self.setWindowTitle("Nuova Prenotazione")
+
+
 
     def get_form_entry(self, tipo):
         self.v_layout.addWidget(QLabel(tipo))
@@ -124,6 +130,7 @@ class VistaInserisciPrenotazione(QWidget):
                 print("La lista è vuota")
                 self.campo.prenota()
                 self.controller.aggiungi_prenotazione(self.prenotazione)
+                self.aggiungi_movimento()
                 self.callback()
                 self.controller.save_data()
                 self.close()
@@ -219,6 +226,7 @@ class VistaInserisciPrenotazione(QWidget):
     def crea_parametri(self):
         self.campo.prenota()
         self.controller.aggiungi_prenotazione(self.prenotazione)
+        self.aggiungi_movimento()
         self.callback()
         self.controller.save_data()
         self.close()
@@ -234,3 +242,13 @@ class VistaInserisciPrenotazione(QWidget):
             return True
         else:
             return None
+
+    def aggiungi_movimento(self):
+        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text(), self.prenotazione.prezzi_campi())
+        self.movimento.isEntrata = True
+        print("Stiamo aggiungendo")
+        self.controlloreMov.aggiungi_movimento(self.movimento)
+        print("Abbiamo aggiunto")
+        self.controlloreMov.save_data()
+        print("Abbiamo salvato")
+

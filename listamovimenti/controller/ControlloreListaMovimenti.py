@@ -23,5 +23,8 @@ class ControlloreListaMovimenti():
     def elimina_movimento_by_id(self, id):
         self.model.elimina_movimento_by_id(id)
 
+    def saldo(self):
+        self.model.saldo()
+
     def save_data(self):
         self.model.save_data()

@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpacerItem, QSizePolicy, QPushButton, QHBoxLayout
 
+from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
+from movimento.model.Movimento import Movimento
 from prenotazione.controller.ControllorePrenotazione import ControllorePrenotazione
 
 
@@ -9,6 +11,7 @@ class VistaPrenotazione(QWidget):
         self.controller = ControllorePrenotazione(prenotazione)
         self.disdici_prenotazione = disdici_prenotazione
         self.elimina_callback = elimina_callback
+        self.controlloreMov = ControlloreListaMovimenti()
 
         v_layout = QVBoxLayout()
 
@@ -44,6 +47,15 @@ class VistaPrenotazione(QWidget):
         return current_label
 
     def disdici_prenotazione_click(self):
+        self.aggiungi_uscita_cassa()
         self.disdici_prenotazione(self.controller.get_id_prenotazione())
         self.elimina_callback()
         self.close()
+
+    def aggiungi_uscita_cassa(self):
+        self.movimento = Movimento(self.controller.get_data_prenotazione(), "Disdetta campo da " + str(self.controller.get_campo_tipo()), self.controller.prezzi_campi())
+        print("Stiamo aggiungendo perdita")
+        self.controlloreMov.aggiungi_movimento(self.movimento)
+        print("Abbiamo aggiunto perdita")
+        self.controlloreMov.save_data()
+        print("Abbiamo salvato perdita")

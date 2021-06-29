@@ -21,6 +21,7 @@ class Movimento():
         self.data_movimento = data_movimento
         self.descrizione = descrizione
         self.importo = importo
+        self.isEntrata = False
 
     '''def get_ultimo_id(self):
         if not self.controller.get_lista_movimenti():

@@ -33,3 +33,6 @@ class ControllorePrenotazione():
 
     def verifica_stato(self):
         return self.model.verifica_stato
+
+    def prezzi_campi(self):
+        return self.model.prezzi_campi()
