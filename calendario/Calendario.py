@@ -1,5 +1,6 @@
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCalendarWidget, QLabel, QListView, QPushButton
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCalendarWidget, QLabel, QListView, QPushButton, QTableWidget, \
+    QTableWidgetItem, QHeaderView
 from PyQt5.QtCore import Qt
 
 from listaprenotazioni.controller.ControlloreListaPrenotazioni import ControlloreListaPrenotazioni

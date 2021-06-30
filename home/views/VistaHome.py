@@ -51,7 +51,7 @@ class VistaHome(QWidget):
             # VISTA HOME AMMINISTRATORE
             #da il bentornato all'admin
             #self.layout_admin.addWidget(QLabel("<font size = '5'> <b> Bentornato {} </b> </font>".format(self.admin.get_username())), 0, 0, 1, 2)
-            self.layout_admin.addWidget(QLabel("<font size = '6', color=Lime> <b> Bentornato nell'area amministratore </b> </font>"), 0, 0)
+            self.layout_admin.addWidget(QLabel("<font size = '6', color=Lime> <b><u> Bentornato nell'area amministratore! </b></u> </font>"), 0, 0)
             self.layout_admin.addWidget(QLabel("<font size = '5', color=PowderBlue> <b> Selezionare l'attività da svolgere </b> </font>"),1, 0)
             self.layout_admin.addWidget(QLabel("<font size = '4', color='PowderBlue'> <b> Area campi da gioco </b> </font>"), 2, 0)
             self.layout_admin.addWidget(self.get_combo(self.lista_campi), 2, 1)
@@ -69,7 +69,8 @@ class VistaHome(QWidget):
             #self.layout_dip.addWidget(QLabel("<font size = '5'> <b> Bentornato {} </b> </font>".format(self.controller.get_nome_dipendente())))
             v_lay_dip_sx = QVBoxLayout()
             v_lay_dip_dx = QVBoxLayout()
-            v_lay_dip_sx.addWidget(QLabel("<font size = '6', color=Lime> <b> Bentornato nell'area dipendente </b> </font>"))
+            v_lay_dip_sx.addWidget(QLabel("<font size = '6', color=Lime> <b><u> Bentornato nell'area dipendente! </b></u> </font>"))
+            v_lay_dip_sx.addWidget(QLabel("<font size = '5', color=Lime> <b> I tuoi dati: </b> </font>"))
             v_lay_dip_sx.addWidget(self.get_label_info("Nome", self.controller.get_nome_dipendente()))
             v_lay_dip_sx.addWidget(self.get_label_info("Cognome", self.controller.get_cognome_dipendente()))
             v_lay_dip_sx.addWidget(self.get_label_info("Nato a ", self.controller.get_luogo_dipendente()))

@@ -23,7 +23,6 @@ class VistaInserisciPrenotazione(QWidget):
 
         self.combo_ora = QComboBox()
 
-
         self.v_layout = QVBoxLayout()
 
         self.get_form_entry("Nome cliente")

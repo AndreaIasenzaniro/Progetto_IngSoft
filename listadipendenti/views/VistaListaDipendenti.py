@@ -92,6 +92,7 @@ class VistaListaDipendenti(QWidget):
     # Create table
     def createTable(self):
         self.tableWidget = QTableWidget()
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
 
         # Row count
         self.tableWidget.setRowCount(len(self.controller.get_lista_dipendenti()))
