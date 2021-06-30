@@ -38,9 +38,8 @@ class ListaMovimenti():
                 saldo += float(movimento.importo)
             else:
                 saldo -= float(movimento.importo)
-        #return saldo
-        print(saldo)
-
+        return saldo
+        #print(saldo)
 
     def save_data(self):
         with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'wb') as handle:

@@ -4,7 +4,8 @@ from movimento.controller.ControlloreMovimento import ControlloreMovimento
 
 
 class VistaMovimento(QWidget):
-    def __init__(self, movimento, elimina_movimento, elimina_callback):
+    def __init__(self, movimento, elimina_movimento, elimina_callback, parent = None):
+        super(VistaMovimento, self).__init__(parent)
 
         self.controller = ControlloreMovimento(movimento)
         self.elimina_movimento = elimina_movimento

@@ -59,11 +59,11 @@ class VistaInserisciMovimento(QWidget):
             data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
             data_timestamp = datetime.timestamp(data_selezionata_formattata)
 
-            if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
-                self.calendario.close()
-                return data
-            else:
-                return None
+            #if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
+            self.calendario.close()
+            return data
+            #else:
+                #return None
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
 

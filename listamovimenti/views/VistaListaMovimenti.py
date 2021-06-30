@@ -1,5 +1,7 @@
+from PyQt5 import QtGui
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget, QLabel
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listamovimenti.views.VistaInserisciMovimento import VistaInserisciMovimento
@@ -18,6 +20,7 @@ class VistaListaMovimenti(QWidget):
         self.create_table()
         self.list_view = self.tableWidget
         self.v_layout.addWidget(VistaInserisciMovimento(self.controller, self.update_nuovo))
+        self.v_layout.addWidget(QLabel("Saldo attuale: {}".format(self.controller.saldo())))
         self.v_layout.addWidget(self.tableWidget)
 
         #self.update_ui()
@@ -35,21 +38,19 @@ class VistaListaMovimenti(QWidget):
         self.v_layout.addWidget(btn_modifica)
         self.v_layout.addWidget(btn_apri)
 
-        self.saldo = self.controller.saldo()
-
         self.setLayout(self.v_layout)
 
     def show_movimento_selezionato_click(self):
-        #try:
+        try:
             self.selected = self.list_view.selectedIndexes()[0].row()
             print(self.selected)
             movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
             print(movimento_selezionato)
             self.vista_movimento = VistaMovimento(movimento_selezionato, self.controller.elimina_movimento_by_id, self.update_elimina)
             self.vista_movimento.show()
-        #except:
-            #QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da visualizzare.', QMessageBox.Ok,
-                                 #QMessageBox.Ok)
+        except:
+            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da visualizzare.', QMessageBox.Ok,
+                                 QMessageBox.Ok)
 
     def create_table(self):
         self.tableWidget = QTableWidget()
@@ -60,7 +61,12 @@ class VistaListaMovimenti(QWidget):
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i = 0
         for movimento in self.controller.get_lista_movimenti():
-            #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.id))
+            if movimento.isEntrata:
+                # inserire colore verde cella importo movimento
+                pass
+            else:
+                # inserire colore rosso cella importo movimento
+                pass
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
