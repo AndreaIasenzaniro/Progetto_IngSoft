@@ -53,7 +53,7 @@ class VistaPrenotazione(QWidget):
         self.close()
 
     def aggiungi_uscita_cassa(self):
-        self.movimento = Movimento(self.controller.get_data_prenotazione(), "Disdetta campo da " + str(self.controller.get_campo_tipo()), self.controller.prezzi_campi())
+        self.movimento = Movimento(self.controller.get_data_prenotazione(), "Disdetta campo da " + str(self.controller.get_campo_tipo()) + "- ID prenotazione: " + str(self.prenotazione.id), "Spesa",self.controller.prezzi_campi())
         print("Stiamo aggiungendo perdita")
         self.controlloreMov.aggiungi_movimento(self.movimento)
         print("Abbiamo aggiunto perdita")
