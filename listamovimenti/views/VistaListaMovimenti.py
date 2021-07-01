@@ -1,6 +1,6 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QStandardItemModel
+from PyQt5.QtGui import QStandardItemModel, QFont
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget, QLabel
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
@@ -20,7 +20,17 @@ class VistaListaMovimenti(QWidget):
         self.create_table()
         self.list_view = self.tableWidget
         #self.v_layout.addWidget(VistaInserisciMovimento(self.controller, self.update_nuovo))
-        self.v_layout.addWidget(QLabel("Saldo attuale: {}".format(self.controller.saldo())))
+        self.label_saldo = QLabel("Saldo attuale: {}".format(self.controller.saldo()))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.label_saldo.setFont(font)
+        if self.controller.saldo() < 0.0:
+            self.label_saldo.setStyleSheet('color: red')
+        else:
+            self.label_saldo.setStyleSheet('color: green')
+
+        self.v_layout.addWidget(self.label_saldo)
         self.v_layout.addWidget(self.tableWidget)
 
         #self.update_ui()
