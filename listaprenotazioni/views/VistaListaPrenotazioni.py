@@ -24,6 +24,11 @@ class VistaListaPrenotazioni(QWidget):
         open_button = QPushButton('Apri')
         open_button.clicked.connect(self.show_selected_info)
         buttons_layout.addWidget(open_button)
+
+        esc_button = QPushButton('E')
+        esc_button.clicked.connect(self.funz_esci)
+        buttons_layout.addWidget(esc_button)
+
         buttons_layout.addStretch()
         h_layout.addLayout(buttons_layout)
         self.setLayout(h_layout)
@@ -112,3 +117,14 @@ class VistaListaPrenotazioni(QWidget):
     def update_elimina(self):
         riga = self.selected
         self.tableWidget.removeRow(riga)
+
+    def funz_esci(self):
+        from home.views.VistaHome import VistaHome
+        self.vista_home = VistaHome()
+        self.close()
+        self.vista_home.show()
+        self.vista_home.close()
+        from calendario.Calendario import Calendario
+        self.cal = Calendario()
+        self.close()
+        return self.cal.show()
