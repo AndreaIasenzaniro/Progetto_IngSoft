@@ -5,6 +5,8 @@ from dateutil.relativedelta import relativedelta
 
 from abbonamento.controller.ControlloreAbbonamento import ControlloreAbbonamento
 from abbonamento.model.Abbonamento import Abbonamento
+from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
+from movimento.model.Movimento import Movimento
 
 
 class VistaAbbonamento(QWidget):
@@ -14,6 +16,7 @@ class VistaAbbonamento(QWidget):
         #self.setFixedSize(350, 250)
 
         self.controller = ControlloreAbbonamento(abbonamento)
+        self.controlloreMov = ControlloreListaMovimenti()
         self.callbackInserisciAbbonamento = callbackInsericiAbbonamento
         self.lista_tipo_abbonamento = ["Giornaliero","Mensile", "Trimestrale", "Annuale"]
 
@@ -59,19 +62,23 @@ class VistaAbbonamento(QWidget):
         if radioButton.isChecked():
             if radioButton.tipo == "Giornaliero":
                 self.tipo_abb = "Giornaliero"
+                self.prezzo_abb = 8
                 self.giorni = 1
             if radioButton.tipo == "Mensile":
                 self.tipo_abb = "Mensile"
+                self.prezzo_abb = 35
                 self.mesi = 1
             if radioButton.tipo == "Trimestrale":
                 self.tipo_abb = "Trimestrale"
+                self.prezzo_abb = 90
                 self.mesi = 3
             if radioButton.tipo == "Annuale":
                 self.tipo_abb = "Annuale"
+                self.prezzo_abb = 360
                 self.mesi = 12
 
     def add_abbonamento_click(self):
-        try:
+        #try:
             date = datetime.strptime(self.data_in_abb.text(), '%d/%m/%Y')
             dateUnix = datetime.timestamp(date)
             oggi = datetime.today()
@@ -80,7 +87,8 @@ class VistaAbbonamento(QWidget):
             if oggiUnix-dateUnix<86400 :
                 date += relativedelta(days=self.giorni)
                 date += relativedelta(months=self.mesi)
-                self.callbackInserisciAbbonamento(Abbonamento(int(date.timestamp()), self.tipo_abb))
+                self.callbackInserisciAbbonamento(Abbonamento(int(date.timestamp()), self.tipo_abb, self.prezzo_abb))
+                self.aggiungi_movimento()
                 self.data_in_abb.setText("")
                 messaggio = QMessageBox()
                 messaggio.setWindowTitle("Operazione eseguita.")
@@ -92,5 +100,14 @@ class VistaAbbonamento(QWidget):
                 messaggio.setText("La data inserita deve essere maggiore o uguale di quella attuale.")
                 messaggio.exec_()
                 self.data_in_abb.setText("")
-        except:
-            QMessageBox.critical(self, 'Errore', 'Inserisci la data nel formato richiesto: gg/mm/aaaa', QMessageBox.Ok, QMessageBox.Ok)
+        #except:
+            #QMessageBox.critical(self, 'Errore', 'Inserisci la data nel formato richiesto: gg/mm/aaaa', QMessageBox.Ok, QMessageBox.Ok)
+
+    def aggiungi_movimento(self):
+        self.movimento = Movimento(self.data_in_abb.text(), "Sottoscrizione abbonamento {}".format(self.tipo_abb), self.prezzo_abb)
+        self.movimento.isEntrata = True
+        print("Stiamo aggiungendo")
+        self.controlloreMov.aggiungi_movimento(self.movimento)
+        print("Abbiamo aggiunto")
+        self.controlloreMov.save_data()
+        print("Abbiamo salvato")
