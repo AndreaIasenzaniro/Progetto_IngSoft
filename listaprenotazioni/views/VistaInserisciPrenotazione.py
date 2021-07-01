@@ -242,7 +242,7 @@ class VistaInserisciPrenotazione(QWidget):
             return None
 
     def aggiungi_movimento(self):
-        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text() + "- ID prenotazione: " + str(self.prenotazione.id),"Incasso", self.prenotazione.prezzi_campi())
+        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text() + " - ID prenotazione: " + str(self.prenotazione.id),"Incasso", self.prenotazione.prezzi_campi())
         self.movimento.isEntrata = True
         print("Stiamo aggiungendo")
         self.controlloreMov.aggiungi_movimento(self.movimento)
