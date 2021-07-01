@@ -23,7 +23,7 @@ class ListaMovimenti():
         self.lista_movimenti.remove(list(filter(is_selected_movimento, self.lista_movimenti))[0])
 
     def movimento_ordinato(self, lista):
-        lista.sort(key=lambda x: x.data_movimento, reverse=False)
+        lista.sort(key=lambda x: x.data, reverse=False)
 
     def get_movimento_by_index(self, index):
         return self.lista_movimenti[index]
@@ -31,7 +31,7 @@ class ListaMovimenti():
     def get_lista_movimenti(self):
         return self.lista_movimenti
 
-    def saldo(self):
+    def get_saldo_cassa(self):
         saldo = 0
         for movimento in self.lista_movimenti:
             if movimento.isEntrata:
@@ -39,7 +39,6 @@ class ListaMovimenti():
             else:
                 saldo -= float(movimento.importo)
         return saldo
-        #print(saldo)
 
     def save_data(self):
         with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'wb') as handle:

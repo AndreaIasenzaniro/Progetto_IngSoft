@@ -184,7 +184,6 @@ class VistaInserisciPrenotazione(QWidget):
         self.data_da_calendario.setGridVisible(True)
         self.data_da_calendario.show()
 
-
     def data_selezionata(self):
         #vedere se bisogna fare queste successive 4 righe anche in VistaAbbonamento e VistaCertificato, perche il .today
         #ritorna anche i secondi nel timestamp
@@ -243,7 +242,7 @@ class VistaInserisciPrenotazione(QWidget):
             return None
 
     def aggiungi_movimento(self):
-        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text(), self.prenotazione.prezzi_campi())
+        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text(),"Incasso", self.prenotazione.prezzi_campi())
         self.movimento.isEntrata = True
         print("Stiamo aggiungendo")
         self.controlloreMov.aggiungi_movimento(self.movimento)

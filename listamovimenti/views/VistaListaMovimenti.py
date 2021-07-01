@@ -19,7 +19,7 @@ class VistaListaMovimenti(QWidget):
 
         self.create_table()
         self.list_view = self.tableWidget
-        self.v_layout.addWidget(VistaInserisciMovimento(self.controller, self.update_nuovo))
+        #self.v_layout.addWidget(VistaInserisciMovimento(self.controller, self.update_nuovo))
         self.v_layout.addWidget(QLabel("Saldo attuale: {}".format(self.controller.saldo())))
         self.v_layout.addWidget(self.tableWidget)
 
@@ -31,10 +31,10 @@ class VistaListaMovimenti(QWidget):
         btn_modifica = QPushButton("Modifica")
         btn_modifica.clicked.connect(self.show_modifica_movimento_click)
 
-        #btn_nuovo = QPushButton("Nuovo")
-        #btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
+        btn_nuovo = QPushButton("Nuovo")
+        btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
 
-        #self.v_layout.addWidget(btn_nuovo)
+        self.v_layout.addWidget(btn_nuovo)
         self.v_layout.addWidget(btn_modifica)
         self.v_layout.addWidget(btn_apri)
 
@@ -55,8 +55,8 @@ class VistaListaMovimenti(QWidget):
     def create_table(self):
         self.tableWidget = QTableWidget()
         self.tableWidget.setRowCount(len(self.controller.get_lista_movimenti()))
-        self.tableWidget.setColumnCount(3)
-        columns = ['Data operaizone', 'Descrizione', 'Importo']
+        self.tableWidget.setColumnCount(4)
+        columns = ['Data operaizone', 'Causale', 'Descrizione', 'Importo']
         self.tableWidget.setHorizontalHeaderLabels(columns)
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i = 0
@@ -67,9 +67,10 @@ class VistaListaMovimenti(QWidget):
             else:
                 # inserire colore rosso cella importo movimento
                 pass
-            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
-            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
-            self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
+            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data))
+            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.causale))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.descrizione))
+            self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
     def update_elimina(self):
@@ -86,10 +87,10 @@ class VistaListaMovimenti(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da modificare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
 
-    '''def show_nuovo_movimento_click(self):
+    def show_nuovo_movimento_click(self):
         self.vista_inserisci_movimento = VistaInserisciMovimento(self.controller, self.update_nuovo)
-        #self.vista_inserisci_movimento.show()
-        self.v_layout.addWidget(self.vista_inserisci_movimento)'''
+        self.vista_inserisci_movimento.show()
+        #self.v_layout.addWidget(self.vista_inserisci_movimento)
 
     def update_nuovo(self):
         m = len(self.controller.get_lista_movimenti())
@@ -98,19 +99,22 @@ class VistaListaMovimenti(QWidget):
         self.i=0
         for movimento in self.controller.get_lista_movimenti():
             #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.id))
-            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
-            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
-            self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
+            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data))
+            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.causale))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.descrizione))
+            self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
+
 
     def update_modifica(self):
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i=0
         for movimento in self.controller.get_lista_movimenti():
             #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.id))
-            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data_movimento))
-            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.descrizione))
-            self.tableWidget.setItem(self.i, 2, QTableWidgetItem("€ {}".format(movimento.importo)))
+            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data))
+            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.causale))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.descrizione))
+            self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
     def update_elimina(self):

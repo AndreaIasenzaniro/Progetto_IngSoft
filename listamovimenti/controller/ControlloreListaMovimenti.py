@@ -24,7 +24,7 @@ class ControlloreListaMovimenti():
         self.model.elimina_movimento_by_id(id)
 
     def saldo(self):
-        return self.model.saldo()
+        return self.model.get_saldo_cassa()
 
     def save_data(self):
         self.model.save_data()

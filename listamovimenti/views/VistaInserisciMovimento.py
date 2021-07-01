@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout, QLabel, QLineEdit, \
-    QCalendarWidget
+    QCalendarWidget, QRadioButton
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
+
 from movimento.model.Movimento import Movimento
 
 
@@ -21,17 +22,37 @@ class VistaInserisciMovimento(QWidget):
         btn_ok.clicked.connect(self.aggiugni_movimento)
         btn_annulla = QPushButton("Annulla")
         btn_annulla.clicked.connect(self.close)
-
         btn_data = QPushButton("Inserisci data")
         btn_data.clicked.connect(self.visualizza_calendario)
-        self.v_layout.addWidget(btn_data)
-        self.v_layout.addLayout(self.get_label_line("Descrizione", "Descrizione", "descrzione"))
+
+        self.v_layout.addLayout(self.get_label_line("Causale", "Causale", "Causale"))
         self.v_layout.addLayout(self.get_label_line("Importo", "Importo", "importo"))
+        self.v_layout.addLayout(self.get_radio_button(['Incasso', 'Spesa']))
+        self.v_layout.addWidget(btn_data)
 
         self.v_layout.addWidget(btn_ok)
         self.v_layout.addWidget(btn_annulla)
 
         self.setLayout(self.v_layout)
+
+    def get_radio_button(self, lista):
+        h_lay = QHBoxLayout()
+        h_lay.addWidget(QLabel("Tipo di movimento"))
+        for item in lista:
+            self.radiobutton = QRadioButton(item)
+            self.radiobutton.tipo = item
+            self.radiobutton.toggled.connect(self.scelta_radio)
+            h_lay.addWidget(self.radiobutton)
+        return h_lay
+
+    def scelta_radio(self):
+        self.radioButton = self.sender()
+        if self.radioButton.isChecked():
+            if self.radioButton.tipo == "Incasso":
+                self.tipo = True
+            if self.radioButton.tipo == "Spesa":
+                self.tipo = False
+
 
     def visualizza_calendario(self):
         self.window = QWidget()
@@ -57,7 +78,7 @@ class VistaInserisciMovimento(QWidget):
             data_selezionata = self.calendario.selectedDate()
             data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
             data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
-            data_timestamp = datetime.timestamp(data_selezionata_formattata)
+            #data_timestamp = datetime.timestamp(data_selezionata_formattata)
 
             #if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
             self.calendario.close()
@@ -77,15 +98,17 @@ class VistaInserisciMovimento(QWidget):
         return layout
 
     def aggiugni_movimento(self):
-        descrizione = self.info["Descrizione"].text()
-        importo = self.info["Importo"].text()
         data = self.data_selezionata()
+        causale = self.info["Causale"].text()
+        descrizione = str(self.radioButton.tipo)
+        importo = self.info["Importo"].text()
         if descrizione == "" or importo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.aggiungi_movimento(Movimento(data, descrizione, importo))
-
+            self.movimento = Movimento(data, causale, descrizione, importo)
+            self.controller.aggiungi_movimento(self.movimento)
+            self.movimento.isEntrata = self.tipo
             self.controller.save_data()
             self.callback()
-            #self.close()
+            self.close()

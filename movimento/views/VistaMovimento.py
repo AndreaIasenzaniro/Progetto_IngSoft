@@ -19,7 +19,7 @@ class VistaMovimento(QWidget):
         btn_elimina.clicked.connect(self.elimina_movimento_click)
 
         self.v_layout.addWidget(QLabel("Operazione del {}".format(self.controller.get_data_movimento())))
-        self.v_layout.addWidget(QLabel("Causale movimento {}".format(self.controller.get_descrizione_movimento())))
+        self.v_layout.addWidget(QLabel("Causale movimento {}".format(self.controller.get_causale_movimento())))
         self.v_layout.addWidget(QLabel("Importo moviemento {}".format(self.controller.get_importo_movimento())))
 
         self.setLayout(self.v_layout)

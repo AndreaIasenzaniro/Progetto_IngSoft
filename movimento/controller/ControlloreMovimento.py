@@ -6,7 +6,10 @@ class ControlloreMovimento():
         return self.model.id
 
     def get_data_movimento(self):
-        return self.model.data_movimento
+        return self.model.data
+
+    def get_causale_movimento(self):
+        return self.model.causale
 
     def get_descrizione_movimento(self):
         return self.model.descrizione
