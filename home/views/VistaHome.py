@@ -136,7 +136,7 @@ class VistaHome(QWidget):
         if self.combo_campo.currentIndex()!=0:
             VistaHome.selezione_campo = self.combo_campo.currentText()
             self.cal = Calendario()
-            #self.close()
+            self.close()
             return self.cal.show()
 
     def go_gestione_cassa(self):
