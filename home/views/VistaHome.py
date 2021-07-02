@@ -1,7 +1,7 @@
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QPixmap
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QSizePolicy, QComboBox, QGridLayout, \
-    QLabel, QSpacerItem, QHBoxLayout
+    QLabel, QSpacerItem, QHBoxLayout, QListView
 from PyQt5.QtCore import Qt
 
 from amministratore.model.Amministratore import Amministratore
@@ -17,8 +17,8 @@ class VistaHome(QWidget):
     def __init__(self, parent=None):
         super(VistaHome, self).__init__(parent)
 
-        #self.setFixedSize(800, 500)
-        self.move(350, 150)
+        self.setFixedSize(800, 500)
+        self.move(250, 100)
 
         from home.login.Login import Login
         self.controller = ControlloreDipendente(Login.accesso_utente)
@@ -122,13 +122,13 @@ class VistaHome(QWidget):
 
     # metodo che restituisce la lista dei clienti iscritti e registrati nella palestra
     def go_gestione_palestra(self):
-        self.close()
+        #self.close()
         self.vista_lista_clienti = VistaListaClienti()
         return self.vista_lista_clienti.show()
 
     # metodo che restituisce la lista dei dipendenti del centro sportivo
     def go_lista_dipendenti(self):
-        self.close()
+        #self.close()
         self.vista_lista_dipendenti = VistaListaDipendenti()
         return self.vista_lista_dipendenti.show()
 
@@ -136,7 +136,7 @@ class VistaHome(QWidget):
         if self.combo_campo.currentIndex()!=0:
             VistaHome.selezione_campo = self.combo_campo.currentText()
             self.cal = Calendario()
-            self.close()
+            #self.close()
             return self.cal.show()
 
     def go_gestione_cassa(self):
@@ -147,5 +147,5 @@ class VistaHome(QWidget):
     def funz_esci(self):
         from home.login.Login import Login
         self.vista_login = Login()
-        self.close()
+       # self.close()
         return self.vista_login.show()

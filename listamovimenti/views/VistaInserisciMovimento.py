@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout, QLabel, QLineEdit, \
-    QCalendarWidget, QRadioButton
+    QCalendarWidget, QRadioButton, QSpacerItem, QSizePolicy
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 
@@ -26,10 +26,10 @@ class VistaInserisciMovimento(QWidget):
         btn_data.clicked.connect(self.visualizza_calendario)
 
         self.v_layout.addLayout(self.get_label_line("Causale", "Causale", "Causale"))
-        self.v_layout.addLayout(self.get_label_line("Importo", "Importo", "importo"))
+        self.v_layout.addLayout(self.get_label_line("Importo", "Importo", "0000.00"))
         self.v_layout.addLayout(self.get_radio_button(['Incasso', 'Spesa']))
         self.v_layout.addWidget(btn_data)
-
+        self.v_layout.addItem(QSpacerItem(45, 45, QSizePolicy.Minimum, QSizePolicy.Minimum))
         self.v_layout.addWidget(btn_ok)
         self.v_layout.addWidget(btn_annulla)
 
@@ -98,17 +98,23 @@ class VistaInserisciMovimento(QWidget):
         return layout
 
     def aggiugni_movimento(self):
-        data = self.data_selezionata()
-        causale = self.info["Causale"].text()
-        descrizione = str(self.radioButton.tipo)
-        importo = self.info["Importo"].text()
-        if descrizione == "" or importo == "":
-            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
-                                 QMessageBox.Ok, QMessageBox.Ok)
-        else:
-            self.movimento = Movimento(data, causale, descrizione, importo)
-            self.controller.aggiungi_movimento(self.movimento)
-            self.movimento.isEntrata = self.tipo
-            self.controller.save_data()
-            self.callback()
-            self.close()
+        try:
+            data = self.data_selezionata()
+            causale = self.info["Causale"].text()
+            descrizione = str(self.radioButton.tipo)
+            importo = self.info["Importo"].text()
+            if descrizione == "" or importo == "":
+                QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+
+            else:
+                self.movimento = Movimento(data, causale, descrizione, importo)
+                self.controller.aggiungi_movimento(self.movimento)
+                self.movimento.isEntrata = self.tipo
+                self.controller.save_data()
+                self.callback()
+                self.close()
+                from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
+                VistaListaMovimenti.update()
+        except:
+            pass

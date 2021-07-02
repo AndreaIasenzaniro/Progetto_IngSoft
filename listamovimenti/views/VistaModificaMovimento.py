@@ -1,3 +1,5 @@
+from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit
+
 from movimento.controller.ControlloreMovimento import ControlloreMovimento
 
 
@@ -8,3 +10,23 @@ class VistaModificaMovimentoCassa():
         self.controller = controller
         self.callback = callback
         self.info = {}
+
+        btn_modifica = QPushButton("Modifica")
+        btn_modifica.clicked.connect(self.mod_movimento)
+
+        btn_annulla = QPushButton("Annulla")
+        btn_annulla.clicked.connect(self.close)
+
+        self.v_layout = QVBoxLayout()
+
+        self.v_layout.addLayout(self.get_label_line())
+
+    def get_label_line(self, tipo, campo, testo):
+        layout = QHBoxLayout()
+        layout.addWidget(QLabel(testo))
+        current_text_edit = QLineEdit(self)
+        current_text_edit.setText(campo)
+        layout.addWidget(current_text_edit)
+        self.info[tipo] = current_text_edit
+        return layout
+

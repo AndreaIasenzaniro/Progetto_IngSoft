@@ -4,10 +4,13 @@ import pickle
 
 class ListaMovimenti():
     def __init__(self):
+
         self.lista_movimenti = []
         if os.path.isfile('listamovimenti/data/lista_movimenti_salvata.pickle'):
             with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'rb') as f:
                 self.lista_movimenti = pickle.load(f)
+
+        self.get_saldo_cassa()
 
     def aggiungi_movimento(self, movimento):
         self.lista_movimenti.append(movimento)
@@ -38,7 +41,7 @@ class ListaMovimenti():
                 saldo += float(movimento.importo)
             else:
                 saldo -= float(movimento.importo)
-        return saldo
+        return round(saldo, 2)
 
     def save_data(self):
         with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'wb') as handle:

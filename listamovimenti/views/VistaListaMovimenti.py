@@ -1,7 +1,8 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QFont
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget, QLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget, QLabel, \
+    QSizePolicy, QHeaderView
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listamovimenti.views.VistaInserisciMovimento import VistaInserisciMovimento
@@ -13,13 +14,15 @@ class VistaListaMovimenti(QWidget):
     def __init__(self, parent = None):
         super(VistaListaMovimenti, self).__init__(parent)
 
+        self.setFixedSize(800, 500)
+        self.move(250, 100)
+
         self.controller = ControlloreListaMovimenti()
 
         self.v_layout = QVBoxLayout()
 
         self.create_table()
         self.list_view = self.tableWidget
-        #self.v_layout.addWidget(VistaInserisciMovimento(self.controller, self.update_nuovo))
         self.label_saldo = QLabel("Saldo attuale: {}".format(self.controller.saldo()))
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -35,8 +38,8 @@ class VistaListaMovimenti(QWidget):
 
         #self.update_ui()
 
-        btn_apri = QPushButton("Apri")
-        btn_apri.clicked.connect(self.show_movimento_selezionato_click)
+        '''btn_apri = QPushButton("Apri")
+        btn_apri.clicked.connect(self.show_movimento_selezionato_click)'''
 
         btn_modifica = QPushButton("Modifica")
         btn_modifica.clicked.connect(self.show_modifica_movimento_click)
@@ -46,7 +49,7 @@ class VistaListaMovimenti(QWidget):
 
         self.v_layout.addWidget(btn_nuovo)
         self.v_layout.addWidget(btn_modifica)
-        self.v_layout.addWidget(btn_apri)
+        #self.v_layout.addWidget(btn_apri)
 
         self.setLayout(self.v_layout)
 
@@ -71,17 +74,13 @@ class VistaListaMovimenti(QWidget):
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i = 0
         for movimento in self.controller.get_lista_movimenti():
-            if movimento.isEntrata:
-                # inserire colore verde cella importo movimento
-                pass
-            else:
-                # inserire colore rosso cella importo movimento
-                pass
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(movimento.data))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(movimento.causale))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(movimento.descrizione))
             self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
+        self.tableWidget.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def update_elimina(self):
         riga = self.selected
