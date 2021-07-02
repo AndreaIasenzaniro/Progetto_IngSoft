@@ -44,6 +44,7 @@ class Calendario(QWidget):
         self.vista_lista_prenotazioni = VistaListaPrenotazioni(data_da_usare)
         self.close()
         self.vista_lista_prenotazioni.show()
+        #chiudo calendario quando clicco sul giorno
         self.close()
 
     #questa funzione apre l'interfaccia per l'inserimento di una nuova prenotazione

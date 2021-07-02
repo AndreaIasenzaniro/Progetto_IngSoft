@@ -52,6 +52,7 @@ class VistaPrenotazione(QWidget):
         self.disdici_prenotazione(self.controller.get_id_prenotazione())
         self.elimina_callback()
         self.close()
+        #aggiornamento
         self.controllorePre.save_data()
 
         '''from calendario.Calendario import Calendario
