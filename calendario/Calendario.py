@@ -42,6 +42,7 @@ class Calendario(QWidget):
         data_selezionata = self.calendario.selectedDate()
         data_da_usare = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
         self.vista_lista_prenotazioni = VistaListaPrenotazioni(data_da_usare)
+        self.close()
         self.vista_lista_prenotazioni.show()
         self.close()
 
