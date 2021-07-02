@@ -114,7 +114,6 @@ class VistaListaMovimenti(QWidget):
             self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
-
     def update_modifica(self):
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i=0

@@ -102,19 +102,22 @@ class VistaInserisciMovimento(QWidget):
             data = self.data_selezionata()
             causale = self.info["Causale"].text()
             descrizione = str(self.radioButton.tipo)
-            importo = self.info["Importo"].text()
-            if descrizione == "" or importo == "":
+            if isinstance(float(self.info["Importo"].text()), float):
+                importo = self.info["Importo"].text()
+            else:
+                QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un importo valido',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+            if descrizione == "":
                 QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
                                      QMessageBox.Ok, QMessageBox.Ok)
-
             else:
                 self.movimento = Movimento(data, causale, descrizione, importo)
-                self.controller.aggiungi_movimento(self.movimento)
                 self.movimento.isEntrata = self.tipo
-                self.controller.save_data()
+                self.controller.aggiungi_movimento(self.movimento)
+                #self.controller.save_data()
                 self.callback()
                 self.close()
-                from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
-                VistaListaMovimenti.update()
+                #from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
+                #VistaListaMovimenti.update_nuovo()
         except:
             pass
