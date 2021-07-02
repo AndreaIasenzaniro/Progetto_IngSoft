@@ -43,6 +43,7 @@ class Calendario(QWidget):
         data_da_usare = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
         self.vista_lista_prenotazioni = VistaListaPrenotazioni(data_da_usare)
         self.vista_lista_prenotazioni.show()
+        self.close()
 
     #questa funzione apre l'interfaccia per l'inserimento di una nuova prenotazione
     def show_new_prenotazione(self):
