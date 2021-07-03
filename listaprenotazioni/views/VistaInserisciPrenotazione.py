@@ -113,13 +113,91 @@ class VistaInserisciPrenotazione(QWidget):
         else:
             numero_campo=""
         data = self.data_selezionata()
+        try:
+            data_formattata = datetime.strptime(data, '%d/%m/%Y')
+            data2_timestamp = datetime.timestamp(data_formattata)
+        except:
+            QMessageBox.critical(self, 'Errore', 'prinmo errore sulla data',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        today = datetime.today()
+        today_formattato = today.strftime("%d/%m/%Y")
+        today_formattato_per_unix= datetime.strptime(today_formattato,'%d/%m/%Y')
+        today_unix = datetime.timestamp(today_formattato_per_unix)
+
+        orario_today = str(today.hour) + ":" + str(today.minute)
 
         if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
         elif data == None:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci una data valida (stai inserendo o un giorno già '
                                                  'passato o una domenica quando il centro è chiuso.', QMessageBox.Ok,QMessageBox.Ok)
-        else:
+        elif data2_timestamp == today_unix:
+            if ora_inizio < orario_today:
+                QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+            else:
+                print("Nessun campo d'inserimento vuoto")
+                self.campo = Campo(tipo_campo, numero_campo)
+                print("Campo creato")
+                self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, data, ora_inizio)
+                print("Prenotazione creata")
+                if not self.c.get_lista_prenotazioni():
+                    print("La lista è vuota")
+                    self.campo.prenota()
+                    self.controller.aggiungi_prenotazione(self.prenotazione)
+                    self.aggiungi_movimento()
+                    self.callback()
+                    self.controller.save_data()
+                    self.close()
+                else:
+                    for prenotazione_esistente in self.c.get_lista_prenotazioni():
+                        print("Scorro la lista")
+                        if self.confronta(prenotazione_esistente.data, self.prenotazione.data):
+                            if self.confronta(prenotazione_esistente.campo.tipo, self.prenotazione.campo.tipo):
+                                if self.confronta(prenotazione_esistente.campo.numero, self.prenotazione.campo.numero):
+                                    if prenotazione_esistente.ora_inizio <= self.prenotazione.ora_inizio \
+                                            and self.prenotazione.ora_inizio < prenotazione_esistente.ora_fine:
+                                        print("Errore coincidenza ora inizio")
+                                        QMessageBox.critical(self, 'Errore',
+                                                             "Impossibile effettuare la prenotazione, poichè l'inizio dell'evento è compreso in un altro evento già prenotato",
+                                                             QMessageBox.Ok, QMessageBox.Ok)
+                                        break
+                                    elif self.prenotazione.ora_fine > prenotazione_esistente.ora_inizio \
+                                            and self.prenotazione.ora_fine < prenotazione_esistente.ora_fine:
+                                        print("Errore coincidenza ora fine")
+                                        QMessageBox.critical(self, 'Errore',
+                                                             "Impossibile effettuare la prenotazione, poichè la fine dell'evento è compreso in un altro evento già prenotato",
+                                                             QMessageBox.Ok, QMessageBox.Ok)
+                                        break
+                                    else:
+                                        if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
+                                            print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
+                                            self.crea_parametri()
+                                            print("Creato al passo 1")
+                                        else:
+                                            pass
+                                else:
+                                    if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
+                                        print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
+                                        self.crea_parametri()
+                                        print("Creato al passo 2")
+                                    else:
+                                        pass
+                            else:
+                                if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
+                                    print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
+                                    self.crea_parametri()
+                                    print("Creato al passo 3")
+                                else:
+                                    pass
+                        else:
+                            if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
+                                print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
+                                self.crea_parametri()
+                                print("Creato al passo 4")
+                            else:
+                                pass
+        elif data2_timestamp != today_unix:
             print("Nessun campo d'inserimento vuoto")
             self.campo=Campo(tipo_campo, numero_campo)
             print("Campo creato")
