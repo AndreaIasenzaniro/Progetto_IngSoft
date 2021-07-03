@@ -117,7 +117,7 @@ class VistaInserisciPrenotazione(QWidget):
             data_formattata = datetime.strptime(data, '%d/%m/%Y')
             data2_timestamp = datetime.timestamp(data_formattata)
         except:
-            QMessageBox.critical(self, 'Errore', 'prinmo errore sulla data',
+            QMessageBox.critical(self, 'Errore', 'Errore, hai inserito un giorno già passato o una domenica (la domenica il centro è chiuso',
                                  QMessageBox.Ok, QMessageBox.Ok)
         today = datetime.today()
         today_formattato = today.strftime("%d/%m/%Y")
@@ -128,12 +128,10 @@ class VistaInserisciPrenotazione(QWidget):
 
         if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
-        elif data == None:
-            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci una data valida (stai inserendo o un giorno già '
-                                                 'passato o una domenica quando il centro è chiuso.', QMessageBox.Ok,QMessageBox.Ok)
+
         elif data2_timestamp == today_unix:
             if ora_inizio < orario_today:
-                QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
+                QMessageBox.critical(self, 'Errore', 'Errore hai inserito la data di oggi con un orario già passato',
                                      QMessageBox.Ok, QMessageBox.Ok)
             else:
                 print("Nessun campo d'inserimento vuoto")
@@ -270,20 +268,17 @@ class VistaInserisciPrenotazione(QWidget):
         oggi_formattato_per_unix = datetime.strptime(oggi_formattato, '%d/%m/%Y')
         oggi_unix = datetime.timestamp(oggi_formattato_per_unix)
         print("Oggi: " + str(oggi_unix))
-        try:
-            data_selezionata = self.calendario.selectedDate()
-            data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
-            data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
-            data_timestamp = datetime.timestamp(data_selezionata_formattata)
-            print("Data selezionata: " + str(data_timestamp))
+        data_selezionata = self.calendario.selectedDate()
+        data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
+        data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
+        data_timestamp = datetime.timestamp(data_selezionata_formattata)
+        print("Data selezionata: " + str(data_timestamp))
 
-            if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
-                self.calendario.close()
-                return data
-            else:
-                return None
-        except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
+        if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
+            self.calendario.close()
+            return data
+        else:
+            return None
 
     def visualizza_calendario(self):
         self.window = QWidget()
