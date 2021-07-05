@@ -112,13 +112,16 @@ class VistaInserisciPrenotazione(QWidget):
             numero_campo=self.radiobuttons2.text()
         else:
             numero_campo=""
-        data = self.data_selezionata()
+
+        data_unix = self.data_selezionata()
+
+        '''
         try:
             data_formattata = datetime.strptime(data, '%d/%m/%Y')
             data2_timestamp = datetime.timestamp(data_formattata)
         except:
             QMessageBox.critical(self, 'Errore', 'Errore, hai inserito un giorno già passato o una domenica (la domenica il centro è chiuso',
-                                 QMessageBox.Ok, QMessageBox.Ok)
+                                 QMessageBox.Ok, QMessageBox.Ok)'''
         today = datetime.today()
         today_formattato = today.strftime("%d/%m/%Y")
         today_formattato_per_unix= datetime.strptime(today_formattato,'%d/%m/%Y')
@@ -126,10 +129,12 @@ class VistaInserisciPrenotazione(QWidget):
 
         orario_today = str(today.hour) + ":" + str(today.minute)
 
-        if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="":
+        if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="" or data_unix is None:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
-
-        elif data2_timestamp == today_unix:
+        elif data_unix=="Errore":
+            QMessageBox.critical(self, 'Errore', 'Hai inserito una data passata o una domenica',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        elif data_unix == today_unix:
             if ora_inizio < orario_today:
                 QMessageBox.critical(self, 'Errore', 'Errore hai inserito la data di oggi con un orario già passato',
                                      QMessageBox.Ok, QMessageBox.Ok)
@@ -137,7 +142,7 @@ class VistaInserisciPrenotazione(QWidget):
                 print("Nessun campo d'inserimento vuoto")
                 self.campo = Campo(tipo_campo, numero_campo)
                 print("Campo creato")
-                self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, data, ora_inizio)
+                self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.data, ora_inizio)
                 print("Prenotazione creata")
                 if not self.c.get_lista_prenotazioni():
                     print("La lista è vuota")
@@ -195,11 +200,11 @@ class VistaInserisciPrenotazione(QWidget):
                                 print("Creato al passo 4")
                             else:
                                 pass
-        elif data2_timestamp != today_unix:
+        elif data_unix != today_unix:
             print("Nessun campo d'inserimento vuoto")
             self.campo=Campo(tipo_campo, numero_campo)
             print("Campo creato")
-            self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, data, ora_inizio)
+            self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.data, ora_inizio)
             print("Prenotazione creata")
             if not self.c.get_lista_prenotazioni():
                 print("La lista è vuota")
@@ -268,17 +273,25 @@ class VistaInserisciPrenotazione(QWidget):
         oggi_formattato_per_unix = datetime.strptime(oggi_formattato, '%d/%m/%Y')
         oggi_unix = datetime.timestamp(oggi_formattato_per_unix)
         print("Oggi: " + str(oggi_unix))
-        data_selezionata = self.calendario.selectedDate()
-        data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
-        data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
-        data_timestamp = datetime.timestamp(data_selezionata_formattata)
-        print("Data selezionata: " + str(data_timestamp))
+        try:
+            data_selezionata = self.calendario.selectedDate()
+            self.data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
+            data_selezionata_formattata = datetime.strptime(self.data, '%d/%m/%Y')
+            data_timestamp = datetime.timestamp(data_selezionata_formattata)
+            print("Data selezionata: " + str(data_timestamp))
 
-        if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
-            self.calendario.close()
-            return data
-        else:
-            return None
+            if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
+                self.calendario.close()
+                return data_timestamp
+            elif data_timestamp is None:
+                return None
+            elif data_timestamp < oggi_unix:
+                return("Errore")
+
+        except:
+            pass
+
+
 
     def visualizza_calendario(self):
         self.window = QWidget()
