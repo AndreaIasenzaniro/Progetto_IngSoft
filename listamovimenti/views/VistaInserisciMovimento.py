@@ -21,7 +21,7 @@ class VistaInserisciMovimento(QWidget):
         btn_ok = QPushButton("Ok")
         btn_ok.clicked.connect(self.aggiugni_movimento)
         btn_annulla = QPushButton("Annulla")
-        btn_annulla.clicked.connect(self.close)
+        btn_annulla.clicked.connect(self.annulla)
         btn_data = QPushButton("Inserisci data")
         btn_data.clicked.connect(self.visualizza_calendario)
 
@@ -126,3 +126,9 @@ class VistaInserisciMovimento(QWidget):
                 #VistaListaMovimenti.update_nuovo()
         except:
             pass
+
+    def annulla(self):
+        from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
+        self.close()
+        self.vista_mov = VistaListaMovimenti()
+        return self.vista_mov.show()
