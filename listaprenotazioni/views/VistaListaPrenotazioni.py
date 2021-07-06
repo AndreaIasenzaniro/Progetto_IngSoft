@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 
 from listaprenotazioni.controller.ControlloreListaPrenotazioni import ControlloreListaPrenotazioni
 from listaprenotazioni.views.VistaInserisciPrenotazione import VistaInserisciPrenotazione
+from listaprenotazioni.views.VistaModificaPrenotazione import VistaModificaPrenotazione
 from prenotazione.views.VistaPrenotazione import VistaPrenotazione
 
 
@@ -24,6 +25,9 @@ class VistaListaPrenotazioni(QWidget):
         open_button = QPushButton('Apri')
         open_button.clicked.connect(self.show_selected_info)
         buttons_layout.addWidget(open_button)
+        edit_button = QPushButton('Modifica')
+        edit_button.clicked.connect(self.modifica)
+        buttons_layout.addWidget(edit_button)
         esc_button = QPushButton('Esci')
         esc_button.clicked.connect(self.funz_esci)
         buttons_layout.addWidget(esc_button)
@@ -33,34 +37,23 @@ class VistaListaPrenotazioni(QWidget):
         self.resize(600, 300)
         self.setWindowTitle('Lista Prenotazioni' + " " + self.data_selezionata)
         self.controller.save_data()
-    '''def update_ui(self):
-        self.listview_model = QStandardItemModel(self.list_view)
-        self.i=0
-        self.lista_selezionata = []
-        for prenotazione in self.controller.get_lista_prenotazioni():
-            from home.views.VistaHome import VistaHome
-            if prenotazione.campo.tipo == VistaHome.selezione_campo and prenotazione.data == self.data_selezionata:
-                self.lista_selezionata.append(prenotazione)
-            else:
-                pass
-            self.controller.ordina(self.lista_selezionata)
-        for prenotazione in self.lista_selezionata:
-            item = QStandardItem()
-            item.setText(prenotazione.data + " " + prenotazione.ora_inizio + " " + prenotazione.ora_fine + " " + prenotazione.cognome + " " + prenotazione.nome + " " + str(prenotazione.id))
-            item.setEditable(False)
-            if self.i%2:
-                item.setBackground(QBrush(Qt.lightGray))
-            font = item.font()
-            font.setPointSize(12)
-            item.setFont(font)
-            self.listview_model.appendRow(item)
-        self.list_view.setModel(self.listview_model)'''
+
     def show_selected_info(self):
         try:
             self.selected = self.list_view.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lista_selezionata[self.selected]
             self.vista_prenotazione = VistaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_elimina)
             self.vista_prenotazione.show()
+        except:
+            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
+
+
+    def modifica(self):
+        try:
+            self.selected = self.list_view.selectedIndexes()[0].row()
+            prenotazione_selezionata = self.lista_selezionata[self.selected]
+            self.modifica_prenotazione = VistaModificaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_elimina)
+            self.modifica_prenotazione.show()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
 
