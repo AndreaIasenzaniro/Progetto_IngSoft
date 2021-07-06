@@ -47,8 +47,12 @@ class VistaListaMovimenti(QWidget):
         btn_nuovo = QPushButton("Nuovo")
         btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
 
+        btn_esc = QPushButton("Esci")
+        btn_esc.clicked.connect(self.funz_esci)
+
         self.v_layout.addWidget(btn_nuovo)
         self.v_layout.addWidget(btn_modifica)
+        self.v_layout.addWidget(btn_esc)
         #self.v_layout.addWidget(btn_apri)
 
         self.setLayout(self.v_layout)
@@ -131,3 +135,9 @@ class VistaListaMovimenti(QWidget):
 
     def closeEvent(self, event):
         self.controller.save_data()
+
+    def funz_esci(self):
+        from home.views.VistaHome import VistaHome
+        self.close()
+        self.home = VistaHome()
+        return self.home.show()
