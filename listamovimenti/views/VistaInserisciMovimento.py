@@ -111,13 +111,18 @@ class VistaInserisciMovimento(QWidget):
                 QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
                                      QMessageBox.Ok, QMessageBox.Ok)
             else:
+                print("Creo movimento")
                 self.movimento = Movimento(data, causale, descrizione, importo)
                 self.movimento.isEntrata = self.tipo
                 self.controller.aggiungi_movimento(self.movimento)
-                #self.controller.save_data()
+                print("Aggiunto alla lista")
+                self.controller.save_data()
                 self.callback()
+                #self.close()
+                from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
                 self.close()
-                #from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
+                self.vista_mov = VistaListaMovimenti()
+                return self.vista_mov.show()
                 #VistaListaMovimenti.update_nuovo()
         except:
             pass

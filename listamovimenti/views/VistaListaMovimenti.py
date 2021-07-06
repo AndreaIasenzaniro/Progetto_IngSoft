@@ -101,6 +101,7 @@ class VistaListaMovimenti(QWidget):
                                  QMessageBox.Ok)
 
     def show_nuovo_movimento_click(self):
+        self.close()
         self.vista_inserisci_movimento = VistaInserisciMovimento(self.controller, self.update_nuovo)
         self.vista_inserisci_movimento.show()
         #self.v_layout.addWidget(self.vista_inserisci_movimento)
