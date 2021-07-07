@@ -35,7 +35,7 @@ class VistaListaPrenotazioni(QWidget):
         h_layout.addLayout(buttons_layout)
         self.setLayout(h_layout)
         self.resize(600, 300)
-        self.setWindowTitle('Lista Prenotazioni' + " " + self.data_selezionata)
+      #  self.setWindowTitle('Lista Prenotazioni' + " " + self.data_selezionata)
         self.controller.save_data()
 
     def show_selected_info(self):
@@ -44,15 +44,17 @@ class VistaListaPrenotazioni(QWidget):
             prenotazione_selezionata = self.lista_selezionata[self.selected]
             self.vista_prenotazione = VistaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_elimina)
             self.vista_prenotazione.show()
+            #print(prenotazione_selezionata.data)
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
 
 
     def modifica(self):
         try:
+            self.close()
             self.selected = self.list_view.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lista_selezionata[self.selected]
-            self.modifica_prenotazione = VistaModificaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_elimina)
+            self.modifica_prenotazione = VistaModificaPrenotazione(prenotazione_selezionata, self.controller, self.update_mod)
             self.modifica_prenotazione.show()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
@@ -114,3 +116,13 @@ class VistaListaPrenotazioni(QWidget):
         from calendario.Calendario import Calendario
         self.cal = Calendario()
         return self.cal.show()
+
+    def update_mod(self):
+        self.controller.ordina(self.controller.get_lista_prenotazioni())
+        # inserimento prenotazioni nella tableWidget
+        self.i = 0
+        for prenotazione in self.controller.get_lista_prenotazioni():
+            self.tableWidget.setItem(self.i, 0, QTableWidgetItem(prenotazione.cognome))
+            self.tableWidget.setItem(self.i, 1, QTableWidgetItem(prenotazione.nome))
+            self.tableWidget.setItem(self.i, 2, QTableWidgetItem(prenotazione.documento))
+            self.i += 1

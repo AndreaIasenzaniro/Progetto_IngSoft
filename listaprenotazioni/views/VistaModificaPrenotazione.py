@@ -3,6 +3,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSpacerItem, QSizePolicy, QPushButton, QLabel, QLineEdit, QMessageBox, \
     QComboBox, QHBoxLayout, QRadioButton, QCalendarWidget
 
+
 from campo.model.Campo import Campo
 from listaprenotazioni.controller.ControlloreListaPrenotazioni import ControlloreListaPrenotazioni
 from prenotazione.controller.ControllorePrenotazione import ControllorePrenotazione
@@ -13,7 +14,7 @@ class VistaModificaPrenotazione(QWidget):
     def __init__(self, prenotazione_selezionata, controller, callback):
         super(VistaModificaPrenotazione, self).__init__()
         self.p = prenotazione_selezionata
-        self.prenotazione = ControllorePrenotazione(prenotazione_selezionata)
+        self.prenotazione_sel = ControllorePrenotazione(prenotazione_selezionata)
         self.controller = controller
         self.callback = callback
         self.info = {}
@@ -24,10 +25,10 @@ class VistaModificaPrenotazione(QWidget):
 
         self.v_layout = QVBoxLayout()
 
-        self.get_form_entry(self.prenotazione.get_nome(),"Nome cliente")
-        self.get_form_entry(self.prenotazione.get_cognome(),"Cognome cliente")
-        self.get_form_entry(self.prenotazione.get_documento(),"Documento")
-        self.get_form_entry(self.prenotazione.get_campo_tipo(),"Tipo campo")
+        self.get_form_entry(self.prenotazione_sel.get_nome(),"Nome cliente")
+        self.get_form_entry(self.prenotazione_sel.get_cognome(),"Cognome cliente")
+        self.get_form_entry(self.prenotazione_sel.get_documento(),"Documento")
+        self.get_form_entry(self.prenotazione_sel.get_campo_tipo(),"Tipo campo")
 
 
         self.numero = QLabel("Numero Campo")
@@ -108,11 +109,20 @@ class VistaModificaPrenotazione(QWidget):
         else:
             numero_campo=""
 
-        data_unix = self.data_selezionata()
-        if data_unix is None:
-            data_form = datetime.strptime(self.prenotazione.data, '%d/%m/%Y')
-            data_times = datetime.timestamp(data_form)
-            data_unix = data_times
+
+
+        self.data_unix = self.data_selezionata()
+
+        if self.data_unix is None:
+            self.assegno_data = self.prenotazione_sel.get_data_prenotazione()
+            print(self.assegno_data + "ASSEGNO DATA")
+            self.data_form = datetime.strptime(self.assegno_data, '%d/%m/%Y')
+            self.data_times = datetime.timestamp(self.data_form)
+            self.data_unix = self.data_times
+            print(str(self.data_unix) + "DATA UNIX")
+        else:
+            self.assegno_data = self.data
+
 
 
         today = datetime.today()
@@ -122,12 +132,12 @@ class VistaModificaPrenotazione(QWidget):
 
         orario_today = str(today.hour) + ":" + str(today.minute)
 
-        if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="" or data_unix is None:
+        if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="" or self.data_unix is None:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
-        elif data_unix=="Errore":
+        elif self.data_unix=="Errore":
             QMessageBox.critical(self, 'Errore', 'Hai inserito una data passata o una domenica',
                                  QMessageBox.Ok, QMessageBox.Ok)
-        elif data_unix == today_unix:
+        elif self.data_unix == today_unix:
             if ora_inizio < orario_today:
                 QMessageBox.critical(self, 'Errore', 'Errore hai inserito la data di oggi con un orario già passato',
                                      QMessageBox.Ok, QMessageBox.Ok)
@@ -135,7 +145,7 @@ class VistaModificaPrenotazione(QWidget):
                 print("Nessun campo d'inserimento vuoto")
                 self.campo = Campo(tipo_campo, numero_campo)
                 print("Campo creato")
-                self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.data, ora_inizio)
+                self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.assegno_data, ora_inizio)
                 print("Prenotazione creata")
                 if not self.c.get_lista_prenotazioni():
                     print("La lista è vuota")
@@ -193,11 +203,11 @@ class VistaModificaPrenotazione(QWidget):
                                 print("Creato al passo 4")
                             else:
                                 pass
-        elif data_unix != today_unix:
+        elif self.data_unix != today_unix:
             print("Nessun campo d'inserimento vuoto")
             self.campo=Campo(tipo_campo, numero_campo)
             print("Campo creato")
-            self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.data, ora_inizio)
+            self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.assegno_data, ora_inizio)
             print("Prenotazione creata")
             if not self.c.get_lista_prenotazioni():
                 print("La lista è vuota")
@@ -302,10 +312,16 @@ class VistaModificaPrenotazione(QWidget):
 
     def crea_parametri(self):
         self.campo.prenota()
-        self.controller.aggiungi_prenotazione(self.prenotazione)
-        self.callback()
+        self.controller.rimuovi_dalla_lista(self.p)
         self.controller.save_data()
+        self.controller.aggiungi_prenotazione(self.prenotazione)
+        self.controller.save_data()
+        self.callback()
+        from calendario.Calendario import Calendario
         self.close()
+        self.controller.save_data()
+        self.mostra_calendario = Calendario()
+        return self.mostra_calendario.show()
 
     def confronta(self,prenotazione_esistente, nuova_prenotazione):
         if prenotazione_esistente == nuova_prenotazione:
