@@ -35,31 +35,43 @@ class VistaHome(QWidget):
         self.layout_admin.setSpacing(25)
         self.layout_dip.setSpacing(25)
 
-        #inserimento sfondo
+        ''''# inserimento sfondo
         image = QLabel(self)
-        #image.setGeometry(30, 30, 900, 900)
+        # image.setGeometry(30, 30, 900, 900)
         pixmap = QPixmap("home/views/foto.jpeg")
         image.setPixmap(pixmap)
         self.resize(pixmap.width(), pixmap.height())
         image.show()
-        #fisso la finestra alle dimensioni della foto
+        # fisso la finestra alle dimensioni della foto
         self.setFixedSize(pixmap.width(), pixmap.height())
-        #self.showMaximized()
+        # self.showMaximized()'''
 
-        if Login.autorizzazione_accesso=="Amministratore":
+        # inserimento sfondo
+        image = QLabel(self)
+        #image.setGeometry(0, 0, 800, 500)
+        pixmap = QPixmap("home/views/foto_home.png")
+        image.setPixmap(pixmap)
+        self.resize(pixmap.width(), pixmap.height())
+        image.show()
+        # fisso la finestra alle dimensioni della foto
+        # self.setFixedSize(pixmap.width(), pixmap.height())
+        # self.showMaximized()
+
+        if Login.autorizzazione_accesso == "Amministratore":
             self.setWindowTitle("Home - Amministratore")
             # VISTA HOME AMMINISTRATORE
-            #da il bentornato all'admin
-            #self.layout_admin.addWidget(QLabel("<font size = '5'> <b> Bentornato {} </b> </font>".format(self.admin.get_username())), 0, 0, 1, 2)
-            self.layout_admin.addWidget(QLabel("<font size = '6', color=Lime> <b><u> Bentornato nell'area amministratore! </b></u> </font>"), 0, 0)
-            self.layout_admin.addWidget(QLabel("<font size = '5', color=PowderBlue> <b> Selezionare l'attività da svolgere </b> </font>"),1, 0)
-            self.layout_admin.addWidget(QLabel("<font size = '4', color='PowderBlue'> <b> Area campi da gioco </b> </font>"), 2, 0)
+            # da il bentornato all'admin
+            # self.layout_admin.addWidget(QLabel("<font size = '5'> <b> Bentornato {} </b> </font>".format(self.admin.get_username())), 0, 0, 1, 2)
+            self.layout_admin.addWidget(
+                QLabel("<font size = '6'> <b><u> Bentornato nell'area amministratore! </b></u> </font>"), 0, 0)
+            self.layout_admin.addWidget(QLabel("<font size = '5'> <b> Selezionare l'attività da svolgere </b> </font>"),1, 0)
+            self.layout_admin.addWidget(QLabel("<font size = '4'> <b> Area campi da gioco </b> </font>"), 2, 0)
             self.layout_admin.addWidget(self.get_combo(self.lista_campi), 2, 1)
-            self.layout_admin.addWidget(QLabel("<font size = '4', color='PowderBlue'> <b> Area dipendenti </b> </font>"), 3, 0)
+            self.layout_admin.addWidget(QLabel("<font size = '4'> <b> Area dipendenti </b> </font>"), 3, 0)
             self.layout_admin.addWidget(self.pulsante_con_nome("Gestione dipendenti", self.go_lista_dipendenti), 3, 1)
-            self.layout_admin.addWidget(QLabel("<font size = '4', color='PowderBlue'> <b> Area palestra </b> </font>"), 4, 0)
+            self.layout_admin.addWidget(QLabel("<font size = '4'> <b> Area palestra </b> </font>"), 4, 0)
             self.layout_admin.addWidget(self.pulsante_con_nome("Gestione Palestra", self.go_gestione_palestra), 4, 1)
-            self.layout_admin.addWidget(QLabel("<font size = '4', color='PowderBlue'> <b> Area Gestione Cassa </b> </font>"), 5, 0)
+            self.layout_admin.addWidget(QLabel("<font size = '4'> <b> Area Gestione Cassa </b> </font>"), 5, 0)
             self.layout_admin.addWidget(self.pulsante_con_nome("Gestione movimenti cassa", self.go_gestione_cassa), 5, 1)
             self.layout_admin.addWidget(self.pulsante_con_nome("Esci", self.funz_esci), 6, 2)
             self.setLayout(self.layout_admin)
@@ -69,8 +81,8 @@ class VistaHome(QWidget):
             #self.layout_dip.addWidget(QLabel("<font size = '5'> <b> Bentornato {} </b> </font>".format(self.controller.get_nome_dipendente())))
             v_lay_dip_sx = QVBoxLayout()
             v_lay_dip_dx = QVBoxLayout()
-            v_lay_dip_sx.addWidget(QLabel("<font size = '6', color=Lime> <b><u> Bentornato nell'area dipendente! </b></u> </font>"))
-            v_lay_dip_sx.addWidget(QLabel("<font size = '5', color=Lime> <b> I tuoi dati: </b> </font>"))
+            v_lay_dip_sx.addWidget(QLabel("<font size = '6'> <b><u> Bentornato nell'area dipendente! </b></u> </font>"))
+            v_lay_dip_sx.addWidget(QLabel("<font size = '5'> <b> I tuoi dati: </b> </font>"))
             v_lay_dip_sx.addWidget(self.get_label_info("Nome", self.controller.get_nome_dipendente()))
             v_lay_dip_sx.addWidget(self.get_label_info("Cognome", self.controller.get_cognome_dipendente()))
             v_lay_dip_sx.addWidget(self.get_label_info("Nato a ", self.controller.get_luogo_dipendente()))
@@ -79,10 +91,10 @@ class VistaHome(QWidget):
             v_lay_dip_sx.addWidget(self.get_label_info("Telefono", self.controller.get_telefono_dipendente()))
             v_lay_dip_sx.addWidget(self.get_label_info("Email", self.controller.get_email_dipendente()))
             v_lay_dip_sx.addWidget(self.get_label_info("Abilitazione", self.controller.get_abilitazione_dipendente()))
-            v_lay_dip_dx.addWidget(QLabel("<font size = '5', color=PowderBlue> <b> Selezionare l'attività da svolgere </b> </font>"))
-            v_lay_dip_dx.addWidget(QLabel("<font size = '4', color=PowderBlue> <b> Area campi da gioco: </b> </font>"))
+            v_lay_dip_dx.addWidget(QLabel("<font size = '5> <b> Selezionare l'attività da svolgere </b> </font>"))
+            v_lay_dip_dx.addWidget(QLabel("<font size = '4'> <b> Area campi da gioco: </b> </font>"))
             v_lay_dip_dx.addWidget(self.get_combo(self.lista_campi))
-            v_lay_dip_dx.addWidget(QLabel("<font size = '4', color=PowderBlue> <b> Area palestra: </b> </font>"))
+            v_lay_dip_dx.addWidget(QLabel("<font size = '4'> <b> Area palestra: </b> </font>"))
             v_lay_dip_dx.addWidget(self.pulsante_con_nome("Gestione Palestra", self.go_gestione_palestra))
             v_lay_dip_dx.addWidget(self.pulsante_con_nome("Esci", self.funz_esci))
             self.layout_dip.addLayout(v_lay_dip_sx)
@@ -102,7 +114,7 @@ class VistaHome(QWidget):
         return self.combo_campo
 
     def get_label_info(self, testo, valore):
-        current_label = QLabel("<font color='PowderBlue'>{}: {}</font>".format('<b>{}</b>'.format(testo), valore))
+        current_label = QLabel("{}: {}".format('<b>{}</b>'.format(testo), valore))
         font_nome = current_label.font()
         current_label.setFont(font_nome)
         current_font = current_label.font()

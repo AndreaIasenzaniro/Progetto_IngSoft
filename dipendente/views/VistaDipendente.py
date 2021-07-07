@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpacerItem, QSizePolicy, QPushButton
 
 from dipendente.controller.ControlloreDipendente import ControlloreDipendente
@@ -14,6 +15,17 @@ class VistaDipendente(QWidget):
         v_layout = QVBoxLayout()
 
         label_name = QLabel(self.controller.get_nome_dipendente() +" "+ self.controller.get_cognome_dipendente())
+
+        # inserimento sfondo
+        image = QLabel(self)
+        image.setGeometry(0, 0, 500, 600)
+        pixmap = QPixmap("dipendente/views/dip.jpg")
+        image.setPixmap(pixmap)
+        self.resize(pixmap.width(), pixmap.height())
+        image.show()
+        # fisso la finestra alle dimensioni della foto
+        self.setFixedSize(500, 600)
+        # self.showMaximized()
 
         # creazione pulsante di elimina del cliente
         btn_elimina = QPushButton("Elimina")

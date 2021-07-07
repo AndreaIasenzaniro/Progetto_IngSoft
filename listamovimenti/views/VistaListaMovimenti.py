@@ -71,10 +71,13 @@ class VistaListaMovimenti(QWidget):
 
     def create_table(self):
         self.tableWidget = QTableWidget()
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
         self.tableWidget.setRowCount(len(self.controller.get_lista_movimenti()))
         self.tableWidget.setColumnCount(4)
         columns = ['Data operaizone', 'Causale', 'Descrizione', 'Importo']
         self.tableWidget.setHorizontalHeaderLabels(columns)
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i = 0
         for movimento in self.controller.get_lista_movimenti():
@@ -84,7 +87,7 @@ class VistaListaMovimenti(QWidget):
             self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        #self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def update_elimina(self):
         riga = self.selected
