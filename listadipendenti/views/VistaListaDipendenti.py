@@ -96,27 +96,31 @@ class VistaListaDipendenti(QWidget):
 
         # Row count
         self.tableWidget.setRowCount(len(self.controller.get_lista_dipendenti()))
-        rows = self.controller.get_lista_dipendenti()
+        #rows = self.controller.get_lista_dipendenti()
 
         # Column count
-        self.tableWidget.setColumnCount(5)
-        columns = ['Cognome', 'Nome', 'Codice fiscale', 'Abilitazione', 'Email']
+        self.tableWidget.setColumnCount(7)
+        columns = ['Cognome', 'Nome', 'Codice fiscale', 'Data di nascita', 'Luogo di nascita', 'Abilitazione', 'Email']
         self.tableWidget.setHorizontalHeaderLabels(columns)
         self.controller.ordina_dipendenti(self.controller.get_lista_dipendenti())
 
         # inserimento dipendenti nella tableWidget
         self.i = 0
         for dipendente in self.controller.get_lista_dipendenti():
+            #self.tableWidget.setItem(self.i, 0, QTableWidgetItem(dipendente.id))
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(dipendente.cognome))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(dipendente.nome))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(dipendente.cf))
-            self.tableWidget.setItem(self.i, 3, QTableWidgetItem(dipendente.abilitazione))
-            self.tableWidget.setItem(self.i, 4, QTableWidgetItem(dipendente.email))
+            self.tableWidget.setItem(self.i, 3, QTableWidgetItem(dipendente.datanascita))
+            self.tableWidget.setItem(self.i, 4, QTableWidgetItem(dipendente.luogonascita))
+            self.tableWidget.setItem(self.i, 5, QTableWidgetItem(dipendente.abilitazione))
+            self.tableWidget.setItem(self.i, 6, QTableWidgetItem(dipendente.email))
             self.i += 1
 
         # Table will fit the screen horizontally
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        #self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def update_elimina(self):
         riga = self.selected_elimina
@@ -134,8 +138,10 @@ class VistaListaDipendenti(QWidget):
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(dipendente.cognome))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(dipendente.nome))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(dipendente.cf))
-            self.tableWidget.setItem(self.i, 3, QTableWidgetItem(dipendente.abilitazione))
-            self.tableWidget.setItem(self.i, 4, QTableWidgetItem(dipendente.email))
+            self.tableWidget.setItem(self.i, 3, QTableWidgetItem(dipendente.datanascita))
+            self.tableWidget.setItem(self.i, 4, QTableWidgetItem(dipendente.luogonascita))
+            self.tableWidget.setItem(self.i, 5, QTableWidgetItem(dipendente.abilitazione))
+            self.tableWidget.setItem(self.i, 6, QTableWidgetItem(dipendente.email))
             self.i += 1
 
     def update_mod(self):
@@ -146,8 +152,10 @@ class VistaListaDipendenti(QWidget):
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(dipendente.cognome))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(dipendente.nome))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(dipendente.cf))
-            self.tableWidget.setItem(self.i, 3, QTableWidgetItem(dipendente.abilitazione))
-            self.tableWidget.setItem(self.i, 4, QTableWidgetItem(dipendente.email))
+            self.tableWidget.setItem(self.i, 3, QTableWidgetItem(dipendente.datanascita))
+            self.tableWidget.setItem(self.i, 4, QTableWidgetItem(dipendente.luogonascita))
+            self.tableWidget.setItem(self.i, 5, QTableWidgetItem(dipendente.abilitazione))
+            self.tableWidget.setItem(self.i, 6, QTableWidgetItem(dipendente.email))
             self.i += 1
 
     def closeEvent(self, event):

@@ -11,7 +11,7 @@ class VistaCliente(QWidget):
     def __init__(self, cliente, elimina_cliente, elimina_callback, parent=None):
         super(VistaCliente, self).__init__(parent)
 
-        #self.setFixedSize(750, 580)
+        self.setFixedSize(750, 580)
 
         self.controller = ControlloreCliente(cliente)
         self.elimina_cliente = elimina_cliente
@@ -23,6 +23,17 @@ class VistaCliente(QWidget):
         self.label_img.setPixmap(QPixmap('listaclienti/data/utente.png'))
         # titolo scheda profilo cliente
         self.setWindowTitle("Scheda cliente: " + self.controller.get_nome_cliente() + " " + self.controller.get_cognome_cliente())
+
+        # inserimento sfondo
+        image = QLabel(self)
+        #image.setGeometry(0, 0, 750, 580)
+        pixmap = QPixmap("cliente/views/palestra.png")
+        image.setPixmap(pixmap)
+        #image.resize(800, 700)
+        #self.resize(pixmap.width(), pixmap.height())
+        image.show()
+        # fisso la finestra alle dimensioni della foto
+        # self.showMaximized()
 
         # nome cliente visualizzato in grande
         label_nome = QLabel(self.controller.get_nome_cliente() + " " + self.controller.get_cognome_cliente())
