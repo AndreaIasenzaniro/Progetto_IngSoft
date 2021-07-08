@@ -10,5 +10,5 @@ class ControlloreCertificato():
     #restituisce la data di scadenza del certificato in una stringa
     def getScadenza(self):
         #print("TIMESTAMP: {}".format(self.model.scadenza))
-        dataScadenza = datetime.fromtimestamp(self.model.data_in_abb)
+        dataScadenza = datetime.fromtimestamp(self.model.scadenza)
         return "{}/{}/{}".format(dataScadenza.day, dataScadenza.month, dataScadenza.year)

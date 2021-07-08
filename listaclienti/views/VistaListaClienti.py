@@ -23,7 +23,7 @@ class VistaListaClienti(QWidget):
         #crea tabella
         self.createTable()
         #per non modificare self.list_view in table_view
-        self.list_view = self.tableWidget
+        #self.list_view = self.tableWidget
         self.h_layout.addWidget(self.tableWidget)
 
         buttons_layout = QVBoxLayout()
@@ -56,13 +56,13 @@ class VistaListaClienti(QWidget):
         self.setWindowTitle("Lista Clienti")
 
     def show_selected_info_click(self):
-        try:
-            self.selected = self.list_view.selectedIndexes()[0].row()
+        #try:
+            self.selected = self.tableWidget.selectedIndexes()[0].row()
             cliente_selezionato = self.controller.get_cliente_by_index(self.selected)
             self.vista_cliente = VistaCliente(cliente_selezionato, self.controller.elimina_cliente_by_id, self.update_elimina)
             self.vista_cliente.show()
-        except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un cliente da visualizzare.', QMessageBox.Ok, QMessageBox.Ok)
+        #except:
+            #QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un cliente da visualizzare.', QMessageBox.Ok, QMessageBox.Ok)
 
 
     def show_modifica_cliente_click(self):

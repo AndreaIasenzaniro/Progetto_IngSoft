@@ -76,7 +76,7 @@ class VistaCliente(QWidget):
         v_lay_inf.addWidget(VistaAbbonamento(self.controller.get_abbonamento_cliente(), self.controller.aggiungi_abbonamento_cliente))
         v_lay_inf.addItem(QSpacerItem(15, 15, QSizePolicy.Minimum, QSizePolicy.Minimum))
         #v_lay_inf.addWidget(QLabel("<b>CERTIFICATO MEDICO</b>"))
-        v_lay_inf.addWidget(VistaCertificato(self.controller.get_certificato_cliente(),self.controller.aggiungi_certificato_cliente))
+        v_lay_inf.addWidget(VistaCertificato(self.controller.get_certificato_cliente(), self.controller.aggiungi_certificato_cliente))
 
         # layout di visualizzazione per pulsanti
         h_lay_btn = QHBoxLayout()
