@@ -10,6 +10,10 @@ from listaprenotazioni.views.VistaListaPrenotazioni import VistaListaPrenotazion
 class Calendario(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
+
+        from home.views.VistaHome import VistaHome
+        self.setWindowTitle("Campo da {}".format(VistaHome().selezione_campo))
+
         self.setFixedSize(750, 450)
         self.Calendar()
         self.controller = ControlloreListaPrenotazioni()

@@ -13,7 +13,7 @@ class VistaInserisciCliente(QWidget):
         self.info = {}
 
         self.v_layout = QVBoxLayout()
-        self.setFixedSize(600, 350)
+        self.setFixedSize(630, 370)
 
         btn_ok = QPushButton("OK")
         btn_ok.clicked.connect(self.add_cliente)
@@ -60,6 +60,7 @@ class VistaInserisciCliente(QWidget):
         layout.addWidget(QLabel(label))
         current_text_edit = QLineEdit(self)
         current_text_edit.setPlaceholderText(placeholder)
+        current_text_edit.setGeometry(70,30,70,30)
         layout.addWidget(current_text_edit)
         self.info[tipo] = current_text_edit
         return layout

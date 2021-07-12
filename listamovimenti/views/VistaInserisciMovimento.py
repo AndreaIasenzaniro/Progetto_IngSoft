@@ -21,7 +21,7 @@ class VistaInserisciMovimento(QWidget):
         btn_ok = QPushButton("Ok")
         btn_ok.clicked.connect(self.aggiugni_movimento)
         btn_annulla = QPushButton("Annulla")
-        btn_annulla.clicked.connect(self.annulla)
+        btn_annulla.clicked.connect(self.close)
         btn_data = QPushButton("Inserisci data")
         btn_data.clicked.connect(self.visualizza_calendario)
 
@@ -53,7 +53,6 @@ class VistaInserisciMovimento(QWidget):
             if self.radioButton.tipo == "Spesa":
                 self.tipo = False
 
-
     def visualizza_calendario(self):
         self.window = QWidget()
         self.v1_layout = QVBoxLayout()
@@ -73,18 +72,11 @@ class VistaInserisciMovimento(QWidget):
         oggi_formattato = oggi.strftime("%d/%m/%Y")
         oggi_formattato_per_unix = datetime.strptime(oggi_formattato, '%d/%m/%Y')
         oggi_unix = datetime.timestamp(oggi_formattato_per_unix)
-        print("Oggi: " + str(oggi_unix))
         try:
             data_selezionata = self.calendario.selectedDate()
             data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
-            data_selezionata_formattata = datetime.strptime(data, '%d/%m/%Y')
-            #data_timestamp = datetime.timestamp(data_selezionata_formattata)
-
-            #if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
             self.calendario.close()
             return data
-            #else:
-                #return None
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
 
@@ -118,17 +110,8 @@ class VistaInserisciMovimento(QWidget):
                 print("Aggiunto alla lista")
                 self.controller.save_data()
                 self.callback()
-                #self.close()
-                from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
                 self.close()
-                self.vista_mov = VistaListaMovimenti()
-                return self.vista_mov.show()
-                #VistaListaMovimenti.update_nuovo()
+                from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
+                VistaListaMovimenti().update()
         except:
             pass
-
-    def annulla(self):
-        from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
-        self.close()
-        self.vista_mov = VistaListaMovimenti()
-        return self.vista_mov.show()
