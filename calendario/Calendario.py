@@ -9,7 +9,7 @@ class Calendario(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
 
-        self.setFixedSize(1250, 700)
+        self.showMaximized()
         self.Calendar()
         self.controller = ControlloreListaPrenotazioni()
         self.list_view = QListView()

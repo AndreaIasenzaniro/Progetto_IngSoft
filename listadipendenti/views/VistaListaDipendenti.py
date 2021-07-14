@@ -13,8 +13,7 @@ class VistaListaDipendenti(QWidget):
     def __init__(self, parent=None):
         super(VistaListaDipendenti, self).__init__(parent)
 
-        self.setFixedSize(1250, 700)
-        #self.move(250, 100)
+        self.showMaximized()
 
         self.controller = ControlloreListaDipendenti()
         #self.list_view = QListView()

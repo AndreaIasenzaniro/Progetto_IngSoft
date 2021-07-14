@@ -30,7 +30,7 @@ class VistaCliente(QWidget):
         v_lay_sup_sx = QVBoxLayout()
         v_lay_sup_dx = QVBoxLayout()
         v_lay_sup_sx.addWidget(self.label_img)
-        v_lay_sup_dx.addItem(QSpacerItem(65, 65, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        v_lay_sup_dx.addStretch()
         v_lay_sup_dx.addWidget(label_nome)
         v_lay_sup_dx.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Minimum))
         v_lay_sup_dx.addWidget(self.get_label_info("Stato", self.controller.get_stato_cliente()))

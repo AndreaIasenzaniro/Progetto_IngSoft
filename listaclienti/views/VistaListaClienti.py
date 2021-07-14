@@ -1,4 +1,4 @@
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QMouseEvent
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem, \
     QHeaderView, QLabel
 
@@ -13,7 +13,7 @@ class VistaListaClienti(QWidget):
     def __init__(self, parent=None):
         super(VistaListaClienti, self).__init__(parent)
 
-        self.setFixedSize(1250, 700)
+        self.showMaximized()
         self.controller = ControlloreListaClienti()
         self.h_layout = QHBoxLayout()
         self.profilo_cliente = QVBoxLayout()

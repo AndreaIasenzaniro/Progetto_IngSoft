@@ -13,7 +13,7 @@ class VistaListaMovimenti(QWidget):
     def __init__(self, parent = None):
         super(VistaListaMovimenti, self).__init__(parent)
 
-        self.setFixedSize(1250, 700)
+        self.showMaximized()
 
         self.controller = ControlloreListaMovimenti()
         self.h_layout = QHBoxLayout()
