@@ -103,7 +103,7 @@ class VistaAbbonamento(QWidget):
             #QMessageBox.critical(self, 'Errore', 'Inserisci la data nel formato richiesto: gg/mm/aaaa', QMessageBox.Ok, QMessageBox.Ok)
 
     def aggiungi_movimento(self):
-        self.movimento = Movimento(self.data_in_abb.text(), "Sottoscrizione abbonamento {}".format(self.tipo_abb),"Incasso", self.prezzo_abb)
+        self.movimento = Movimento(self.data_in_abb.text(), "Sottoscrizione abbonamento {}".format(self.tipo_abb),"Incasso", float(self.prezzo_abb))
         self.movimento.isEntrata = True
         print("Stiamo aggiungendo")
         self.controlloreMov.aggiungi_movimento(self.movimento)

@@ -11,6 +11,7 @@ class VistaListaPrenotazioni(QWidget):
         super(VistaListaPrenotazioni, self).__init__(parent)
         self.controller = ControlloreListaPrenotazioni()
         self.data_selezionata=data_selezionata
+        self.setWindowTitle("Prenotazioni del {}".format(data_selezionata))
         h_layout = QHBoxLayout()
         self.createTable()
         self.list_view = self.tableWidget

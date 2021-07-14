@@ -14,7 +14,8 @@ class VistaHome(QWidget):
     def __init__(self, parent=None):
         super(VistaHome, self).__init__(parent)
 
-        self.setFixedSize(1250, 700)
+        #self.setFixedSize(1250, 700)
+        self.showMaximized()
         from home.login.Login import Login
         self.controller = ControlloreDipendente(Login.accesso_utente)
         # layout a griglia per la pagina
@@ -30,7 +31,7 @@ class VistaHome(QWidget):
         image = QLabel(self)
         pixmap = QPixmap("home/views/centro.png")
         image.setPixmap(pixmap)
-        self.resize(pixmap.width(), pixmap.height())
+        #self.resize(pixmap.width(), pixmap.height())
         image.show()
         # costruttore condizionale
         if Login.autorizzazione_accesso == "Amministratore":

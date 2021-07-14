@@ -35,7 +35,7 @@ class VistaInserisciPrenotazione(QWidget):
         self.v_layout.addWidget(self.numero)
         self.radio()
 
-        print(QDate.currentDate())
+        #print(QDate.currentDate())
 
         self.data_label = QLabel("Data")
         self.v_layout.addWidget(self.data_label)
@@ -117,7 +117,7 @@ class VistaInserisciPrenotazione(QWidget):
             numero_campo=""
 
         data_unix = self.data_selezionata()
-
+        print("ddddddddddddddddddd {}".format(self.data_selezionata()))
         '''
         try:
             data_formattata = datetime.strptime(data, '%d/%m/%Y')
@@ -275,13 +275,13 @@ class VistaInserisciPrenotazione(QWidget):
         oggi_formattato = oggi.strftime("%d/%m/%Y")
         oggi_formattato_per_unix = datetime.strptime(oggi_formattato, '%d/%m/%Y')
         oggi_unix = datetime.timestamp(oggi_formattato_per_unix)
-        #print("Oggi: " + str(oggi_unix))
+        print("Oggi: " + str(oggi_unix))
         try:
             data_selezionata = self.calendario.selectedDate()
             self.data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
             data_selezionata_formattata = datetime.strptime(self.data, '%d/%m/%Y')
             data_timestamp = datetime.timestamp(data_selezionata_formattata)
-            #print("Data selezionata: " + str(data_timestamp))
+            print("Data selezionata: " + str(data_timestamp))
             if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
                 self.calendario.close()
                 return data_timestamp
@@ -325,7 +325,7 @@ class VistaInserisciPrenotazione(QWidget):
             return None
 
     def aggiungi_movimento(self):
-        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text() + " - ID prenotazione: " + str(self.prenotazione.id),"Incasso", float(self.prenotazione.prezzi_campi()))
+        self.movimento = Movimento(self.data, "Prenotazione campo da " + self.info["Tipo campo"].text() + " - ID prenotazione: " + str(self.prenotazione.id),"Incasso", float(self.prenotazione.prezzi_campi()))
         self.movimento.isEntrata = True
         print("Stiamo aggiungendo")
         self.controlloreMov.aggiungi_movimento(self.movimento)

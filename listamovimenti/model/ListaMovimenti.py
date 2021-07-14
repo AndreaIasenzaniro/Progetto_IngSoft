@@ -33,6 +33,7 @@ class ListaMovimenti():
     def movimento_ordinato(self, lista):
         lista.sort(key=lambda x: x.data, reverse=False)
 
+
     def get_movimento_by_index(self, index):
         return self.lista_movimenti[index]
 
