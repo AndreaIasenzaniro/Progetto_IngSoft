@@ -66,7 +66,7 @@ class Login(QWidget):
         # setting del layout della finestra
         self.setLayout(login_layout)
 
-    # funzione che esegue la verifica dell'utente ed il conseguente accesso all'area d competenza
+    # funzione che esegue la verifica dell'utente e l'accesso all'area di competenza
     def check_credenziali(self):
         msg = QMessageBox()
         i=0

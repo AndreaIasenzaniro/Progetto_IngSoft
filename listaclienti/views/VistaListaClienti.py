@@ -18,7 +18,7 @@ class VistaListaClienti(QWidget):
         self.h_layout = QHBoxLayout()
         self.profilo_cliente = QVBoxLayout()
         image = QLabel(self)
-        pixmap = QPixmap("cliente/views/palestra3.png")
+        pixmap = QPixmap("listaclienti/views/palestra.png")
         image.setPixmap(pixmap)
         image.show()
         #crea tabella
@@ -38,7 +38,7 @@ class VistaListaClienti(QWidget):
         btn_esci = QPushButton("Esci")
         btn_esci.setShortcut("Esc")
         btn_esci.setStyleSheet("background-color: #66cdaa; font-size: 13px; font-weight: bold;")
-        btn_esci.clicked.connect(self.funz_indietro)
+        btn_esci.clicked.connect(self.funz_esci)
 
         buttons_layout.addStretch()
         buttons_layout.addWidget(btn_nuovo)
@@ -101,11 +101,11 @@ class VistaListaClienti(QWidget):
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(cliente.cognome))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(cliente.nome))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(cliente.cf))
-            if cliente.getAbbonamento() is not None:
+            if cliente.get_abbonamento() is not None:
                 self.tableWidget.setItem(self.i, 3, QTableWidgetItem("In corso"))
             else:
                 self.tableWidget.setItem(self.i, 3, QTableWidgetItem("Scaduto"))
-            if cliente.getCertificato() is not None:
+            if cliente.get_certificato() is not None:
                 self.tableWidget.setItem(self.i, 4, QTableWidgetItem("In corso"))
             else:
                 self.tableWidget.setItem(self.i, 4, QTableWidgetItem("Scaduto"))
@@ -129,11 +129,11 @@ class VistaListaClienti(QWidget):
             self.tableWidget.setItem(self.i, 0, QTableWidgetItem(cliente.cognome))
             self.tableWidget.setItem(self.i, 1, QTableWidgetItem(cliente.nome))
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(cliente.cf))
-            if cliente.getAbbonamento() is not None:
+            if cliente.get_abbonamento() is not None:
                 self.tableWidget.setItem(self.i, 3, QTableWidgetItem("In corso"))
             else:
                 self.tableWidget.setItem(self.i, 3, QTableWidgetItem("Scaduto"))
-            if cliente.getCertificato() is not None:
+            if cliente.get_certificato() is not None:
                 self.tableWidget.setItem(self.i, 4, QTableWidgetItem("In corso"))
             else:
                 self.tableWidget.setItem(self.i, 4, QTableWidgetItem("Scaduto"))
@@ -149,10 +149,11 @@ class VistaListaClienti(QWidget):
             self.tableWidget.setItem(self.i, 2, QTableWidgetItem(cliente.cf))
             self.i += 1
 
-    def funz_indietro(self):
+    def funz_esci(self):
         from home.views.VistaHome import VistaHome
         self.vista_home = VistaHome()
         self.close()
+        VistaListaClienti.profilo_cliente = False
         return self.vista_home.show()
 
     def closeEvent(self, event):

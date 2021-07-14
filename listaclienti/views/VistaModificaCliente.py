@@ -87,7 +87,7 @@ class VistaModificaCliente(QWidget):
         else:
             cliente1 = Cliente((nome+cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza,  indirizzo, email, telefono)
             abbonamento=self.cliente.get_abbonamento_cliente()
-            cliente1.aggiungiAbbonamento(abbonamento)
+            cliente1.aggiungi_abbonamento(abbonamento)
             self.controller.rimuovi_dalla_lista(self.cl)
             self.controller.aggiungi_cliente(cliente1)
             self.callback()

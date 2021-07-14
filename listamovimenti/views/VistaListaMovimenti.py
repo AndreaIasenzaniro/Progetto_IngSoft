@@ -14,7 +14,6 @@ class VistaListaMovimenti(QWidget):
         super(VistaListaMovimenti, self).__init__(parent)
 
         self.setFixedSize(1250, 700)
-        #self.move(250, 100)
 
         self.controller = ControlloreListaMovimenti()
         self.h_layout = QHBoxLayout()
@@ -46,6 +45,7 @@ class VistaListaMovimenti(QWidget):
         btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
         btn_esci = QPushButton("Esci")
         btn_esci.setStyleSheet("background-color: #66cdaa; font-size: 13px; font-weight: bold;")
+        btn_esci.setShortcut("Esc")
         btn_esci.clicked.connect(self.funz_esci)
 
         self.v_lay_sx.addStretch()

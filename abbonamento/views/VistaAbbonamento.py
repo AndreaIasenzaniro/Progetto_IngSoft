@@ -42,7 +42,6 @@ class VistaAbbonamento(QWidget):
             v_lay_abbonamento.addWidget(QLabel("<b>Cliente non abbonato</b>"))
             v_lay_abbonamento.addLayout(h_lay_sup)
             v_lay_abbonamento.addLayout(h_lay_inf)
-
         self.setLayout(v_lay_abbonamento)
 
     def get_radio_button(self, tipo_abbonamento):

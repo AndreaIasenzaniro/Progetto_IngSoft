@@ -55,11 +55,12 @@ class Calendario(QWidget):
     def show_new_prenotazione(self):
         self.vista_inserisci_prenotazione = VistaInserisciPrenotazione(self.controller, self.update_ui)
         #self.vista_inserisci_prenotazione.show()
-        v_lay = QVBoxLayout()
+        self.v_lay = QHBoxLayout()
         if Calendario.vista_prenotazione == False:
-            v_lay.addWidget(self.vista_inserisci_prenotazione)
-            v_lay.addStretch()
-            self.h_layout.addLayout(v_lay)
+            #self.v_lay.addStretch()
+            self.v_lay.addWidget(self.vista_inserisci_prenotazione)
+            #self.v_lay.addStretch()
+            self.h_layout.addLayout(self.v_lay)
             Calendario.vista_prenotazione = True
         elif Calendario.vista_prenotazione == True:
             pass
@@ -72,4 +73,5 @@ class Calendario(QWidget):
         from home.views.VistaHome import VistaHome
         self.vista_home = VistaHome()
         self.close()
+        Calendario.vista_prenotazione = False
         return self.vista_home.show()

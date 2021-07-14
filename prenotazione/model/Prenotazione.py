@@ -41,11 +41,11 @@ class Prenotazione():
 
     def prezzi_campi(self):
         if self.campo.tipo == "Calcio":
-            prezzo = 80
+            prezzo = 80.00
             return prezzo
         elif self.campo.tipo == "Calcetto":
-            prezzo = 50
+            prezzo = 50.00
             return prezzo
         else:
-            prezzo = 40
+            prezzo = 40.00
             return prezzo

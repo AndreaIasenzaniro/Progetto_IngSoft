@@ -15,6 +15,8 @@ from prenotazione.model.Prenotazione import Prenotazione
 class VistaInserisciPrenotazione(QWidget):
     def __init__(self, controller, callback):
         super(VistaInserisciPrenotazione, self).__init__()
+
+        self.setFixedSize(300,500)
         
         self.controller = controller
         self.callback = callback
@@ -23,9 +25,8 @@ class VistaInserisciPrenotazione(QWidget):
         self.controlloreMov = ControlloreListaMovimenti()
 
         self.combo_ora = QComboBox()
-
         self.v_layout = QVBoxLayout()
-
+        self.v_layout.addStretch()
         self.get_form_entry("Nome cliente")
         self.get_form_entry("Cognome cliente")
         self.get_form_entry("Documento")
@@ -48,7 +49,7 @@ class VistaInserisciPrenotazione(QWidget):
                           "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",]
         self.get_combo(self.lista_ore)
 
-        self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        self.v_layout.addItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         btn_ok = QPushButton("OK")
         btn_ok.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
@@ -63,6 +64,7 @@ class VistaInserisciPrenotazione(QWidget):
         btn_annulla.setShortcut("Esc")
         btn_annulla.clicked.connect(self.funz_esci)
         self.v_layout.addWidget(btn_annulla)
+        self.v_layout.addStretch()
 
         self.setLayout(self.v_layout)
         self.setWindowTitle("Nuova Prenotazione")
@@ -100,6 +102,8 @@ class VistaInserisciPrenotazione(QWidget):
 
 
     def add_prenotazione(self):
+        from calendario.Calendario import Calendario
+        Calendario.vista_prenotazione = False
         nome = self.info["Nome cliente"].text()
         cognome = self.info["Cognome cliente"].text()
         documento = self.info["Documento"].text()
@@ -321,7 +325,7 @@ class VistaInserisciPrenotazione(QWidget):
             return None
 
     def aggiungi_movimento(self):
-        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text() + " - ID prenotazione: " + str(self.prenotazione.id),"Incasso", self.prenotazione.prezzi_campi())
+        self.movimento = Movimento(self.data_selezionata(), "Prenotazione campo da " + self.info["Tipo campo"].text() + " - ID prenotazione: " + str(self.prenotazione.id),"Incasso", float(self.prenotazione.prezzi_campi()))
         self.movimento.isEntrata = True
         print("Stiamo aggiungendo")
         self.controlloreMov.aggiungi_movimento(self.movimento)

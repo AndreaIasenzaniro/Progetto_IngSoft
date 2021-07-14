@@ -53,13 +53,10 @@ class VistaCliente(QWidget):
         h_lay_cent.addLayout(v_lay_cent_dx)
         # layout di visualizzazione inferiore
         v_lay_inf = QVBoxLayout()
-        v_lay_inf.addItem(QSpacerItem(15, 15, QSizePolicy.Minimum, QSizePolicy.Minimum))
-        #v_lay_inf.addWidget(QLabel("<b>ABBONAMENTO - INGRESSO</b>"))
+        v_lay_inf.addItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Minimum))
         v_lay_inf.addWidget(VistaAbbonamento(self.controller.get_abbonamento_cliente(), self.controller.aggiungi_abbonamento_cliente))
-        v_lay_inf.addItem(QSpacerItem(15, 15, QSizePolicy.Minimum, QSizePolicy.Minimum))
-        #v_lay_inf.addWidget(QLabel("<b>CERTIFICATO MEDICO</b>"))
+        v_lay_inf.addItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Minimum))
         v_lay_inf.addWidget(VistaCertificato(self.controller.get_certificato_cliente(), self.controller.aggiungi_certificato_cliente))
-
         # layout di visualizzazione per pulsanti
         h_lay_btn = QHBoxLayout()
         btn_chiudi = QPushButton("Chiudi")
@@ -94,6 +91,8 @@ class VistaCliente(QWidget):
         if reply == QMessageBox.Yes:
             self.elimina_cliente(self.controller.get_id_cliente())
             self.elimina_callback()
+            from listaclienti.views.VistaListaClienti import VistaListaClienti
+            VistaListaClienti.profilo_cliente = False
             self.close()
         else:
             pass

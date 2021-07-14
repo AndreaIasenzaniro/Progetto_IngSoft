@@ -1,10 +1,7 @@
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QVBoxLayout, QPushButton, QMessageBox, QTableWidget, \
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QTableWidget, \
     QTableWidgetItem, QHeaderView
-from PyQt5.QtCore import Qt
 
 from listaprenotazioni.controller.ControlloreListaPrenotazioni import ControlloreListaPrenotazioni
-from listaprenotazioni.views.VistaInserisciPrenotazione import VistaInserisciPrenotazione
 from listaprenotazioni.views.VistaModificaPrenotazione import VistaModificaPrenotazione
 from prenotazione.views.VistaPrenotazione import VistaPrenotazione
 
@@ -15,12 +12,9 @@ class VistaListaPrenotazioni(QWidget):
         self.controller = ControlloreListaPrenotazioni()
         self.data_selezionata=data_selezionata
         h_layout = QHBoxLayout()
-        #self.list_view = QListView()
         self.createTable()
         self.list_view = self.tableWidget
-        #self.update_ui()
         h_layout.addWidget(self.list_view)
-        #self.stampa_lista()
         buttons_layout = QVBoxLayout()
         open_button = QPushButton('Apri')
         open_button.clicked.connect(self.show_selected_info)
@@ -29,7 +23,7 @@ class VistaListaPrenotazioni(QWidget):
         edit_button.clicked.connect(self.modifica)
         buttons_layout.addWidget(edit_button)
         esc_button = QPushButton('Esci')
-        esc_button.clicked.connect(self.close)
+        esc_button.clicked.connect(self.funz_esci)
         buttons_layout.addWidget(esc_button)
         buttons_layout.addStretch()
         h_layout.addLayout(buttons_layout)
@@ -44,10 +38,8 @@ class VistaListaPrenotazioni(QWidget):
             prenotazione_selezionata = self.lista_selezionata[self.selected]
             self.vista_prenotazione = VistaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_elimina)
             self.vista_prenotazione.show()
-            #print(prenotazione_selezionata.data)
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
-
 
     def modifica(self):
         try:
@@ -114,8 +106,7 @@ class VistaListaPrenotazioni(QWidget):
     def funz_esci(self):
         self.close()
         from calendario.Calendario import Calendario
-        self.cal = Calendario()
-        return self.cal.show()
+        Calendario.vista_prenotazione = False
 
     def update_mod(self):
         self.controller.ordina(self.controller.get_lista_prenotazioni())

@@ -33,16 +33,16 @@ class ControlloreCliente():
         return self.model.residenza
 
     def get_abbonamento_cliente(self):
-        return self.model.getAbbonamento()
+        return self.model.get_abbonamento()
 
     def aggiungi_abbonamento_cliente(self, abbonamento):
-        self.model.aggiungiAbbonamento(abbonamento)
+        self.model.aggiungi_abbonamento(abbonamento)
 
     def get_certificato_cliente(self):
-        return self.model.getCertificato()
+        return self.model.get_certificato()
 
     def aggiungi_certificato_cliente(self, cliente):
-        self.model.aggiungiCertificato(cliente)
+        self.model.aggiungi_certificato(cliente)
 
     def get_stato_cliente(self):
         if self.get_abbonamento_cliente() == None:

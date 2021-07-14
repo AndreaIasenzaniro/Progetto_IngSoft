@@ -3,7 +3,6 @@ from datetime import datetime
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout, QLabel, QLineEdit, \
     QCalendarWidget, QRadioButton, QSpacerItem, QSizePolicy
 
-from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 
 from movimento.model.Movimento import Movimento
 
@@ -11,6 +10,8 @@ from movimento.model.Movimento import Movimento
 class VistaInserisciMovimento(QWidget):
     def __init__(self, controller, callback, parent = None):
         super(VistaInserisciMovimento, self).__init__(parent)
+
+        self.setFixedSize(350,300)
 
         self.controller = controller
         self.callback = callback
@@ -25,8 +26,8 @@ class VistaInserisciMovimento(QWidget):
         btn_data = QPushButton("Inserisci data")
         btn_data.clicked.connect(self.visualizza_calendario)
 
-        self.v_layout.addLayout(self.get_label_line("Causale", "Causale", "Causale"))
-        self.v_layout.addLayout(self.get_label_line("Importo", "Importo", "0000.00"))
+        self.v_layout.addLayout(self.get_label_line("<b>Causale</b>", "Causale", "Causale"))
+        self.v_layout.addLayout(self.get_label_line("<b>Importo<b/>", "Importo", "0000.00"))
         self.v_layout.addLayout(self.get_radio_button(['Incasso', 'Spesa']))
         self.v_layout.addWidget(btn_data)
         self.v_layout.addItem(QSpacerItem(45, 45, QSizePolicy.Minimum, QSizePolicy.Minimum))
@@ -37,7 +38,7 @@ class VistaInserisciMovimento(QWidget):
 
     def get_radio_button(self, lista):
         h_lay = QHBoxLayout()
-        h_lay.addWidget(QLabel("Tipo di movimento"))
+        h_lay.addWidget(QLabel("<b>Tipo di movimento<b/>"))
         for item in lista:
             self.radiobutton = QRadioButton(item)
             self.radiobutton.tipo = item

@@ -14,19 +14,19 @@ class Cliente():
         self.abbonamento = None
         self.certificato = None
 
-    def aggiungiAbbonamento(self, abbonamento):
+    def aggiungi_abbonamento(self, abbonamento):
         self.abbonamento = abbonamento
 
-    def getAbbonamento(self):
+    def get_abbonamento(self):
         if self.abbonamento is None:
             return None
         elif self.abbonamento.abb_in_corso():
                 return self.abbonamento
 
-    def aggiungiCertificato(self, certificato):
+    def aggiungi_certificato(self, certificato):
         self.certificato = certificato
 
-    def getCertificato(self):
+    def get_certificato(self):
         if self.certificato is None:
             return None
         elif self.certificato.inCorso():

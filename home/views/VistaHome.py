@@ -113,6 +113,7 @@ class VistaHome(QWidget):
         # pulsante.setStyleSheet("font-size: 24px")
         if titolo == 'Esci':
             pulsante.setStyleSheet("background-color: #66cdaa; font-size: 13px; font-weight: bold;")
+            pulsante.setShortcut("Esc")
         pulsante.clicked.connect(on_click)
         return pulsante
 
