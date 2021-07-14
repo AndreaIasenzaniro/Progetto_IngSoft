@@ -1,25 +1,25 @@
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCalendarWidget, QLabel, QListView, QPushButton, QTableWidget, \
-    QTableWidgetItem, QHeaderView
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCalendarWidget, QListView, QPushButton,QHBoxLayout
 
 from listaprenotazioni.controller.ControlloreListaPrenotazioni import ControlloreListaPrenotazioni
 from listaprenotazioni.views.VistaInserisciPrenotazione import VistaInserisciPrenotazione
 from listaprenotazioni.views.VistaListaPrenotazioni import VistaListaPrenotazioni
 
 class Calendario(QWidget):
+    vista_prenotazione = False
     def __init__(self, parent = None):
         super().__init__(parent)
 
-        from home.views.VistaHome import VistaHome
-        self.setWindowTitle("Campo da {}".format(VistaHome().selezione_campo))
-
-        self.setFixedSize(750, 450)
+        self.setFixedSize(1250, 700)
         self.Calendar()
         self.controller = ControlloreListaPrenotazioni()
         self.list_view = QListView()
         self.update_ui()
-        self.setLayout(self.vbox)
+        self.h_layout = QHBoxLayout()
+
+        from home.views.VistaHome import VistaHome
+        self.setWindowTitle("Campo da {}".format(VistaHome().selezione_campo))
+        self.h_layout.addLayout(self.vbox)
+        self.setLayout(self.h_layout)
         self.show()
 
     #funzione che crea il calendario concretamente
@@ -46,15 +46,23 @@ class Calendario(QWidget):
         data_selezionata = self.calendario.selectedDate()
         data_da_usare = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
         self.vista_lista_prenotazioni = VistaListaPrenotazioni(data_da_usare)
-        self.close()
+        #self.close()
         self.vista_lista_prenotazioni.show()
         #chiudo calendario quando clicco sul giorno
-        self.close()
+        #self.close()
 
     #questa funzione apre l'interfaccia per l'inserimento di una nuova prenotazione
     def show_new_prenotazione(self):
         self.vista_inserisci_prenotazione = VistaInserisciPrenotazione(self.controller, self.update_ui)
-        self.vista_inserisci_prenotazione.show()
+        #self.vista_inserisci_prenotazione.show()
+        v_lay = QVBoxLayout()
+        if Calendario.vista_prenotazione == False:
+            v_lay.addWidget(self.vista_inserisci_prenotazione)
+            v_lay.addStretch()
+            self.h_layout.addLayout(v_lay)
+            Calendario.vista_prenotazione = True
+        elif Calendario.vista_prenotazione == True:
+            pass
 
     def update_ui(self):
         pass

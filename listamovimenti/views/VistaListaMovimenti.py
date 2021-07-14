@@ -1,8 +1,7 @@
+from datetime import datetime
+
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QStandardItemModel, QFont
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget, QLabel, \
-    QSizePolicy, QHeaderView, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTableWidgetItem, QTableWidget, QLabel, QHeaderView, QHBoxLayout
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listamovimenti.views.VistaInserisciMovimento import VistaInserisciMovimento
@@ -14,10 +13,8 @@ class VistaListaMovimenti(QWidget):
     def __init__(self, parent = None):
         super(VistaListaMovimenti, self).__init__(parent)
 
-        self.update()
-
-        self.setFixedSize(800, 500)
-        self.move(250, 100)
+        self.setFixedSize(1250, 700)
+        #self.move(250, 100)
 
         self.controller = ControlloreListaMovimenti()
         self.h_layout = QHBoxLayout()
@@ -25,12 +22,13 @@ class VistaListaMovimenti(QWidget):
         self.v_lay_dx = QVBoxLayout()
         self.create_table()
         self.list_view = self.tableWidget
-        self.saldo = self.controller.get_saldo()
+        self.saldo = round(self.controller.get_saldo(),2)
 
-        self.label_saldo = QLabel("Saldo attuale: {}".format(self.saldo))
+        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.label_saldo = QLabel("Saldo al {}:  <b>€ {}".format(now, self.saldo))
         font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(True)
+        font.setPointSize(15)
+        #font.setBold(True)
         self.label_saldo.setFont(font)
         if self.controller.get_saldo() < 0.0:
             self.label_saldo.setStyleSheet('color: red')
@@ -38,20 +36,25 @@ class VistaListaMovimenti(QWidget):
             self.label_saldo.setStyleSheet('color: green')
 
         btn_elimina = QPushButton("Elimina")
+        btn_elimina.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_elimina.clicked.connect(self.elimina_movimento_click)
         btn_modifica = QPushButton("Modifica")
+        btn_modifica.setStyleSheet("background-color: #00bfff; font-size: 13px; font-weight: bold;")
         btn_modifica.clicked.connect(self.show_modifica_movimento_click)
         btn_nuovo = QPushButton("Nuovo")
+        btn_nuovo.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_nuovo.clicked.connect(self.show_nuovo_movimento_click)
-        btn_esc = QPushButton("Esci")
-        btn_esc.clicked.connect(self.funz_esci)
+        btn_esci = QPushButton("Esci")
+        btn_esci.setStyleSheet("background-color: #66cdaa; font-size: 13px; font-weight: bold;")
+        btn_esci.clicked.connect(self.funz_esci)
 
         self.v_lay_sx.addStretch()
         self.v_lay_sx.addWidget(btn_nuovo)
+        self.v_lay_sx.addStretch()
         self.v_lay_sx.addWidget(btn_modifica)
         self.v_lay_sx.addWidget(btn_elimina)
         self.v_lay_sx.addStretch()
-        self.v_lay_sx.addWidget(btn_esc)
+        self.v_lay_sx.addWidget(btn_esci)
 
         self.v_lay_dx.addWidget(self.label_saldo)
         self.v_lay_dx.addWidget(self.tableWidget)
@@ -73,20 +76,32 @@ class VistaListaMovimenti(QWidget):
                                  QMessageBox.Ok)
     # funzione pulsante elimina
     def elimina_movimento_click(self):
-        self.selected = self.list_view.selectedIndexes()[0].row()
-        movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
-        from movimento.controller.ControlloreMovimento import ControlloreMovimento
-        self.controller.elimina_movimento_by_id(ControlloreMovimento(movimento_selezionato).get_id_movimento())
-        row = self.selected
-        self.tableWidget.removeRow(row)
-        self.update()
+
+        try:
+            self.selected = self.list_view.selectedIndexes()[0].row()
+            movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
+            reply = QMessageBox.question(self, "Messaggio",
+                                         "Sicuro di voler eliminare il movimento selezionato? OPERAZIONE IRREVERSIBILE", QMessageBox.Yes |
+                                         QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                from movimento.controller.ControlloreMovimento import ControlloreMovimento
+                self.controller.elimina_movimento_by_id(ControlloreMovimento(movimento_selezionato).get_id_movimento())
+                row = self.selected
+                self.tableWidget.removeRow(row)
+                self.update()
+            else:
+                pass
+        except:
+            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
+                                 QMessageBox.Ok)
+
     #funzione pulsante apri
     def show_movimento_selezionato_click(self):
         try:
             self.selected = self.list_view.selectedIndexes()[0].row()
             movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
             self.vista_movimento = VistaMovimento(movimento_selezionato, self.controller.elimina_movimento_by_id, self.update_elimina)
-            self.vista_movimento.show()
+            #self.vista_movimento.show()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da visualizzare.', QMessageBox.Ok,
                                  QMessageBox.Ok)

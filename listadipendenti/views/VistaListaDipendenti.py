@@ -13,8 +13,8 @@ class VistaListaDipendenti(QWidget):
     def __init__(self, parent=None):
         super(VistaListaDipendenti, self).__init__(parent)
 
-        self.setFixedSize(800, 500)
-        self.move(250, 100)
+        self.setFixedSize(1250, 700)
+        #self.move(250, 100)
 
         self.controller = ControlloreListaDipendenti()
         #self.list_view = QListView()
@@ -28,34 +28,38 @@ class VistaListaDipendenti(QWidget):
         btn_layout = QVBoxLayout()
         # creazione pulsante di apertura del dipendente
         btn_apri = QPushButton("Apri")
-        btn_apri.setStyleSheet("background-color: ; font-size: 15px; font-weight: bold;")
+        btn_apri.setStyleSheet("background-color: #b0c4de; font-size: 13px; font-weight: bold;")
         btn_apri.clicked.connect(self.show_selected_info)
         # creazione pulsante modifica del dipendente
         btn_modifica = QPushButton("Modifica")
-        btn_modifica.setStyleSheet("background-color: ; font-size: 15px; font-weight: bold;")
+        btn_modifica.setStyleSheet("background-color: #00bfff; font-size: 13px; font-weight: bold;")
         btn_modifica.clicked.connect(self.modifica_dipendente)
         # creazione pulsante di aggiunta di un nuovo dipendente
         btn_nuovo = QPushButton("Nuovo")
-        btn_nuovo.setStyleSheet("background-color: ; font-size: 15px; font-weight: bold;")
+        btn_nuovo.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_nuovo.clicked.connect(self.show_new_dipendente)
         # creazione pulsante di chiusura della finestra
         btn_esci = QPushButton("Esci")
+        btn_esci.setStyleSheet("background-color: #66cdaa; font-size: 13px; font-weight: bold;")
         btn_esci.setShortcut("Esc")
         btn_esci.clicked.connect(self.funz_indietro)
 
         # aggiunta pulsanti al layout dei pulsanti
+        btn_layout.addStretch()
         btn_layout.addWidget(btn_nuovo)
-        btn_layout.addWidget(btn_modifica)
+        btn_layout.addStretch()
         btn_layout.addWidget(btn_apri)
+        btn_layout.addWidget(btn_modifica)
         btn_layout.addStretch()
         btn_layout.addWidget(btn_esci)
+
+        # aggiunta layout pulsanti al layout principale
+        h_layout.addLayout(btn_layout)
 
         # aggiunta visualizzazione della lista al layout
         #h_layout.addWidget(self.list_view)
         h_layout.addWidget(self.tableWidget)
-        # aggiunta layout pulsanti al layout principale
-        h_layout.addLayout(btn_layout)
-        btn_layout.addStretch()
+
 
         # setting del layout della finestra
         self.setLayout(h_layout)

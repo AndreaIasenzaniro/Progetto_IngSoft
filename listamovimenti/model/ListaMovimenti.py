@@ -10,13 +10,12 @@ class ListaMovimenti():
             with open('listamovimenti/data/lista_movimenti_salvata.pickle', 'rb') as f:
                 self.lista_movimenti = pickle.load(f)
 
-        self.saldo=0
+        self.saldo = float(0)
         for movimento in self.lista_movimenti:
             if movimento.isEntrata:
                 self.saldo += float(movimento.importo)
             else:
                 self.saldo -= float(movimento.importo)
-            round(self.saldo, 2)
 
     def aggiungi_movimento(self, movimento):
         self.lista_movimenti.append(movimento)

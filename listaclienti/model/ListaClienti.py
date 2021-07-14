@@ -10,7 +10,7 @@ class ListaClienti():
             with open('listaclienti/data/lista_clienti_salvata.pickle', 'rb') as f:
                 self.lista_clienti = pickle.load(f)
 
-    def aggiungiCliente(self, cliente):
+    def aggiungi_cliente(self, cliente):
         self.lista_clienti.append(cliente)
 
     def cliente_ordinato(self, lista):
@@ -29,9 +29,9 @@ class ListaClienti():
     def get_cliente_by_index(self, index):
         return self.lista_clienti[index]
 
-    def getListaClienti(self):
+    def get_lista_clienti(self):
         return self.lista_clienti
 
-    def saveData(self):
+    def save_data(self):
         with open('listaclienti/data/lista_clienti_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_clienti, handle, pickle.HIGHEST_PROTOCOL)

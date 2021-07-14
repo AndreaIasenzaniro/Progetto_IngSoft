@@ -29,7 +29,7 @@ class VistaListaPrenotazioni(QWidget):
         edit_button.clicked.connect(self.modifica)
         buttons_layout.addWidget(edit_button)
         esc_button = QPushButton('Esci')
-        esc_button.clicked.connect(self.funz_esci)
+        esc_button.clicked.connect(self.close)
         buttons_layout.addWidget(esc_button)
         buttons_layout.addStretch()
         h_layout.addLayout(buttons_layout)

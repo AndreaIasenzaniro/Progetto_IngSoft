@@ -39,13 +39,13 @@ class Login(QWidget):
         self.password.setPlaceholderText('Inserisci password')
         # creazione pulsante del login
         btn_login = QPushButton('Login')
-        #btn_login.setStyleSheet("background-color: #b0c4de; font-size: 20px; font-weight: bold;")
+        btn_login.setStyleSheet("background-color: #b0c4de; font-size: 15px; font-weight: bold;")
         self.impostaGrandezzaMassima(btn_login)
         btn_login.setShortcut("Return")
         btn_login.clicked.connect(self.check_credenziali)
         # creazione pulsante esci
         btn_esci = QPushButton('Esci')
-        #btn_esci.setStyleSheet("background-color: #b0c4de; font-size: 20px; font-weight: bold;")
+        btn_esci.setStyleSheet("background-color: #b0c4de; font-size: 15px; font-weight: bold;")
         btn_esci.setShortcut("Esc")
         self.impostaGrandezzaMassima(btn_esci)
         btn_esci.clicked.connect(self.close)
