@@ -13,17 +13,21 @@ class VistaInserisciCliente(QWidget):
         self.info = {}
 
         self.v_layout = QVBoxLayout()
-        self.setFixedSize(630, 370)
+        self.setFixedSize(650, 380)
 
         btn_ok = QPushButton("OK")
+        btn_ok.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+        btn_ok.setShortcut("Return")
         btn_ok.clicked.connect(self.add_cliente)
 
         btn_annulla = QPushButton("Annulla")
+        btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
+        btn_annulla.setShortcut("Esc")
         btn_annulla.clicked.connect(self.close)
 
         self.label_img = QLabel()
         self.label_img.setPixmap(QPixmap('listaclienti/data/utente.png'))
-
+        # layout superiore
         h_lay_sup = QHBoxLayout()
         v_lay_sup_sx = QVBoxLayout()
         v_lay_sup_dx = QVBoxLayout()
@@ -35,7 +39,7 @@ class VistaInserisciCliente(QWidget):
         v_lay_sup_dx.addWidget(self.label_img)
         h_lay_sup.addLayout(v_lay_sup_sx)
         h_lay_sup.addLayout(v_lay_sup_dx)
-
+        # layout inferiore
         h_lay_inf = QHBoxLayout()
         v_lay_inf_sx = QVBoxLayout()
         v_lay_inf_dx = QVBoxLayout()
@@ -60,7 +64,7 @@ class VistaInserisciCliente(QWidget):
 
     def get_label_line(self, label, tipo, placeholder):
         layout = QHBoxLayout()
-        layout.addWidget(QLabel(label))
+        layout.addWidget(QLabel("<b>{}</b>".format(label)))
         current_text_edit = QLineEdit(self)
         current_text_edit.setPlaceholderText(placeholder)
         current_text_edit.setGeometry(70,30,70,30)
