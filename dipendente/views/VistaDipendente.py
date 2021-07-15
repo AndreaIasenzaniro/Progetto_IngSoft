@@ -32,7 +32,6 @@ class VistaDipendente(QWidget):
         btn_elimina.setStyleSheet("background-color: #f08080; font-size: 15px; font-weight: bold;")
         btn_elimina.clicked.connect(self.elimina_dipendente_click)
 
-
         # aggiunta oggetti al layout
         v_layout.addWidget(label_name)
         v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))

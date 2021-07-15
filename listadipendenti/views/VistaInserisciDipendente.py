@@ -107,18 +107,20 @@ class VistaInserisciDipendente(QWidget):
     def add_dipendente(self):
         nome = self.info["Nome"].text()
         cognome = self.info["Cognome"].text()
-        datanascita = self.info["Data di nascita"].text()
-        luogonascita = self.info["Luogo di nascita"].text()
+        data_nascita = self.info["Data di nascita"].text()
+        luogo_nascita = self.info["Luogo di nascita"].text()
+        residenza = self.info["Residenza"].text()
+        indirizzo = self.info["Indirizzo"].text()
         cf = self.info["Codice Fiscale"].text()
         telefono = self.info["Telefono"].text()
         email = self.info["Email"].text()
         abilitazione = self.combo_abilitazione.currentText()
         password = self.info["Password"].text()
 
-        if nome == "" or cognome == "" or cf == "" or datanascita == "" or luogonascita == "" or cf == "" \
-                or telefono == "" or email == "" or abilitazione == "" or password == "":
+        if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita == "" or cf == "" \
+                or telefono == "" or email == "" or abilitazione == "" or password == "" or residenza == "" or indirizzo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.aggiungi_dipendente(Dipendente(nome, cognome, datanascita, luogonascita, cf, telefono, email, abilitazione, password))
+            self.controller.aggiungi_dipendente(Dipendente(nome, cognome, data_nascita, luogo_nascita, residenza, indirizzo, cf, telefono, email, abilitazione, password))
             self.callback()
             self.close()

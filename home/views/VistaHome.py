@@ -120,15 +120,16 @@ class VistaHome(QWidget):
 
     # metodo che restituisce la lista dei clienti iscritti e registrati nella palestra
     def go_gestione_palestra(self):
-        self.close()
         self.vista_lista_clienti = VistaListaClienti()
+        self.close()
         return self.vista_lista_clienti.show()
 
     # metodo che restituisce la lista dei dipendenti del centro sportivo
     def go_lista_dipendenti(self):
-        self.close()
         self.vista_lista_dipendenti = VistaListaDipendenti()
+        self.close()
         return self.vista_lista_dipendenti.show()
+
     # metodo che reindirizza alla finestra di gestione delle prenotazioni
     def go_gestione_campi(self):
         if self.combo_campo.currentIndex()!=0:
@@ -138,8 +139,8 @@ class VistaHome(QWidget):
             return self.cal.show()
     # metodo che reindirizza alla gestione della cassa
     def go_gestione_cassa(self):
-        self.close()
         self.vista_lista_movimenti = VistaListaMovimenti()
+        self.close()
         return self.vista_lista_movimenti.show()
 
     def funz_esci(self):

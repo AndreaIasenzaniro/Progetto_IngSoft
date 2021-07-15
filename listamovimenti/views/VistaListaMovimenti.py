@@ -76,12 +76,11 @@ class VistaListaMovimenti(QWidget):
                                  QMessageBox.Ok)
     # funzione pulsante elimina
     def elimina_movimento_click(self):
-
         try:
             self.selected = self.list_view.selectedIndexes()[0].row()
             movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
             reply = QMessageBox.question(self, "Messaggio",
-                                         "Sicuro di voler eliminare il movimento selezionato? OPERAZIONE IRREVERSIBILE", QMessageBox.Yes |
+                                         "Sicuro di voler eliminare il movimento selezionato? <p>OPERAZIONE IRREVERSIBILE", QMessageBox.Yes |
                                          QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
                 from movimento.controller.ControlloreMovimento import ControlloreMovimento
