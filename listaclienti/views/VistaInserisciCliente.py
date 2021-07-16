@@ -82,10 +82,13 @@ class VistaInserisciCliente(QWidget):
         indirizzo = self.info["Indirizzo"].text()
         email = self.info["Email"].text()
         telefono = self.info["Telefono"].text()
+
         if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita =="" or residenza =="" or \
                 indirizzo == "" or email == "" or telefono == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
-        else:
+        if telefono.isnumeric():
             self.controller.aggiungi_cliente(Cliente((nome + cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza, indirizzo, email, telefono))
             self.callback()
             self.close()
+        else:
+            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un formato numerico al recapito telefonico', QMessageBox.Ok, QMessageBox.Ok)

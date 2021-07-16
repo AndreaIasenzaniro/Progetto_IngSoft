@@ -24,6 +24,7 @@ class VistaModificaPrenotazione(QWidget):
         self.combo_ora = QComboBox()
 
         self.v_layout = QVBoxLayout()
+        self.setFixedSize(300, 500)
 
         self.get_form_entry(self.prenotazione_sel.get_nome(),"Nome cliente")
         self.get_form_entry(self.prenotazione_sel.get_cognome(),"Cognome cliente")
@@ -65,7 +66,7 @@ class VistaModificaPrenotazione(QWidget):
         self.v_layout.addWidget(btn_annulla)
 
         self.setLayout(self.v_layout)
-        self.setWindowTitle("Nuova Prenotazione")
+        self.setWindowTitle("Modifica Prenotazione")
 
     def get_form_entry(self, campo, tipo):
         self.v_layout.addWidget(QLabel(tipo))

@@ -17,6 +17,7 @@ class VistaListaPrenotazioni(QWidget):
         self.controlloreMov = ControlloreListaMovimenti()
         self.controllorePre = ControlloreListaPrenotazioni()
 
+        self.showMaximized()
         self.setWindowTitle("Prenotazioni del {}".format(data_selezionata))
         h_layout = QHBoxLayout()
         self.createTable()
@@ -39,7 +40,7 @@ class VistaListaPrenotazioni(QWidget):
         buttons_layout.addWidget(btn_esci)
         h_layout.addLayout(buttons_layout)
         self.setLayout(h_layout)
-        self.resize(1100, 600)
+        #self.resize(1100, 600)
         self.controller.save_data()
 
     def elimina_prenotazione_click(self):
@@ -80,7 +81,7 @@ class VistaListaPrenotazioni(QWidget):
 
     def modifica_prenotazione_click(self):
         try:
-            self.close()
+            #self.close()
             self.selected = self.list_view.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lista_selezionata[self.selected]
             self.modifica_prenotazione = VistaModificaPrenotazione(prenotazione_selezionata, self.controller, self.update_mod)
@@ -146,3 +147,5 @@ class VistaListaPrenotazioni(QWidget):
         self.close()
         from calendario.Calendario import Calendario
         Calendario.vista_prenotazione = False
+        self.cal = Calendario()
+        return self.cal.show()

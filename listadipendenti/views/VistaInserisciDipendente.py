@@ -118,9 +118,11 @@ class VistaInserisciDipendente(QWidget):
         password = self.info["Password"].text()
 
         if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita == "" or cf == "" \
-                or telefono == "" or email == "" or abilitazione == "" or password == "" or residenza == "" or indirizzo == "":
+            or telefono == "" or email == "" or abilitazione == "" or password == "" or residenza == "" or indirizzo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
-        else:
+        if telefono.isnumeric():
             self.controller.aggiungi_dipendente(Dipendente(nome, cognome, data_nascita, luogo_nascita, residenza, indirizzo, cf, telefono, email, abilitazione, password))
             self.callback()
             self.close()
+        else:
+            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un formato numerico al recapito telefonico', QMessageBox.Ok, QMessageBox.Ok)
