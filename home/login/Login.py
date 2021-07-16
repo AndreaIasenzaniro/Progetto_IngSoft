@@ -9,7 +9,7 @@ from listadipendenti.controller.ControlloreListaDipendenti import *
 
 class Login(QWidget):
     accesso_utente = None
-    autorizzazione = None
+    autorizzazione_accesso = None
     def __init__(self, parent = None):
         super(Login, self).__init__(parent)
 
@@ -71,7 +71,7 @@ class Login(QWidget):
         msg = QMessageBox()
         i=0
         if self.username.text() == Amministratore().get_username() and  self.password.text() == Amministratore().get_password():
-            Login.autorizzazione_accesso="Amministratore"
+            Login.autorizzazione_accesso = "Amministratore"
             self.close()
             self.vistahome = VistaHome()
             self.vistahome.show()
@@ -79,11 +79,11 @@ class Login(QWidget):
             for dipendente in self.controller.get_lista_dipendenti():
                 i += 1
                 if self.password.text() == dipendente.password and self.username.text() == dipendente.id:
-                    Login.autorizzazione_accesso = "Dipendente"
+                    if dipendente.abilitazione == "Personal Trainer":
+                        Login.autorizzazione_accesso = "Personal Trainer"
+                    if dipendente.abilitazione == "Collaboratore":
+                        Login.autorizzazione_accesso = "Collaboratore"
                     Login.accesso_utente = dipendente
-                    # msg.setWindowTitle("Login corretto")
-                    # msg.setText('Accesso effettuato correttamente. Buon lavoro!')
-                    # msg.exec_()
                     self.close()
                     self.vistahome = VistaHome()
                     self.vistahome.show()

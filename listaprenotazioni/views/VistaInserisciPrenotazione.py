@@ -160,7 +160,7 @@ class VistaInserisciPrenotazione(QWidget):
                     self.aggiungi_movimento()
                     self.callback()
                     self.controller.save_data()
-                    #self.close()
+                    self.close()
                 else:
                     for prenotazione_esistente in self.c.get_lista_prenotazioni():
                         print("Scorro la lista")
@@ -222,7 +222,7 @@ class VistaInserisciPrenotazione(QWidget):
                 self.aggiungi_movimento()
                 self.callback()
                 self.controller.save_data()
-                #self.close()
+                self.close()
             else:
                 for prenotazione_esistente in self.c.get_lista_prenotazioni():
                     print("Scorro la lista")

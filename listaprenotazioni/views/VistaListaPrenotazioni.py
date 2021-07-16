@@ -24,7 +24,7 @@ class VistaListaPrenotazioni(QWidget):
         h_layout.addWidget(self.list_view)
         buttons_layout = QVBoxLayout()
         buttons_layout.addStretch()
-        btn_disdici = QPushButton("Elimina")
+        btn_disdici = QPushButton("Disdici")
         btn_disdici.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_disdici.clicked.connect(self.elimina_prenotazione_click)
         buttons_layout.addWidget(btn_disdici)
@@ -48,7 +48,7 @@ class VistaListaPrenotazioni(QWidget):
             prenotazione_selezionata = self.lista_selezionata[self.selected]
             controller = ControllorePrenotazione(prenotazione_selezionata)
             reply = QMessageBox.question(self, "Messaggio",
-                                         "Sicuro di voler eliminare il dipendente selezionato? <p>OPERAZIONE IRREVERSIBILE",
+                                         "Sicuro di voler disdire la prenotazione? <p>OPERAZIONE IRREVERSIBILE",
                                          QMessageBox.Yes |
                                          QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
