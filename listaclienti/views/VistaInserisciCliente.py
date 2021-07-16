@@ -15,10 +15,10 @@ class VistaInserisciCliente(QWidget):
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 380)
 
-        btn_ok = QPushButton("OK")
-        btn_ok.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
-        btn_ok.setShortcut("Return")
-        btn_ok.clicked.connect(self.add_cliente)
+        btn_aggiungi = QPushButton("Aggiungi")
+        btn_aggiungi.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+        btn_aggiungi.setShortcut("Return")
+        btn_aggiungi.clicked.connect(self.add_cliente)
 
         btn_annulla = QPushButton("Annulla")
         btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
@@ -52,7 +52,7 @@ class VistaInserisciCliente(QWidget):
         v_lay_inf_sx.addStretch()
         v_lay_inf_sx.addWidget(btn_annulla)
         v_lay_inf_dx.addStretch()
-        v_lay_inf_dx.addWidget(btn_ok)
+        v_lay_inf_dx.addWidget(btn_aggiungi)
         h_lay_inf.addLayout(v_lay_inf_sx)
         h_lay_inf.addLayout(v_lay_inf_dx)
 

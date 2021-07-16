@@ -34,6 +34,7 @@ class VistaAbbonamento(QWidget):
             self.data_in_abb = QLineEdit()
             self.data_in_abb.setPlaceholderText("gg/mm/aaaa")
             btn_aggiungi = QPushButton("Aggiungi")
+            btn_aggiungi.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
             btn_aggiungi.setShortcut("Return")
             btn_aggiungi.clicked.connect(self.add_abbonamento_click)
             h_lay_inf.addWidget(QLabel("Inserire la data di inizio dell'abbonamento"))

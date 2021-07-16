@@ -31,13 +31,19 @@ class Calendario(QWidget):
         self.calendario.clicked.connect(self.data_selezionata)
         self.vbox.addWidget(self.calendario)
 
-        new_button = QPushButton("Aggiungi prenotazione")
-        new_button.clicked.connect(self.show_new_prenotazione)
-        self.vbox.addWidget(new_button)
+        btn_layout = QHBoxLayout()
 
-        btn_esc = QPushButton("Esci")
-        btn_esc.clicked.connect(self.funz_esci)
-        self.vbox.addWidget(btn_esc)
+        new_button = QPushButton("Aggiungi prenotazione")
+        new_button.setStyleSheet("background-color: #90ee90; font-size: 15px; font-weight: bold;")
+        new_button.clicked.connect(self.show_new_prenotazione)
+        btn_layout.addWidget(new_button)
+
+        btn_esci = QPushButton("Esci")
+        btn_esci.setStyleSheet("background-color: #66cdaa; font-size: 15px; font-weight: bold;")
+        btn_esci.clicked.connect(self.funz_esci)
+        btn_layout.addWidget(btn_esci)
+
+        self.vbox.addLayout(btn_layout)
 
     #questa funzione acquisisce e salva la data che andiamo a selezionare (clickare) sul calendario, la formatta in un
     #formato a noi comodo e la salva in un ulteriore variabile che andremo a passare nel costruttore VistaListaPrenotazioni

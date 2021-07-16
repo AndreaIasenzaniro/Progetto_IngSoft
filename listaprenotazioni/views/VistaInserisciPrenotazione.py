@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QDate
+from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSpacerItem, QSizePolicy, QPushButton, QLabel, QLineEdit, QMessageBox, \
     QComboBox, QCalendarWidget, QCheckBox, QHBoxLayout, QRadioButton
@@ -16,7 +16,7 @@ class VistaInserisciPrenotazione(QWidget):
     def __init__(self, controller, callback):
         super(VistaInserisciPrenotazione, self).__init__()
 
-        self.setFixedSize(300,500)
+        self.setFixedSize(300,600)
         
         self.controller = controller
         self.callback = callback
@@ -27,6 +27,13 @@ class VistaInserisciPrenotazione(QWidget):
         self.combo_ora = QComboBox()
         self.v_layout = QVBoxLayout()
         self.v_layout.addStretch()
+        lbl_titolo = QLabel("<b>Nuova prenotazione</b>")
+        font = lbl_titolo.font()
+        font.setPointSize(20)
+        lbl_titolo.setFont(font)
+        lbl_titolo.setAlignment(Qt.AlignCenter)
+        self.v_layout.addWidget(lbl_titolo)
+        self.v_layout.addStretch()
         self.get_form_entry("Nome cliente")
         self.get_form_entry("Cognome cliente")
         self.get_form_entry("Documento")
@@ -34,8 +41,6 @@ class VistaInserisciPrenotazione(QWidget):
         self.numero = QLabel("Numero Campo")
         self.v_layout.addWidget(self.numero)
         self.radio()
-
-        #print(QDate.currentDate())
 
         self.data_label = QLabel("Data")
         self.v_layout.addWidget(self.data_label)
@@ -55,7 +60,6 @@ class VistaInserisciPrenotazione(QWidget):
         btn_ok.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_ok.setShortcut("Return")
         btn_ok.clicked.connect(self.add_prenotazione)
-        #btn_ok.clicked.connect(self.aggiungi_movimento)
         self.v_layout.addWidget(btn_ok)
 
         # creazione pulsante di annullamento dell'inserimento
@@ -70,8 +74,11 @@ class VistaInserisciPrenotazione(QWidget):
         self.setWindowTitle("Nuova Prenotazione")
 
     def get_form_entry(self, tipo):
-        self.v_layout.addWidget(QLabel(tipo))
+        self.v_layout.addWidget(QLabel("<b>{}</b>".format(tipo)))
         current_text_edit = QLineEdit(self)
+        font = current_text_edit.font()
+        font.setPointSize(15)
+        current_text_edit.setFont(font)
         self.v_layout.addWidget(current_text_edit)
         if tipo =="Tipo campo":
             from home.views.VistaHome import VistaHome
@@ -99,7 +106,6 @@ class VistaInserisciPrenotazione(QWidget):
         self.h_layout.addWidget(self.radiobuttons2)
 
         self.v_layout.addLayout(self.h_layout)
-
 
     def add_prenotazione(self):
         from calendario.Calendario import Calendario
@@ -154,7 +160,7 @@ class VistaInserisciPrenotazione(QWidget):
                     self.aggiungi_movimento()
                     self.callback()
                     self.controller.save_data()
-                    self.close()
+                    #self.close()
                 else:
                     for prenotazione_esistente in self.c.get_lista_prenotazioni():
                         print("Scorro la lista")
@@ -216,7 +222,7 @@ class VistaInserisciPrenotazione(QWidget):
                 self.aggiungi_movimento()
                 self.callback()
                 self.controller.save_data()
-                self.close()
+                #self.close()
             else:
                 for prenotazione_esistente in self.c.get_lista_prenotazioni():
                     print("Scorro la lista")

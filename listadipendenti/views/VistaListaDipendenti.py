@@ -103,9 +103,8 @@ class VistaListaDipendenti(QWidget):
             self.tableWidget.setItem(self.i, 9, QTableWidgetItem(dipendente.telefono))
             self.tableWidget.setItem(self.i, 10, QTableWidgetItem(dipendente.email))
             self.i += 1
-
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def elimina_dipendente_click(self):
         try:

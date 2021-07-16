@@ -127,6 +127,7 @@ class VistaListaMovimenti(QWidget):
             self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def update_nuovo(self):
         m = len(self.controller.get_lista_movimenti())

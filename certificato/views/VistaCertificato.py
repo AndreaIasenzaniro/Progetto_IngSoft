@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox,QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QMessageBox,QHBoxLayout
 
 from certificato.controller.ControlloreCertificato import ControlloreCertificato
 from certificato.model.Certificato import Certificato
@@ -21,9 +21,10 @@ class VistaCertificato(QWidget):
             self.scadenza.setPlaceholderText("gg/mm/aaaa")
             h_lay_certificato.addWidget(self.scadenza)
             orizLayout = QHBoxLayout()
-            inserisci = QPushButton("Aggiungi")
-            inserisci.clicked.connect(self.aggiungi_certificato_click)
-            orizLayout.addWidget(inserisci)
+            btn_aggiungi = QPushButton("Aggiungi")
+            btn_aggiungi.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+            btn_aggiungi.clicked.connect(self.aggiungi_certificato_click)
+            orizLayout.addWidget(btn_aggiungi)
             '''annulla = QPushButton("Annulla")
             annulla.clicked.connect(self.close)
             orizLayout.addWidget(annulla)'''

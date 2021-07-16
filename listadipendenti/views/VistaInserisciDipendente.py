@@ -17,10 +17,10 @@ class VistaInserisciDipendente(QWidget):
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 470)
 
-        btn_ok = QPushButton("OK")
-        btn_ok.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
-        btn_ok.setShortcut("Return")
-        btn_ok.clicked.connect(self.add_dipendente)
+        btn_aggiugni = QPushButton("Aggiungi")
+        btn_aggiugni.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+        btn_aggiugni.setShortcut("Return")
+        btn_aggiugni.clicked.connect(self.add_dipendente)
         #self.v_layout.addWidget(btn_ok)
         # creazione pulsante di annullamento dell'inserimento
         btn_annulla = QPushButton("Annulla")
@@ -68,7 +68,7 @@ class VistaInserisciDipendente(QWidget):
         #h_lay_inf_btn.addStretch()
         h_lay_inf_btn.addWidget(btn_annulla)
         #h_lay_inf_btn.addStretch()
-        h_lay_inf_btn.addWidget(btn_ok)
+        h_lay_inf_btn.addWidget(btn_aggiugni)
         v_lay_inf.addLayout(h_lay_inf)
         v_lay_inf.addStretch()
         v_lay_inf.addLayout(h_lay_inf_btn)

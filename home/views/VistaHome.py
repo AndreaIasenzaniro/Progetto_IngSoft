@@ -137,6 +137,7 @@ class VistaHome(QWidget):
             self.cal = Calendario()
             self.close()
             return self.cal.show()
+
     # metodo che reindirizza alla gestione della cassa
     def go_gestione_cassa(self):
         self.vista_lista_movimenti = VistaListaMovimenti()

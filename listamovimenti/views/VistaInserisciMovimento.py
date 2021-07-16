@@ -19,9 +19,11 @@ class VistaInserisciMovimento(QWidget):
 
         self.v_layout = QVBoxLayout()
 
-        btn_ok = QPushButton("Ok")
-        btn_ok.clicked.connect(self.aggiugni_movimento)
+        btn_aggiungi = QPushButton("Aggiugngi")
+        btn_aggiungi.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+        btn_aggiungi.clicked.connect(self.aggiugni_movimento)
         btn_annulla = QPushButton("Annulla")
+        btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_annulla.clicked.connect(self.close)
         btn_data = QPushButton("Inserisci data")
         btn_data.clicked.connect(self.visualizza_calendario)
@@ -31,7 +33,7 @@ class VistaInserisciMovimento(QWidget):
         self.v_layout.addLayout(self.get_radio_button(['Incasso', 'Spesa']))
         self.v_layout.addWidget(btn_data)
         self.v_layout.addItem(QSpacerItem(45, 45, QSizePolicy.Minimum, QSizePolicy.Minimum))
-        self.v_layout.addWidget(btn_ok)
+        self.v_layout.addWidget(btn_aggiungi)
         self.v_layout.addWidget(btn_annulla)
 
         self.setLayout(self.v_layout)
