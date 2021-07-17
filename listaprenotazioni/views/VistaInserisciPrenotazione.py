@@ -44,6 +44,8 @@ class VistaInserisciPrenotazione(QWidget):
 
         self.data_label = QLabel("Data")
         self.v_layout.addWidget(self.data_label)
+        self.line_data = QLineEdit()
+        self.v_layout.addWidget(self.line_data)
         self.btn_data = QPushButton("Inserisci data")
         self.btn_data.clicked.connect(self.visualizza_calendario)
 
@@ -305,10 +307,16 @@ class VistaInserisciPrenotazione(QWidget):
         self.calendario.setGridVisible(True)
         self.v1_layout.addWidget(self.calendario)
         self.btn_conferma = QPushButton("Conferma")
-        self.btn_conferma.clicked.connect(self.window.close)
+        self.btn_conferma.clicked.connect(self.chiudi_calendario)
         self.v1_layout.addWidget(self.btn_conferma)
         self.window.setLayout(self.v1_layout)
         self.window.show()
+
+    def chiudi_calendario(self):
+        self.window.close()
+        data_selezionata = self.calendario.selectedDate()
+        self.data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
+        self.line_data.setText("{}".format(self.data))
 
     def crea_parametri(self):
         self.campo.prenota()
