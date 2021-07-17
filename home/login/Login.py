@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QLineEdit, QVBoxLayout, QMessageBox, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QLineEdit, QVBoxLayout, QMessageBox, QHBoxLayout, QCompleter
 from PyQt5.QtCore import Qt
 from qtwidgets import PasswordEdit
 
@@ -18,6 +18,11 @@ class Login(QWidget):
         self.controller = ControlloreListaDipendenti()
         self.setStyleSheet("background-color: Azure;")
 
+        self.lista_suggerimenti = []
+        for dipendente in self.controller.get_lista_dipendenti():
+            nome = dipendente.id
+            self.lista_suggerimenti.append(nome)
+
         # definisco un layout verticale per il login
         login_layout = QVBoxLayout()
         login_layout.setAlignment(Qt.AlignCenter)
@@ -28,6 +33,7 @@ class Login(QWidget):
         # creazione campi inserimento username
         labelUsername = QLabel('<font size = "5"> <b> Username </b> </font>')
         self.username = QLineEdit()
+        self.username.setCompleter(QCompleter(self.lista_suggerimenti))
         #self.username.setStyleSheet("background-color: #ffffff; font-size: 20px;")
         self.impostaGrandezzaMassima(self.username)
         self.username.setPlaceholderText('Inserisci username')
