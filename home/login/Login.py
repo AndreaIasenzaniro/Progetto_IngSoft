@@ -36,7 +36,7 @@ class Login(QWidget):
         self.username.setCompleter(QCompleter(self.lista_suggerimenti))
         #self.username.setStyleSheet("background-color: #ffffff; font-size: 20px;")
         self.impostaGrandezzaMassima(self.username)
-        self.username.setPlaceholderText('Inserisci username')
+        self.username.setPlaceholderText('Inserisci username - id')
         # creazione campi inserimento password
         labelPassword = QLabel('<font size = "5"> <b> Password </b> </font>')
         self.password = PasswordEdit()

@@ -35,6 +35,9 @@ class VistaListaClienti(QWidget):
         btn_nuovo = QPushButton("Nuovo")
         btn_nuovo.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_nuovo.clicked.connect(self.show_nuovo_cliente_click)
+        btn_elimina = QPushButton("Elimina")
+        btn_elimina.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
+        btn_elimina.clicked.connect(self.elimina_cliente_click)
         btn_esci = QPushButton("Esci")
         btn_esci.setShortcut("Esc")
         btn_esci.setStyleSheet("background-color: #66cdaa; font-size: 13px; font-weight: bold;")
@@ -45,6 +48,7 @@ class VistaListaClienti(QWidget):
         buttons_layout.addStretch()
         buttons_layout.addWidget(btn_apri)
         buttons_layout.addWidget(btn_modifica)
+        buttons_layout.addWidget(btn_elimina)
         buttons_layout.addStretch()
         buttons_layout.addWidget(btn_esci)
 
@@ -83,6 +87,27 @@ class VistaListaClienti(QWidget):
     def show_nuovo_cliente_click(self):
         self.vista_inserisci_cliente = VistaInserisciCliente(self.controller, self.update_nuovo)
         self.vista_inserisci_cliente.show()
+
+    def elimina_cliente_click(self):
+        try:
+            self.selected = self.list_view.selectedIndexes()[0].row()
+            cliente_selezionato = self.controller.get_cliente_by_index(self.selected)
+            reply = QMessageBox.question(self, "Messaggio",
+                                         "Sicuro di voler eliminare il dipendente selezionato? <p>OPERAZIONE IRREVERSIBILE",
+                                         QMessageBox.Yes |
+                                         QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                from cliente.controller.ControlloreCliente import ControlloreCliente
+                self.controller.elimina_cliente_by_id(ControlloreCliente(cliente_selezionato).get_id_cliente())
+                row = self.selected
+                self.tableWidget.removeRow(row)
+                self.update()
+            else:
+                pass
+        except:
+            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
+                                 QMessageBox.Ok)
+
 
     # tabella dei clienti
     def create_table(self):

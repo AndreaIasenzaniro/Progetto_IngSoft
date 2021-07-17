@@ -121,8 +121,16 @@ class VistaModificaDipendente(QWidget):
         if nome == "" or cognome == "" or data_nascita=="" or luogo_nascita==""  or cf == "" or telefono == "" or email == "" or abilitazione=="" or password=="":
              QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok,QMessageBox.Ok)
         else:
-            dipendente = Dipendente(nome, cognome, data_nascita, luogo_nascita, residenza, indirizzo, cf, telefono, email, abilitazione, password)
-            self.controller.rimuovi_dalla_lista(self.dp)
-            self.controller.aggiungi_dipendente(dipendente)
-            self.callback()
-            self.close()
+            if telefono.isnumeric() and len(telefono) == 10:
+                if len(cf) == 16:
+                    dipendente = Dipendente(nome, cognome, data_nascita, luogo_nascita, residenza, indirizzo, cf, telefono,
+                                            email, abilitazione, password)
+                    self.controller.rimuovi_dalla_lista(self.dp)
+                    self.controller.aggiungi_dipendente(dipendente)
+                    self.callback()
+                    self.close()
+                else:
+                    QMessageBox.critical(self, 'Errore', 'Per favore inserisci un codice fiscale di telefono valido, 16 valori',
+                                         QMessageBox.Ok, QMessageBox.Ok)
+            else:
+                QMessageBox.critical(self, 'Errore', 'Per favore inserisci un numero di telefono valido, 10 cifre', QMessageBox.Ok, QMessageBox.Ok)

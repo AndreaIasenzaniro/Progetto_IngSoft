@@ -86,9 +86,16 @@ class VistaInserisciCliente(QWidget):
         if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita =="" or residenza =="" or \
                 indirizzo == "" or email == "" or telefono == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
-        if telefono.isnumeric():
-            self.controller.aggiungi_cliente(Cliente((nome + cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza, indirizzo, email, telefono))
-            self.callback()
-            self.close()
         else:
-            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un formato numerico al recapito telefonico', QMessageBox.Ok, QMessageBox.Ok)
+            if telefono.isnumeric() and len(telefono) == 10:
+                if len(cf) == 16:
+                    self.controller.aggiungi_cliente(Cliente((nome + cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza, indirizzo, email, telefono))
+                    self.callback()
+                    self.close()
+                else:
+                    QMessageBox.critical(self, 'Errore',
+                                         'Per favore inserisci un codice fiscale di telefono valido, 16 valori',
+                                         QMessageBox.Ok, QMessageBox.Ok)
+            else:
+                QMessageBox.critical(self, 'Errore', 'Per favore inserisci un numero di telefono valido, 10 cifre',
+                                     QMessageBox.Ok, QMessageBox.Ok)

@@ -1,4 +1,4 @@
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QPixmap
+from PyQt5.QtGui import QPixmap, QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QSizePolicy, QComboBox, QGridLayout, QLabel, QSpacerItem, QHBoxLayout
 from PyQt5.QtCore import Qt
 
@@ -132,7 +132,7 @@ class VistaHome(QWidget):
             combo_model.appendRow(QStandardItem(campo))
         self.combo_campo.activated.connect(self.go_gestione_campi)
         self.combo_campo.setModel(combo_model)
-        #self.combo_campo.setStyleSheet("background-color: #b0c4de; font-size: 15px; font-weight: bold;")
+        self.combo_campo.setStyleSheet("background-color: #add8e6; font-size: 15px; font-weight: bold;")
         return self.combo_campo
 
     def get_label_info(self, testo, valore):
@@ -147,7 +147,7 @@ class VistaHome(QWidget):
     # metodo che definisce la costruzione di un bottone con il suo titolo
     def pulsante_con_nome(self, titolo, on_click):
         pulsante = QPushButton(titolo)
-        # pulsante.setStyleSheet("background-color: #b0c4de; font-size: 20px; font-weight: bold;")
+        pulsante.setStyleSheet("background-color: #add8e6; font-size: 15px; font-weight: bold;")
         # pulsante.setFixedWidth(500)
         # pulsante.setFixedHeight(40)
         # pulsante.setStyleSheet("font-size: 24px")

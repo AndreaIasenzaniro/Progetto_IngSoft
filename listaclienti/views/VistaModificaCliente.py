@@ -80,15 +80,25 @@ class VistaModificaCliente(QWidget):
         indirizzo = self.info["Indirizzo"].text()
         email = self.info["Email"].text()
         telefono = self.info["Telefono"].text()
-        if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita == "" or residenza == "" or \
+
+        if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita =="" or residenza =="" or \
                 indirizzo == "" or email == "" or telefono == "":
-            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste',
-                                 QMessageBox.Ok, QMessageBox.Ok)
+            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
         else:
-            cliente1 = Cliente((nome+cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza,  indirizzo, email, telefono)
-            abbonamento=self.cliente.get_abbonamento_cliente()
-            cliente1.aggiungi_abbonamento(abbonamento)
-            self.controller.rimuovi_dalla_lista(self.cl)
-            self.controller.aggiungi_cliente(cliente1)
-            self.callback()
-            self.close()
+            if telefono.isnumeric() and len(telefono) == 10:
+                if len(cf) == 16:
+                    cliente1 = Cliente((nome + cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza,
+                                       indirizzo, email, telefono)
+                    abbonamento = self.cliente.get_abbonamento_cliente()
+                    cliente1.aggiungi_abbonamento(abbonamento)
+                    self.controller.rimuovi_dalla_lista(self.cl)
+                    self.controller.aggiungi_cliente(cliente1)
+                    self.callback()
+                    self.close()
+                else:
+                    QMessageBox.critical(self, 'Errore',
+                                         'Per favore inserisci un codice fiscale di telefono valido, 16 valori',
+                                         QMessageBox.Ok, QMessageBox.Ok)
+            else:
+                QMessageBox.critical(self, 'Errore', 'Per favore inserisci un numero di telefono valido, 10 cifre',
+                                     QMessageBox.Ok, QMessageBox.Ok)
