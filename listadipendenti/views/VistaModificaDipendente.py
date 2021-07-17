@@ -19,10 +19,10 @@ class VistaModificaDipendente(QWidget):
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 470)
 
-        btn_ok = QPushButton("OK")
-        btn_ok.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
-        btn_ok.setShortcut("Return")
-        btn_ok.clicked.connect(self.mod_dipendente)
+        btn_modifica = QPushButton("Modifica")
+        btn_modifica.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+        btn_modifica.setShortcut("Return")
+        btn_modifica.clicked.connect(self.mod_dipendente)
         # pulsante di annullamento delle modifica
         btn_annulla = QPushButton("Annulla")
         btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
@@ -70,7 +70,7 @@ class VistaModificaDipendente(QWidget):
         # h_lay_inf_btn.addStretch()
         h_lay_inf_btn.addWidget(btn_annulla)
         # h_lay_inf_btn.addStretch()
-        h_lay_inf_btn.addWidget(btn_ok)
+        h_lay_inf_btn.addWidget(btn_modifica)
         v_lay_inf.addLayout(h_lay_inf)
         v_lay_inf.addStretch()
         v_lay_inf.addLayout(h_lay_inf_btn)

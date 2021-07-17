@@ -19,9 +19,11 @@ class VistaModificaCliente(QWidget):
         self.setFixedSize(630, 370)
 
         btn_modifica = QPushButton("Modifica")
+        btn_modifica.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_modifica.clicked.connect(self.mod_cliente)
 
         btn_annulla = QPushButton("Annulla")
+        btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_annulla.clicked.connect(self.close)
 
         self.label_img = QLabel()
