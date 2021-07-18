@@ -96,12 +96,13 @@ class Login(QWidget):
                     break
 
             if i == (len(self.controller.get_lista_dipendenti())) and (self.password.text() != dipendente.password or self.username.text() != dipendente.id):
-                msg.setWindowTitle("Login errato")
-                msg.setText('Password o Username errati. Riprova!')
-                msg.exec_()
-                # in caso di mancata autenticazione i campi di inserimento vengono resettati
-                self.password.setText("")
-                self.username.setText("")
+                if Login.autorizzazione_accesso == None:
+                    msg.setWindowTitle("Login errato")
+                    msg.setText('Password o Username errati. Riprova!')
+                    msg.exec_()
+                    # in caso di mancata autenticazione i campi di inserimento vengono resettati
+                    self.password.setText("")
+                    self.username.setText("")
 
     #imposta la grandezza massima di un "oggetto"
     def impostaGrandezzaMassima(self, oggetto):
