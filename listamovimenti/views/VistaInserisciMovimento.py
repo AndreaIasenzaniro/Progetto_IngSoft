@@ -117,4 +117,6 @@ class VistaInserisciMovimento(QWidget):
                 from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
                 VistaListaMovimenti().update()
         except:
-            pass
+            QMessageBox.critical(self, 'Errore',
+                                 'Per favore, inserisci tutte le informazioni richieste nel modo corretto',
+                                 QMessageBox.Ok, QMessageBox.Ok)

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTab
 
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listamovimenti.views.VistaInserisciMovimento import VistaInserisciMovimento
-from listamovimenti.views.VistaModificaMovimento import VistaModificaMovimentoCassa
+from listamovimenti.views.VistaModificaMovimento import VistaModificaMovimento
 from movimento.views.VistaMovimento import VistaMovimento
 
 
@@ -69,11 +69,11 @@ class VistaListaMovimenti(QWidget):
         try:
             selected = self.list_view.selectedIndexes()[0].row()
             movimento_selezionato = self.controller.get_movimento_by_index(selected)
-            self.vista_movimento_modifica = VistaModificaMovimentoCassa(movimento_selezionato, self.controller, self.update_modifica)
+            self.vista_movimento_modifica = VistaModificaMovimento(movimento_selezionato, self.controller, self.update_modifica)
             self.vista_movimento_modifica.show()
         except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da modificare.', QMessageBox.Ok,
-                                 QMessageBox.Ok)
+            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da modificare.', QMessageBox.Ok, QMessageBox.Ok)
+
     # funzione pulsante elimina
     def elimina_movimento_click(self):
         try:
