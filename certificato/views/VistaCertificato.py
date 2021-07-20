@@ -49,8 +49,9 @@ class VistaCertificato(QWidget):
             else:
                 messaggio = QMessageBox()
                 messaggio.setWindowTitle("Data errata.")
-                messaggio.setText("Inserisci una data valida, maggiore di quella aattuale.")
+                messaggio.setText("Inserisci una data valida, maggiore di quella attuale.")
                 messaggio.exec_()
                 self.scadenza.setText("")
         except:
             QMessageBox.critical(self, 'Errore', 'Inserisci la data nel formato richiesto: gg/mm/aaaa', QMessageBox.Ok, QMessageBox.Ok)
+            self.scadenza.setText("")

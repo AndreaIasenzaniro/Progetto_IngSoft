@@ -78,7 +78,7 @@ class VistaAbbonamento(QWidget):
                 self.mesi = 12
 
     def add_abbonamento_click(self):
-        #try:
+        try:
             date = datetime.strptime(self.data_in_abb.text(), '%d/%m/%Y')
             dateUnix = datetime.timestamp(date)
             oggi = datetime.today()
@@ -100,8 +100,9 @@ class VistaAbbonamento(QWidget):
                 messaggio.setText("La data inserita deve essere maggiore o uguale di quella attuale.")
                 messaggio.exec_()
                 self.data_in_abb.setText("")
-        #except:
-            #QMessageBox.critical(self, 'Errore', 'Inserisci la data nel formato richiesto: gg/mm/aaaa', QMessageBox.Ok, QMessageBox.Ok)
+        except:
+            QMessageBox.critical(self, 'Errore', 'Inserisci la data nel formato richiesto: gg/mm/aaaa', QMessageBox.Ok, QMessageBox.Ok)
+            self.data_in_abb.setText("")
 
     def aggiungi_movimento(self):
         self.movimento = Movimento(self.data_in_abb.text(), "Sottoscrizione abbonamento {}".format(self.tipo_abb),"Incasso", float(self.prezzo_abb))
