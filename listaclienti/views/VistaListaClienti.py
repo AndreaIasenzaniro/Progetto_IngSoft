@@ -1,4 +1,5 @@
-from PyQt5.QtGui import QPixmap
+from PyQt5 import QtGui
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem, \
     QHeaderView, QLabel
 
@@ -130,10 +131,14 @@ class VistaListaClienti(QWidget):
                 self.tableWidget.setItem(self.i, 3, QTableWidgetItem("In corso"))
             else:
                 self.tableWidget.setItem(self.i, 3, QTableWidgetItem("Scaduto"))
+                self.tableWidget.item(self.i, 3).setForeground(QtGui.QColor(255, 127, 127))
+
             if cliente.get_certificato() is not None:
                 self.tableWidget.setItem(self.i, 4, QTableWidgetItem("In corso"))
             else:
                 self.tableWidget.setItem(self.i, 4, QTableWidgetItem("Scaduto"))
+                self.tableWidget.item(self.i, 4).setForeground(QtGui.QColor(255, 127, 127))
+
             self.i += 1
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
