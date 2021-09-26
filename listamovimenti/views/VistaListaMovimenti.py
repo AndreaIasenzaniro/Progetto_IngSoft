@@ -72,6 +72,7 @@ class VistaListaMovimenti(QWidget):
             movimento_selezionato = self.controller.get_movimento_by_index(selected)
             self.vista_movimento_modifica = VistaModificaMovimento(movimento_selezionato, self.controller, self.update_modifica)
             self.vista_movimento_modifica.show()
+            self.close()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da modificare.', QMessageBox.Ok, QMessageBox.Ok)
 

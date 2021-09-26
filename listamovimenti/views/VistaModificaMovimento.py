@@ -26,7 +26,7 @@ class VistaModificaMovimento(QWidget):
         btn_annulla = QPushButton("Annulla")
         btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_annulla.setShortcut("Esc")
-        btn_annulla.clicked.connect(self.close)
+        btn_annulla.clicked.connect(self.annulla)
 
         btn_data = QPushButton("Inserisci data")
         btn_data.clicked.connect(self.visualizza_calendario)
@@ -98,6 +98,12 @@ class VistaModificaMovimento(QWidget):
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
 
+    def annulla(self):
+        self.close()
+        from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
+        self.vistaListaMovimenti=VistaListaMovimenti()
+        return self.vistaListaMovimenti.show()
+
     def mod_movimento(self):
         try:
             data = self.data_selezionata()
@@ -121,6 +127,8 @@ class VistaModificaMovimento(QWidget):
                 self.close()
                 from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
                 VistaListaMovimenti().update()
+                self.vistaListaMovimenti = VistaListaMovimenti()
+                return self.vistaListaMovimenti.show()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste nel modo corretto',
                                  QMessageBox.Ok, QMessageBox.Ok)
