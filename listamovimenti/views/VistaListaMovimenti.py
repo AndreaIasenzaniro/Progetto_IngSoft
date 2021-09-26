@@ -21,6 +21,7 @@ class VistaListaMovimenti(QWidget):
         self.v_lay_dx = QVBoxLayout()
         self.create_table()
         self.list_view = self.tableWidget
+        self.controller.save_data()
         self.saldo = round(self.controller.get_saldo(),2)
 
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -108,6 +109,7 @@ class VistaListaMovimenti(QWidget):
     def show_nuovo_movimento_click(self):
         self.vista_inserisci_movimento = VistaInserisciMovimento(self.controller, self.update_nuovo)
         self.vista_inserisci_movimento.show()
+        self.close()
 
     def create_table(self):
         self.tableWidget = QTableWidget()

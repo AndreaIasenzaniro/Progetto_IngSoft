@@ -17,8 +17,10 @@ class ListaMovimenti():
             else:
                 self.saldo -= float(movimento.importo)
 
+
     def aggiungi_movimento(self, movimento):
         self.lista_movimenti.append(movimento)
+
 
     def rimuovi_movimento(self, prenotazione):
         self.lista_movimenti.remove(prenotazione)
