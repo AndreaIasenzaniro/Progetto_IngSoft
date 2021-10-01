@@ -23,6 +23,7 @@ class VistaCertificato(QWidget):
             orizLayout = QHBoxLayout()
             btn_aggiungi = QPushButton("Aggiungi")
             btn_aggiungi.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
+            btn_aggiungi.setShortcut("Return")
             btn_aggiungi.clicked.connect(self.aggiungi_certificato_click)
             orizLayout.addWidget(btn_aggiungi)
             '''annulla = QPushButton("Annulla")
