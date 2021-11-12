@@ -33,8 +33,8 @@ class VistaModificaMovimento(QWidget):
 
         self.v_layout = QVBoxLayout()
 
-        self.v_layout.addLayout(self.get_label_line("<b>Causale</b>", "Causale", "Causale"))
-        self.v_layout.addLayout(self.get_label_line("<b>Importo<b/>", "Importo", "0000.00"))
+        self.v_layout.addLayout(self.get_label_line("<b>Causale</b>", "Causale", self.movimento.get_causale_movimento()))
+        self.v_layout.addLayout(self.get_label_line("<b>Importo<b/>", "Importo", self.movimento.get_importo_movimento()))
         self.v_layout.addLayout(self.get_radio_button(['Incasso', 'Spesa']))
         self.v_layout.addWidget(btn_data)
         self.v_layout.addItem(QSpacerItem(45, 45, QSizePolicy.Minimum, QSizePolicy.Minimum))
@@ -48,10 +48,11 @@ class VistaModificaMovimento(QWidget):
         layout = QHBoxLayout()
         layout.addWidget(QLabel(label))
         current_text_edit = QLineEdit(self)
-        current_text_edit.setPlaceholderText(placeholder)
+        current_text_edit.setText(placeholder)
         layout.addWidget(current_text_edit)
         self.info[tipo] = current_text_edit
         return layout
+
 
     def get_radio_button(self, lista):
         h_lay = QHBoxLayout()
