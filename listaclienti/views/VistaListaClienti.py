@@ -16,6 +16,7 @@ class VistaListaClienti(QWidget):
 
         self.showMaximized()
         self.controller = ControlloreListaClienti()
+
         self.h_layout = QHBoxLayout()
         self.profilo_cliente = QVBoxLayout()
         image = QLabel(self)
@@ -89,6 +90,7 @@ class VistaListaClienti(QWidget):
         self.vista_inserisci_cliente = VistaInserisciCliente(self.controller, self.update_nuovo)
         self.vista_inserisci_cliente.show()
 
+    # funzione di elimina del cliente selezionato
     def elimina_cliente_click(self):
         try:
             self.selected = self.list_view.selectedIndexes()[0].row()
@@ -99,16 +101,14 @@ class VistaListaClienti(QWidget):
                                          QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
                 from cliente.controller.ControlloreCliente import ControlloreCliente
+                # richiama funzione di elimina del controllore della lista
                 self.controller.elimina_cliente_by_id(ControlloreCliente(cliente_selezionato).get_id_cliente())
-                row = self.selected
-                self.tableWidget.removeRow(row)
-                self.update()
+                self.update_elimina()
             else:
                 pass
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
-
 
     # tabella dei clienti
     def create_table(self):

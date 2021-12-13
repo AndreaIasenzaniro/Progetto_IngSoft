@@ -13,8 +13,6 @@ class VistaAbbonamento(QWidget):
     def __init__(self, abbonamento, callbackInsericiAbbonamento):
         super(VistaAbbonamento, self).__init__()
 
-        #self.setFixedSize(350, 250)
-
         self.controller = ControlloreAbbonamento(abbonamento)
         self.controlloreMov = ControlloreListaMovimenti()
         self.callbackInserisciAbbonamento = callbackInsericiAbbonamento

@@ -32,18 +32,19 @@ class ControlloreCliente():
     def get_residenza_cliente(self):
         return self.model.residenza
 
-    def get_abbonamento_cliente(self):
-        return self.model.get_abbonamento()
-
+    # richiama aggiunta abbonamento model cliente
     def aggiungi_abbonamento_cliente(self, abbonamento):
         self.model.aggiungi_abbonamento(abbonamento)
-
-    def get_certificato_cliente(self):
-        return self.model.get_certificato()
-
+    # richiama get_abbonamento model cliente
+    def get_abbonamento_cliente(self):
+        return self.model.get_abbonamento()
+    # richiama aggiungi_certificato model cliente
     def aggiungi_certificato_cliente(self, cliente):
         self.model.aggiungi_certificato(cliente)
-
+    # richiama get_certificato model cliente
+    def get_certificato_cliente(self):
+        return self.model.get_certificato()
+    # controlla abbonamento e certificato di un cliente, se abbonato e senza certificati, allora indica l'abbonamento sospeso
     def get_stato_cliente(self):
         if self.get_abbonamento_cliente() == None:
             return "Cliente non abbonato"

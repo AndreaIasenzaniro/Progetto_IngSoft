@@ -67,7 +67,6 @@ class VistaCliente(QWidget):
         btn_elimina.clicked.connect(self.elimina_cliente_click)
         h_lay_btn.addWidget(btn_chiudi)
         h_lay_btn.addWidget(btn_elimina)
-
         # aggiunta layout minori a quello generale
         self.v_layout.addLayout(h_lay_sup)
         self.v_layout.addLayout(h_lay_cent)
@@ -83,7 +82,7 @@ class VistaCliente(QWidget):
         current_font.setPointSize(18)
         current_label.setFont(current_font)
         return current_label
-
+    # funzione pulsante elimina
     def elimina_cliente_click(self):
         reply = QMessageBox.question(self, "Messaggio",
                                      "Sicuro di voler eliminare il cliente? OPERAZIONE IRREVERSIBILE", QMessageBox.Yes |

@@ -10,8 +10,10 @@ class VistaInserisciCliente(QWidget):
         super(VistaInserisciCliente, self).__init__()
         self.controller = controller
         self.callback = callback
+        # dizionario vuoto
         self.info = {}
 
+        # layout di inserimento dei dati del cliente
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 380)
 
@@ -73,6 +75,7 @@ class VistaInserisciCliente(QWidget):
         return layout
 
     def add_cliente(self):
+        # popolo il dizionario con i valori inseriti
         nome = self.info["Nome"].text()
         cognome = self.info["Cognome"].text()
         cf = self.info["Codice Fiscale"].text()

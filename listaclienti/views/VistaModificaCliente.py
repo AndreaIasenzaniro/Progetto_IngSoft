@@ -13,8 +13,10 @@ class VistaModificaCliente(QWidget):
         self.cliente = ControlloreCliente(cliente_selezionato)
         self.controller = controller
         self.callback = callback
+        # dizionario vuoto
         self.info = {}
 
+        #layout di modifica dei dati del cliente
         self.v_layout = QVBoxLayout()
         self.setFixedSize(630, 370)
 
@@ -69,10 +71,12 @@ class VistaModificaCliente(QWidget):
         current_text_edit = QLineEdit(self)
         current_text_edit.setText(campo)
         layout.addWidget(current_text_edit)
+        # popolo il dizionario
         self.info[tipo] = current_text_edit
         return layout
 
     def mod_cliente(self):
+        # recupero i valori del dizionario
         nome = self.info["Nome"].text()
         cognome = self.info["Cognome"].text()
         cf = self.info["Codice Fiscale"].text()

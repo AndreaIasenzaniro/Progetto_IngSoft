@@ -13,19 +13,19 @@ class Cliente():
         self.residenza = residenza
         self.abbonamento = None
         self.certificato = None
-
+    # funzione che aggiunge abbonamento
     def aggiungi_abbonamento(self, abbonamento):
         self.abbonamento = abbonamento
-
+    # funzione che controlla scadenza dell'abboanemento
     def get_abbonamento(self):
         if self.abbonamento is None:
             return None
         elif self.abbonamento.abb_in_corso():
                 return self.abbonamento
-
+    # funzione che aggiunge certificato
     def aggiungi_certificato(self, certificato):
         self.certificato = certificato
-
+    # funzione che controlla la scadenza del certificato
     def get_certificato(self):
         if self.certificato is None:
             return None

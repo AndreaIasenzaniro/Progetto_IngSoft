@@ -6,6 +6,8 @@ class ControlloreListaClienti():
         super(ControlloreListaClienti, self).__init__()
         self.model = ListaClienti()
 
+    # richiamo funzioni del model
+
     def aggiungi_cliente(self, cliente):
         self.model.aggiungi_cliente(cliente)
 
