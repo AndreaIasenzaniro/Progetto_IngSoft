@@ -20,7 +20,6 @@ class VistaListaDipendenti(QWidget):
         pixmap = QPixmap("listadipendenti/views/dipendenti.png")
         image.setPixmap(pixmap)
         image.show()
-
         # definisco un layout orizzontale per la pagina
         h_layout = QHBoxLayout()
         # definisco un layout verticale per i pulsanti

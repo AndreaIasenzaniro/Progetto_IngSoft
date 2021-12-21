@@ -8,10 +8,10 @@ class VistaDipendente(QWidget):
     def __init__(self, dipendente, elimina_dipendente, elimina_callback, parent=None):
         super(VistaDipendente, self).__init__(parent)
 
+        # controllore del dipendente che passo con selezione
         self.controller = ControlloreDipendente(dipendente)
         self.elimina_dipendente = elimina_dipendente
         self.elimina_callback = elimina_callback
-
         v_layout = QVBoxLayout()
 
         label_name = QLabel(self.controller.get_nome_dipendente() +" "+ self.controller.get_cognome_dipendente())

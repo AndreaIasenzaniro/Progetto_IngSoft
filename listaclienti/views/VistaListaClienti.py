@@ -16,6 +16,8 @@ class VistaListaClienti(QWidget):
 
         self.showMaximized()
         self.controller = ControlloreListaClienti()
+        self.create_table()
+        self.list_view = self.tableWidget
 
         self.h_layout = QHBoxLayout()
         self.profilo_cliente = QVBoxLayout()
@@ -24,8 +26,6 @@ class VistaListaClienti(QWidget):
         image.setPixmap(pixmap)
         image.show()
         #crea tabella
-        self.create_table()
-        self.list_view = self.tableWidget
 
         buttons_layout = QVBoxLayout()
         btn_apri = QPushButton("Apri")

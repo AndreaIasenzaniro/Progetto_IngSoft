@@ -1,4 +1,5 @@
 class Cliente():
+
     def __init__(self, id, nome, cognome, cf, data_nascita, luogo_nascita, residenza,  indirizzo, email, telefono):
         super(Cliente, self).__init__()
         self.id = id
@@ -13,6 +14,7 @@ class Cliente():
         self.residenza = residenza
         self.abbonamento = None
         self.certificato = None
+
     # funzione che aggiunge abbonamento
     def aggiungi_abbonamento(self, abbonamento):
         self.abbonamento = abbonamento
@@ -22,6 +24,7 @@ class Cliente():
             return None
         elif self.abbonamento.abb_in_corso():
                 return self.abbonamento
+
     # funzione che aggiunge certificato
     def aggiungi_certificato(self, certificato):
         self.certificato = certificato

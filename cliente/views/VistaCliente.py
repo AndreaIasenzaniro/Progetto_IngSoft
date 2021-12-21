@@ -12,19 +12,23 @@ class VistaCliente(QWidget):
     def __init__(self, cliente, elimina_cliente, elimina_callback, parent=None):
         super(VistaCliente, self).__init__(parent)
 
+        # controllore del cliente che passo con selezione
         self.controller = ControlloreCliente(cliente)
         self.elimina_cliente = elimina_cliente
         self.elimina_callback = elimina_callback
         self.v_layout = QVBoxLayout()
+
         # immagine profilo cliente
         self.label_img = QLabel()
         self.label_img.setPixmap(QPixmap('listaclienti/data/utente.png'))
         self.setWindowTitle("Scheda cliente: " + self.controller.get_nome_cliente() + " " + self.controller.get_cognome_cliente())
+
         # nome cliente visualizzato in grande
         label_nome = QLabel(self.controller.get_nome_cliente() + " " + self.controller.get_cognome_cliente())
         font_nome = label_nome.font()
         font_nome.setPointSize(20)
         label_nome.setFont(font_nome)
+
         # layout di visualizzazione superiore
         h_lay_sup = QHBoxLayout()
         v_lay_sup_sx = QVBoxLayout()
@@ -72,6 +76,7 @@ class VistaCliente(QWidget):
         self.v_layout.addLayout(h_lay_cent)
         self.v_layout.addLayout(v_lay_inf)
         self.v_layout.addLayout(h_lay_btn)
+
         self.setLayout(self.v_layout)
 
     def get_label_info(self, testo, valore):
