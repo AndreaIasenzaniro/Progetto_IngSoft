@@ -9,16 +9,20 @@ from dipendente.model.Dipendente import Dipendente
 class VistaModificaDipendente(QWidget):
     def __init__(self, dipendente_selezionato, controller, callback):
         super(VistaModificaDipendente, self).__init__()
+
         self.dp = dipendente_selezionato
+        # passo alla classe il dipendente che seleziono per avere le sue informazioni
         self.dipendente = ControlloreDipendente(dipendente_selezionato)
         self.controller = controller
         self.callback = callback
         self.info = {}
         self.combo_abilitazione = QComboBox()
 
+        # layout di modifica dei dati del dipendente
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 470)
 
+        # pulsante di conferma della modifica
         btn_modifica = QPushButton("Modifica")
         btn_modifica.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_modifica.setShortcut("Return")
@@ -31,6 +35,7 @@ class VistaModificaDipendente(QWidget):
 
         self.label_img = QLabel()
         self.label_img.setPixmap(QPixmap('listadipendenti/data/utente.png'))
+
         # layout superiore
         h_lay_sup = QHBoxLayout()
         v_lay_sup_sx = QVBoxLayout()
@@ -67,9 +72,7 @@ class VistaModificaDipendente(QWidget):
         h_lay_inf.addWidget(self.password)
         self.info["Password"] = self.password
 
-        # h_lay_inf_btn.addStretch()
         h_lay_inf_btn.addWidget(btn_annulla)
-        # h_lay_inf_btn.addStretch()
         h_lay_inf_btn.addWidget(btn_modifica)
         v_lay_inf.addLayout(h_lay_inf)
         v_lay_inf.addStretch()
@@ -77,14 +80,14 @@ class VistaModificaDipendente(QWidget):
 
         self.v_layout.addLayout(h_lay_sup)
         self.v_layout.addLayout(self.get_combo(["Collaboratore", "Personal Trainer"]))
-        # self.get_combo(["Collaboratore", "Personal Trainer"])
+
         self.v_layout.addLayout(h_lay_cent)
         self.v_layout.addLayout(v_lay_inf)
 
         self.setLayout(self.v_layout)
         self.setWindowTitle("Modifica Dipendente")
 
-
+    # ritorna layout con i campi da moficiare con relative etichette
     def get_form_entry(self, campo, tipo):
         h_lay = QHBoxLayout()
         h_lay.addWidget(QLabel("<b>{}</b>".format(tipo)))
@@ -94,6 +97,7 @@ class VistaModificaDipendente(QWidget):
         self.info[tipo] = current_text_edit
         return h_lay
 
+    # ottengo i dati della combo per l'abilitazione
     def get_combo(self, lista):
         v_lay = QVBoxLayout()
         v_lay.addWidget(QLabel("<b>Abilitazione</b>"))
@@ -102,11 +106,13 @@ class VistaModificaDipendente(QWidget):
         for item in lista:
             combo_model.appendRow(QStandardItem(item))
         self.combo_abilitazione.setModel(combo_model)
+        # setto il valore della combo con l'abilitazione attuale del dipendente
         self.combo_abilitazione.setCurrentText(self.dipendente.get_abilitazione_dipendente())
         v_lay.addWidget(self.combo_abilitazione)
         return v_lay
 
     def mod_dipendente(self):
+        # recupero i valori del dizionario
         nome = self.info["Nome"].text()
         cognome = self.info["Cognome"].text()
         data_nascita = self.info["Data di nascita"].text()
@@ -118,6 +124,7 @@ class VistaModificaDipendente(QWidget):
         email = self.info["Email"].text()
         abilitazione = self.combo_abilitazione.currentText()
         password = self.info["Password"].text()
+        # effettuo i controlli per i dati immessi come per l'inserimento di un nuovo cliente
         if nome == "" or cognome == "" or data_nascita=="" or luogo_nascita==""  or cf == "" or telefono == "" or email == "" or abilitazione=="" or password=="":
              QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok,QMessageBox.Ok)
         else:

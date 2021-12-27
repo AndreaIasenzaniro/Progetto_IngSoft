@@ -4,9 +4,8 @@ from listaclienti.model.ListaClienti import ListaClienti
 class ControlloreListaClienti():
     def __init__(self):
         super(ControlloreListaClienti, self).__init__()
+        # assegno la lista dei clienti come model
         self.model = ListaClienti()
-
-    # richiamo funzioni del model
 
     def aggiungi_cliente(self, cliente):
         self.model.aggiungi_cliente(cliente)

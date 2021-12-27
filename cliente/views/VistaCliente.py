@@ -14,6 +14,7 @@ class VistaCliente(QWidget):
 
         # controllore del cliente che passo con selezione
         self.controller = ControlloreCliente(cliente)
+        # funzioni di eliminazione passata alla Vista
         self.elimina_cliente = elimina_cliente
         self.elimina_callback = elimina_callback
         self.v_layout = QVBoxLayout()
@@ -29,7 +30,7 @@ class VistaCliente(QWidget):
         font_nome.setPointSize(20)
         label_nome.setFont(font_nome)
 
-        # layout di visualizzazione superiore
+        # layout superiore
         h_lay_sup = QHBoxLayout()
         v_lay_sup_sx = QVBoxLayout()
         v_lay_sup_dx = QVBoxLayout()
@@ -41,7 +42,7 @@ class VistaCliente(QWidget):
         v_lay_sup_dx.addStretch()
         h_lay_sup.addLayout(v_lay_sup_sx)
         h_lay_sup.addLayout(v_lay_sup_dx)
-        # layout di visualizzazione centrale
+        # layout centrale
         h_lay_cent = QHBoxLayout()
         v_lay_cent_sx = QVBoxLayout()
         v_lay_cent_dx = QVBoxLayout()
@@ -55,13 +56,13 @@ class VistaCliente(QWidget):
         v_lay_cent_dx.addWidget(self.get_label_info("Email", self.controller.get_email_cliente()))
         h_lay_cent.addLayout(v_lay_cent_sx)
         h_lay_cent.addLayout(v_lay_cent_dx)
-        # layout di visualizzazione inferiore
+        # layout inferiore
         v_lay_inf = QVBoxLayout()
         v_lay_inf.addItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Minimum))
         v_lay_inf.addWidget(VistaAbbonamento(self.controller.get_abbonamento_cliente(), self.controller.aggiungi_abbonamento_cliente))
         v_lay_inf.addItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Minimum))
         v_lay_inf.addWidget(VistaCertificato(self.controller.get_certificato_cliente(), self.controller.aggiungi_certificato_cliente))
-        # layout di visualizzazione per pulsanti
+        # layout pulsanti
         h_lay_btn = QHBoxLayout()
         btn_chiudi = QPushButton("Chiudi")
         btn_chiudi.setStyleSheet("background-color: #b0c4de; font-size: 13px; font-weight: bold;")
@@ -71,6 +72,7 @@ class VistaCliente(QWidget):
         btn_elimina.clicked.connect(self.elimina_cliente_click)
         h_lay_btn.addWidget(btn_chiudi)
         h_lay_btn.addWidget(btn_elimina)
+
         # aggiunta layout minori a quello generale
         self.v_layout.addLayout(h_lay_sup)
         self.v_layout.addLayout(h_lay_cent)

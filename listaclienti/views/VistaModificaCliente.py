@@ -9,7 +9,9 @@ from cliente.model.Cliente import Cliente
 class VistaModificaCliente(QWidget):
     def __init__(self, cliente_selezionato, controller, callback):
         super(VistaModificaCliente, self).__init__()
+
         self.cl = cliente_selezionato
+        # passo alla classe il dipendente che seleziono per avere le sue informazioni
         self.cliente = ControlloreCliente(cliente_selezionato)
         self.controller = controller
         self.callback = callback
@@ -20,10 +22,11 @@ class VistaModificaCliente(QWidget):
         self.v_layout = QVBoxLayout()
         self.setFixedSize(630, 370)
 
+        # pulsante di conferma della modifica
         btn_modifica = QPushButton("Modifica")
         btn_modifica.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_modifica.clicked.connect(self.mod_cliente)
-
+        # pulsante di annullamento delle modifica
         btn_annulla = QPushButton("Annulla")
         btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_annulla.clicked.connect(self.close)
@@ -31,6 +34,7 @@ class VistaModificaCliente(QWidget):
         self.label_img = QLabel()
         self.label_img.setPixmap(QPixmap('listaclienti/data/utente.png'))
 
+        # layout superiore
         h_lay_sup = QHBoxLayout()
         v_lay_sup_sx = QVBoxLayout()
         v_lay_sup_dx = QVBoxLayout()
@@ -42,7 +46,7 @@ class VistaModificaCliente(QWidget):
         v_lay_sup_dx.addWidget(self.label_img)
         h_lay_sup.addLayout(v_lay_sup_sx)
         h_lay_sup.addLayout(v_lay_sup_dx)
-
+        # layout inferiore
         h_lay_inf = QHBoxLayout()
         v_lay_inf_sx = QVBoxLayout()
         v_lay_inf_dx = QVBoxLayout()
@@ -65,6 +69,7 @@ class VistaModificaCliente(QWidget):
         self.setLayout(self.v_layout)
         self.setWindowTitle("Modifica Cliente")
 
+    # ritorna layout con i campi da moficiare con relative etichette
     def get_label_line(self, tipo, campo, testo):
         layout = QHBoxLayout()
         layout.addWidget(QLabel(testo))
@@ -86,7 +91,7 @@ class VistaModificaCliente(QWidget):
         indirizzo = self.info["Indirizzo"].text()
         email = self.info["Email"].text()
         telefono = self.info["Telefono"].text()
-
+        # effettuo i controlli per i dati immessi come per l'inserimento di un nuovo cliente
         if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita =="" or residenza =="" or \
                 indirizzo == "" or email == "" or telefono == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)

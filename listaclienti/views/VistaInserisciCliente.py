@@ -17,11 +17,12 @@ class VistaInserisciCliente(QWidget):
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 380)
 
+        # pulsante di conferma dell'aggiunta
         btn_aggiungi = QPushButton("Aggiungi")
         btn_aggiungi.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_aggiungi.setShortcut("Return")
         btn_aggiungi.clicked.connect(self.add_cliente)
-
+        # pulsante di annullamento dell'inserimento
         btn_annulla = QPushButton("Annulla")
         btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_annulla.setShortcut("Esc")
@@ -64,18 +65,21 @@ class VistaInserisciCliente(QWidget):
         self.setLayout(self.v_layout)
         self.setWindowTitle("Nuovo Cliente")
 
+    # ritorna un layout con una lable e la sua etichetta
     def get_label_line(self, label, tipo, placeholder):
         layout = QHBoxLayout()
+        # aggiungo lable con un testo dato al layout
         layout.addWidget(QLabel("<b>{}</b>".format(label)))
         current_text_edit = QLineEdit(self)
         current_text_edit.setPlaceholderText(placeholder)
         current_text_edit.setGeometry(70,30,70,30)
         layout.addWidget(current_text_edit)
+        # aggiungo il tipo al dizionario
         self.info[tipo] = current_text_edit
         return layout
 
     def add_cliente(self):
-        # popolo il dizionario con i valori inseriti
+        # popolo il dizionario con i valori inseriti nei rispettivi "tipi" di dato
         nome = self.info["Nome"].text()
         cognome = self.info["Cognome"].text()
         cf = self.info["Codice Fiscale"].text()
@@ -85,11 +89,12 @@ class VistaInserisciCliente(QWidget):
         indirizzo = self.info["Indirizzo"].text()
         email = self.info["Email"].text()
         telefono = self.info["Telefono"].text()
-
+        # effettuo controlloo di non nullità
         if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita =="" or residenza =="" or \
                 indirizzo == "" or email == "" or telefono == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
         else:
+            # effettuo controllo sull'inserimento in telefono
             if telefono.isnumeric() and len(telefono) == 10:
                 if len(cf) == 16:
                     self.controller.aggiungi_cliente(Cliente((nome + cognome).lower(), nome, cognome, cf, data_nascita, luogo_nascita, residenza, indirizzo, email, telefono))

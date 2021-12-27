@@ -4,6 +4,7 @@ from listadipendenti.model.ListaDipendenti import ListaDipendenti
 class ControlloreListaDipendenti():
     def __init__(self):
         super(ControlloreListaDipendenti, self).__init__()
+        # assegno la lista dei dipendenti come model
         self.model = ListaDipendenti()
 
     def aggiungi_dipendente(self, dipendente):

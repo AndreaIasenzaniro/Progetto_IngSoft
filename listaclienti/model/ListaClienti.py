@@ -5,12 +5,14 @@ import pickle
 class ListaClienti():
     def __init__(self):
         super(ListaClienti, self).__init__()
-        # definisco una lista dei clienti e la popolo con i dati del file
+        # definisco una lista vuota per i clienti
         self.lista_clienti = []
+        # se presente il file che contiene i dati della lista, lo apro e la popolo
         if os.path.isfile('listaclienti/data/lista_clienti_salvata.pickle'):
             with open('listaclienti/data/lista_clienti_salvata.pickle', 'rb') as f:
                 self.lista_clienti = pickle.load(f)
 
+    # funzione che aggiunge un cliente alla lista
     def aggiungi_cliente(self, cliente):
         self.lista_clienti.append(cliente)
 
@@ -29,12 +31,14 @@ class ListaClienti():
     def rimuovi_dalla_lista(self, cliente):
         self.lista_clienti.remove(cliente)
 
-    #funzione che ritorna la posizione del cliente selezionato
+    # funzione che ritorna la posizione del cliente selezionato nella lista
     def get_cliente_by_index(self, index):
         return self.lista_clienti[index]
 
+    # funzione che ritorna la lista dei clienti
     def get_lista_clienti(self):
         return self.lista_clienti
+
     # funzione di salvataggio delle modifiche apportate alla lista
     def save_data(self):
         with open('listaclienti/data/lista_clienti_salvata.pickle', 'wb') as handle:

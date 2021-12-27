@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QMessageBox, QTab
 from listamovimenti.controller.ControlloreListaMovimenti import ControlloreListaMovimenti
 from listamovimenti.views.VistaInserisciMovimento import VistaInserisciMovimento
 from listamovimenti.views.VistaModificaMovimento import VistaModificaMovimento
-from movimento.views.VistaMovimento import VistaMovimento
 
 
 class VistaListaMovimenti(QWidget):

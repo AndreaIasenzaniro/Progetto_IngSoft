@@ -11,18 +11,20 @@ class VistaInserisciDipendente(QWidget):
         super(VistaInserisciDipendente, self).__init__()
         self.controller = controller
         self.callback = callback
+        # dizionario vuto
         self.info = {}
         self.combo_abilitazione = QComboBox()
 
+        # layout di inserimento dei dati del dipendente
         self.v_layout = QVBoxLayout()
         self.setFixedSize(650, 470)
 
+        # pulsante di conferma dell'aggiunta
         btn_aggiugni = QPushButton("Aggiungi")
         btn_aggiugni.setStyleSheet("background-color: #90ee90; font-size: 13px; font-weight: bold;")
         btn_aggiugni.setShortcut("Return")
         btn_aggiugni.clicked.connect(self.add_dipendente)
-        #self.v_layout.addWidget(btn_ok)
-        # creazione pulsante di annullamento dell'inserimento
+        # pulsante di annullamento dell'inserimento
         btn_annulla = QPushButton("Annulla")
         btn_annulla.setStyleSheet("background-color: #f08080; font-size: 13px; font-weight: bold;")
         btn_annulla.setShortcut("Esc")
@@ -59,15 +61,15 @@ class VistaInserisciDipendente(QWidget):
         v_lay_inf = QVBoxLayout()
         h_lay_inf = QHBoxLayout()
         h_lay_inf_btn = QHBoxLayout()
+
         password = QLabel("<b>Password</b>")
         self.password = PasswordEdit()
         self.password.setPlaceholderText('Inserisci password')
         h_lay_inf.addWidget(password)
         h_lay_inf.addWidget(self.password)
         self.info["Password"] = self.password
-        #h_lay_inf_btn.addStretch()
+
         h_lay_inf_btn.addWidget(btn_annulla)
-        #h_lay_inf_btn.addStretch()
         h_lay_inf_btn.addWidget(btn_aggiugni)
         v_lay_inf.addLayout(h_lay_inf)
         v_lay_inf.addStretch()
@@ -75,36 +77,40 @@ class VistaInserisciDipendente(QWidget):
 
         self.v_layout.addLayout(h_lay_sup)
         self.v_layout.addLayout(self.get_combo(["Collaboratore", "Personal Trainer"]))
-        #self.get_combo(["Collaboratore", "Personal Trainer"])
+
         self.v_layout.addLayout(h_lay_cent)
         self.v_layout.addLayout(v_lay_inf)
 
         self.setLayout(self.v_layout)
         self.setWindowTitle("Nuovo Dipendente")
 
+    # ritorna un layout con una lable e la sua etichetta
     def get_label_line(self, label, tipo, placeholder):
         layout = QHBoxLayout()
+        # aggiungo lable con un testo dato al layout
         layout.addWidget(QLabel("<b>{}</b>".format(label)))
         current_text_edit = QLineEdit(self)
         current_text_edit.setPlaceholderText(placeholder)
-        #current_text_edit.setGeometry(70,30,70,30)
         layout.addWidget(current_text_edit)
+        # aggiungo il tipo al dizionario
         self.info[tipo] = current_text_edit
         return layout
 
+    # ritorna un layout con una combo per l'abilitazione del dipendente
     def get_combo(self, lista):
         v_lay = QVBoxLayout()
         v_lay.addWidget(QLabel("<b>Abilitazione</b>"))
         combo_model = QStandardItemModel(self.combo_abilitazione)
         combo_model.appendRow(QStandardItem(""))
+        # popolo la combo con i ruoli nella lista che passo alla funzione
         for item in lista:
             combo_model.appendRow(QStandardItem(item))
         self.combo_abilitazione.setModel(combo_model)
         v_lay.addWidget(self.combo_abilitazione)
-        #h_lay.addItem(QSpacerItem(300,10,QSizePolicy.Minimum,QSizePolicy.Minimum))
         return v_lay
 
     def add_dipendente(self):
+        # popolo il dizionario con i valori inseriti nei rispettivi "tipi" di dato
         nome = self.info["Nome"].text()
         cognome = self.info["Cognome"].text()
         data_nascita = self.info["Data di nascita"].text()
@@ -116,11 +122,12 @@ class VistaInserisciDipendente(QWidget):
         email = self.info["Email"].text()
         abilitazione = self.combo_abilitazione.currentText()
         password = self.info["Password"].text()
-
+        # effettuo controlloo di non nullità
         if nome == "" or cognome == "" or cf == "" or data_nascita == "" or luogo_nascita == "" or cf == "" \
             or telefono == "" or email == "" or abilitazione == "" or password == "" or residenza == "" or indirizzo == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
         else:
+            # effettuo controllo sull'inserimento in telefono
             if telefono.isnumeric() and len(telefono) == 10:
                 if len(cf) == 16:
                     self.controller.aggiungi_dipendente(

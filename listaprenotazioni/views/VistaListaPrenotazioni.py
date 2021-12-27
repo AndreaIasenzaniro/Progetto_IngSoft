@@ -6,7 +6,6 @@ from listaprenotazioni.controller.ControlloreListaPrenotazioni import Controllor
 from listaprenotazioni.views.VistaModificaPrenotazione import VistaModificaPrenotazione
 from movimento.model.Movimento import Movimento
 from prenotazione.controller.ControllorePrenotazione import ControllorePrenotazione
-from prenotazione.views.VistaPrenotazione import VistaPrenotazione
 
 
 class VistaListaPrenotazioni(QWidget):
@@ -70,7 +69,7 @@ class VistaListaPrenotazioni(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
 
-    def visualizza_prenotazione_click(self):
+    '''def visualizza_prenotazione_click(self):
         try:
             self.selected = self.list_view.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lista_selezionata[self.selected]
@@ -78,7 +77,7 @@ class VistaListaPrenotazioni(QWidget):
             self.vista_prenotazione.show()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
-
+'''
     def modifica_prenotazione_click(self):
         try:
             #self.close()

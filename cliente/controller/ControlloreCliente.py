@@ -1,5 +1,6 @@
 class ControlloreCliente():
     def __init__(self, cliente):
+        # il model è del cliente che viene passato
         self.model = cliente
 
     def get_id_cliente(self):
@@ -32,7 +33,7 @@ class ControlloreCliente():
     def get_residenza_cliente(self):
         return self.model.residenza
 
-    # richiama aggiunta abbonamento model cliente
+    # richiama aggiungi_abbonamento model cliente
     def aggiungi_abbonamento_cliente(self, abbonamento):
         self.model.aggiungi_abbonamento(abbonamento)
     # richiama get_abbonamento model cliente
@@ -44,10 +45,11 @@ class ControlloreCliente():
     # richiama get_certificato model cliente
     def get_certificato_cliente(self):
         return self.model.get_certificato()
-    # controlla abbonamento e certificato di un cliente, se abbonato e senza certificati, allora indica l'abbonamento sospeso
+    # controlla abbonamento e certificato di un cliente se abbonato e senza certificati, allora indica l'abbonamento sospeso
     def get_stato_cliente(self):
         if self.get_abbonamento_cliente() == None:
             return "Cliente non abbonato"
+        # Se il cliente è abbonato ma senza certificato, l'abbonamento è sospeso
         if self.get_certificato_cliente() == None:
             return "Sospeso, certificato mancante"
         return "Regolare"

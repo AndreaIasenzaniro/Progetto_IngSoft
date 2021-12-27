@@ -1,6 +1,7 @@
 class ControlloreDipendente():
 
     def __init__(self, dipendente):
+        # il model è del dipendente che vine passato
         self.model = dipendente
 
     def get_id_dipendente(self):
