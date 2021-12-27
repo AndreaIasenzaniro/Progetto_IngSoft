@@ -2,6 +2,7 @@ from prenotazione.model.Prenotazione import *
 
 class ControllorePrenotazione():
     def __init__(self, prenotazione):
+        # il model è della prenotazione che viene passata
         self.model = prenotazione
 
     def get_id_prenotazione(self):

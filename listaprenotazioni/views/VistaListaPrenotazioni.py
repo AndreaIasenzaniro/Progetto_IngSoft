@@ -69,15 +69,6 @@ class VistaListaPrenotazioni(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
 
-    '''def visualizza_prenotazione_click(self):
-        try:
-            self.selected = self.list_view.selectedIndexes()[0].row()
-            prenotazione_selezionata = self.lista_selezionata[self.selected]
-            self.vista_prenotazione = VistaPrenotazione(prenotazione_selezionata, self.controller.elimina_prenotazione_by_id, self.update_elimina)
-            self.vista_prenotazione.show()
-        except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
-'''
     def modifica_prenotazione_click(self):
         try:
             #self.close()

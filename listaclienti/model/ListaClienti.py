@@ -31,7 +31,7 @@ class ListaClienti():
     def rimuovi_dalla_lista(self, cliente):
         self.lista_clienti.remove(cliente)
 
-    # funzione che ritorna la posizione del cliente selezionato nella lista
+    # ritorna il cliente alla posizione data
     def get_cliente_by_index(self, index):
         return self.lista_clienti[index]
 

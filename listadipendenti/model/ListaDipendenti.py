@@ -31,7 +31,7 @@ class ListaDipendenti():
     def rimuovi_dalla_lista(self, dipendente):
         self.lista_dipendenti.remove(dipendente)
 
-    # funzione che ritorna la posizione del dipendente selezionato nella lsita
+    # funzione che ritorna il dipendente alla posizione data
     def get_dipendente_by_index(self, index):
         return self.lista_dipendenti[index]
 

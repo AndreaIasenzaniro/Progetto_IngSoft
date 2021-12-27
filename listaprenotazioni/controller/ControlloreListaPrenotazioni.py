@@ -4,6 +4,7 @@ from listaprenotazioni.model.ListaPrenotazioni import ListaPrenotazioni
 class ControlloreListaPrenotazioni():
     def __init__(self):
         super(ControlloreListaPrenotazioni, self).__init__()
+        # assegno la lista delle prenotazioni come model
         self.model = ListaPrenotazioni()
 
     def aggiungi_prenotazione(self, prenotazione):
@@ -13,7 +14,7 @@ class ControlloreListaPrenotazioni():
         self.model.rimuovi_dalla_lista(prenotazione)
 
     def ordina(self, lista):
-        self.model.ordina_clienti(lista)
+        self.model.ordina_lista(lista)
 
     def get_lista_prenotazioni(self):
         return self.model.get_lista_prenotazioni()
