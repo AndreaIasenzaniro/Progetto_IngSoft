@@ -21,7 +21,7 @@ class VistaListaClienti(QWidget):
         self.create_table()
         self.list_view = self.tableWidget
 
-        h_layout = QHBoxLayout()
+        self.h_layout = QHBoxLayout()
         buttons_layout = QVBoxLayout()
         self.profilo_cliente = QVBoxLayout()
         image = QLabel(self)
@@ -60,8 +60,8 @@ class VistaListaClienti(QWidget):
         buttons_layout.addStretch()
         buttons_layout.addWidget(btn_esci)
 
-        h_layout.addLayout(buttons_layout)
-        h_layout.addWidget(self.tableWidget)
+        self.h_layout.addLayout(buttons_layout)
+        self.h_layout.addWidget(self.tableWidget)
         # setting del layout della finestra
         self.setLayout(self.h_layout)
         self.setWindowTitle("Lista Clienti")
