@@ -107,4 +107,6 @@ class VistaCliente(QWidget):
         self.close()
         from listaclienti.views.VistaListaClienti import VistaListaClienti
         VistaListaClienti.profilo_cliente = False
-        ControlloreListaClienti().save_data()
+        VistaListaClienti().update_nuovo()
+        VistaListaClienti().update()
+

@@ -47,7 +47,7 @@ class VistaInserisciCliente(QWidget):
         v_lay_inf_sx = QVBoxLayout()
         v_lay_inf_dx = QVBoxLayout()
         v_lay_inf_sx.addLayout(self.get_label_line("Nato a","Luogo di nascita","luogo di nascita"))
-        v_lay_inf_dx.addLayout(self.get_label_line("il","Data di nascita","dd/mm/yyy"))
+        v_lay_inf_dx.addLayout(self.get_label_line("il","Data di nascita","dd/mm/yyyy"))
         v_lay_inf_sx.addLayout(self.get_label_line("Residente a ", "Residenza","residenza"))
         v_lay_inf_dx.addLayout(self.get_label_line("in via", "Indirizzo","via , n°"))
         v_lay_inf_sx.addLayout(self.get_label_line("Recapito telefonico", "Telefono","fisso/cellulare"))
