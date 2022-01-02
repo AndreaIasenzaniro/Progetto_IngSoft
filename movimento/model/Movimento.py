@@ -4,6 +4,7 @@ from listamovimenti.controller.ControlloreListaMovimenti import ControlloreLista
 class Movimento():
     def __init__(self, data, causale, descrizione, importo):
 
+        # assegnazione automatica dell'id del movimento
         self.controller = ControlloreListaMovimenti()
         if not self.controller.get_lista_movimenti():
             self.id = 0

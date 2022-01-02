@@ -11,7 +11,7 @@ class VistaModificaMovimento(QWidget):
     def __init__(self, movimento_selezionato, controller, callback):
         super(VistaModificaMovimento, self).__init__()
 
-        self.setFixedSize(350, 300)
+        self.setFixedSize(500, 400)
         self.mov_sel = movimento_selezionato
         self.movimento = ControlloreMovimento(movimento_selezionato)
         self.controller = controller
@@ -44,16 +44,17 @@ class VistaModificaMovimento(QWidget):
         self.setLayout(self.v_layout)
         self.setWindowTitle("Modifica Movimento")
 
+    #funzione che ritorna un layout con una lable ed una casella di testo poste in orizzontale
     def get_label_line(self, label, tipo, placeholder):
         layout = QHBoxLayout()
         layout.addWidget(QLabel(label))
         current_text_edit = QLineEdit(self)
-        current_text_edit.setText(placeholder)
+        current_text_edit.setText(str(placeholder))
         layout.addWidget(current_text_edit)
         self.info[tipo] = current_text_edit
         return layout
 
-
+    # funzione di scelta del tipo di movimento
     def get_radio_button(self, lista):
         h_lay = QHBoxLayout()
         h_lay.addWidget(QLabel("<b>Tipo di movimento<b/>"))
@@ -64,14 +65,17 @@ class VistaModificaMovimento(QWidget):
             h_lay.addWidget(self.radiobutton)
         return h_lay
 
+    # funzione che ritorna true o false a seconda della selezione del radioButton
     def scelta_radio(self):
         self.radioButton = self.sender()
+        # la scelta viene usata per il calcolo del saldo totale dei movimenti
         if self.radioButton.isChecked():
             if self.radioButton.tipo == "Incasso":
                 self.tipo = True
             if self.radioButton.tipo == "Spesa":
                 self.tipo = False
 
+    # funzione di visualizzazione del calendario che permette di selezionare la data
     def visualizza_calendario(self):
         self.window = QWidget()
         self.v1_layout = QVBoxLayout()
@@ -86,6 +90,7 @@ class VistaModificaMovimento(QWidget):
         self.window.setLayout(self.v1_layout)
         self.window.show()
 
+    # funzione che ritorna la data che viene selezionata nel calendario
     def data_selezionata(self):
         oggi = datetime.today()
         oggi_formattato = oggi.strftime("%d/%m/%Y")
@@ -99,6 +104,7 @@ class VistaModificaMovimento(QWidget):
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
 
+    # funzione di annullamento di inserimento del movimento
     def annulla(self):
         self.close()
         from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti

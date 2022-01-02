@@ -11,10 +11,11 @@ class VistaInserisciMovimento(QWidget):
     def __init__(self, controller, callback, parent = None):
         super(VistaInserisciMovimento, self).__init__(parent)
 
-        self.setFixedSize(350,300)
+        self.setFixedSize(500,400)
 
         self.controller = controller
         self.callback = callback
+        # creo un dizionario vuoto, da popolare con le voci del movimento
         self.info = {}
 
         self.v_layout = QVBoxLayout()
@@ -38,9 +39,11 @@ class VistaInserisciMovimento(QWidget):
 
         self.setLayout(self.v_layout)
 
+    # funzione di scelta del tipo di movimento
     def get_radio_button(self, lista):
         h_lay = QHBoxLayout()
         h_lay.addWidget(QLabel("<b>Tipo di movimento<b/>"))
+        # passo una lista (incasso, spesa)
         for item in lista:
             self.radiobutton = QRadioButton(item)
             self.radiobutton.tipo = item
@@ -48,14 +51,17 @@ class VistaInserisciMovimento(QWidget):
             h_lay.addWidget(self.radiobutton)
         return h_lay
 
+    # funzione che ritorna true o false a seconda della selezione del radioButton
     def scelta_radio(self):
         self.radioButton = self.sender()
+        # la scelta viene usata per il calcolo del saldo totale dei movimenti
         if self.radioButton.isChecked():
             if self.radioButton.tipo == "Incasso":
                 self.tipo = True
             if self.radioButton.tipo == "Spesa":
                 self.tipo = False
 
+    # funzione di visualizzazione del calendario che permette di selezionare la data
     def visualizza_calendario(self):
         self.window = QWidget()
         self.v1_layout = QVBoxLayout()
@@ -70,6 +76,7 @@ class VistaInserisciMovimento(QWidget):
         self.window.setLayout(self.v1_layout)
         self.window.show()
 
+    # funzione che ritorna la data che viene selezionata nel calendario
     def data_selezionata(self):
         oggi = datetime.today()
         oggi_formattato = oggi.strftime("%d/%m/%Y")
@@ -83,6 +90,7 @@ class VistaInserisciMovimento(QWidget):
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci la data',QMessageBox.Ok, QMessageBox.Ok)
 
+    #funzione che ritorna un layout con una lable ed una casella di testo poste in orizzontale
     def get_label_line(self, label, tipo, placeholder):
         layout = QHBoxLayout()
         layout.addWidget(QLabel(label))
@@ -92,14 +100,14 @@ class VistaInserisciMovimento(QWidget):
         self.info[tipo] = current_text_edit
         return layout
 
-
+    # funzione di annullamento di inserimento del movimento
     def annulla(self):
         self.close()
         from listamovimenti.views.VistaListaMovimenti import VistaListaMovimenti
         self.vistaListaMovimenti=VistaListaMovimenti()
         return self.vistaListaMovimenti.show()
 
-
+    # funzione di aggiunta del movimento con i campi immessi nella vista di inserimento
     def aggiugni_movimento(self):
         try:
             data = self.data_selezionata()

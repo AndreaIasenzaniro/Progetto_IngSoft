@@ -3,7 +3,10 @@ from listamovimenti.model.ListaMovimenti import ListaMovimenti
 
 class ControlloreListaMovimenti():
     def __init__(self):
+        # assegno il la lista come model al controllore della lista
         self.model = ListaMovimenti()
+
+        # richiamo le funzioni del model
 
     def aggiungi_movimento(self, movimento):
         self.model.aggiungi_movimento(movimento)

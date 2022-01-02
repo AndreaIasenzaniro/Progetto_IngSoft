@@ -64,20 +64,24 @@ class VistaListaMovimenti(QWidget):
 
         self.setLayout(self.h_layout)
 
-    # funzione pulsante modifica
+    # funzione pulsante modifica del movimento
     def show_modifica_movimento_click(self):
         try:
+            # selezione del movimento
             selected = self.list_view.selectedIndexes()[0].row()
+            # assegno il movimento selezionato
             movimento_selezionato = self.controller.get_movimento_by_index(selected)
+            # creo la finestra di modifica del movimento e la apro
             self.vista_movimento_modifica = VistaModificaMovimento(movimento_selezionato, self.controller, self.update_modifica)
             self.vista_movimento_modifica.show()
             self.close()
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da modificare.', QMessageBox.Ok, QMessageBox.Ok)
 
-    # funzione pulsante elimina
+    # funzione pulsante elimina del movimento
     def elimina_movimento_click(self):
         try:
+            # selezione del movimento
             self.selected = self.list_view.selectedIndexes()[0].row()
             movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
             reply = QMessageBox.question(self, "Messaggio",
@@ -85,8 +89,10 @@ class VistaListaMovimenti(QWidget):
                                          QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
                 from movimento.controller.ControlloreMovimento import ControlloreMovimento
+                # richiamo funzione di eliminazione del movimento, dato il suo id
                 self.controller.elimina_movimento_by_id(ControlloreMovimento(movimento_selezionato).get_id_movimento())
                 row = self.selected
+                # rimuovo la riga del movimento eliminato dalla tabella
                 self.tableWidget.removeRow(row)
                 self.update()
             else:
@@ -95,17 +101,7 @@ class VistaListaMovimenti(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
 
-    #funzione pulsante apri
-    def show_movimento_selezionato_click(self):
-        try:
-            self.selected = self.list_view.selectedIndexes()[0].row()
-            movimento_selezionato = self.controller.get_movimento_by_index(self.selected)
-            self.vista_movimento = VistaMovimento(movimento_selezionato, self.controller.elimina_movimento_by_id, self.update_elimina)
-            #self.vista_movimento.show()
-        except:
-            QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da visualizzare.', QMessageBox.Ok,
-                                 QMessageBox.Ok)
-    # funzione pulsante nuovo
+    # funzione pulsante nuovo movimento
     def show_nuovo_movimento_click(self):
         self.vista_inserisci_movimento = VistaInserisciMovimento(self.controller, self.update_nuovo)
         self.vista_inserisci_movimento.show()
@@ -131,6 +127,7 @@ class VistaListaMovimenti(QWidget):
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
+    # funzione di aggiornamento della tabella all'aggiunta di un nuovo movimento
     def update_nuovo(self):
         m = len(self.controller.get_lista_movimenti())
         self.tableWidget.setRowCount(m)
@@ -144,6 +141,7 @@ class VistaListaMovimenti(QWidget):
             self.i += 1
         self.update()
 
+    # funzione di aggiornamento della tabella alla modifica di un movimento esistente
     def update_modifica(self):
         self.controller.oridna_movimenti(self.controller.get_lista_movimenti())
         self.i=0
@@ -154,6 +152,7 @@ class VistaListaMovimenti(QWidget):
             self.tableWidget.setItem(self.i, 3, QTableWidgetItem("€ {}".format(movimento.importo)))
             self.i += 1
 
+    # funzione di salvataggio alla chiusura
     def closeEvent(self, event):
         self.controller.save_data()
 

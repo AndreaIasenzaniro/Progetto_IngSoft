@@ -1,7 +1,9 @@
 class ControlloreMovimento():
     def __init__(self, movimento):
+        # il model viene assegnato al movimento selezionato
         self.model = movimento
 
+    #richiamo le funzioni del model
     def get_id_movimento(self):
         return self.model.id
 
