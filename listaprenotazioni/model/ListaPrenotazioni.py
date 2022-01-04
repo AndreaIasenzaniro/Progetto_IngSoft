@@ -12,9 +12,11 @@ class ListaPrenotazioni():
             with open('listaprenotazioni/data/lista_prenotazioni_salvata.pickle', 'rb') as f:
                 self.lista_prenotazioni = pickle.load(f)
 
+    #funzione che aggiunge una prenotazione alla lista
     def aggiungi_prenotazione(self, prenotazione):
         self.lista_prenotazioni.append(prenotazione)
 
+    #funzione che rimuove una prenotazione dalla lista
     def rimuovi_dalla_lista(self, prenotazione):
         self.lista_prenotazioni.remove(prenotazione)
 

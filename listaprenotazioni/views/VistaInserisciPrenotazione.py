@@ -20,10 +20,12 @@ class VistaInserisciPrenotazione(QWidget):
         
         self.controller = controller
         self.callback = callback
+        #dizionario vuoto
         self.info = {}
         self.c = ControlloreListaPrenotazioni()
         self.controlloreMov = ControlloreListaMovimenti()
 
+        #layout per l'inserimento dei campi della prenotazione
         self.combo_ora = QComboBox()
         self.v_layout = QVBoxLayout()
         self.v_layout.addStretch()
@@ -46,6 +48,7 @@ class VistaInserisciPrenotazione(QWidget):
         self.v_layout.addWidget(self.data_label)
         self.line_data = QLineEdit()
         self.v_layout.addWidget(self.line_data)
+        #bottone data che al click ci apre il calendario per scegliere una data
         self.btn_data = QPushButton("Inserisci data")
         self.btn_data.clicked.connect(self.visualizza_calendario)
 
@@ -74,7 +77,9 @@ class VistaInserisciPrenotazione(QWidget):
 
         self.setLayout(self.v_layout)
         self.setWindowTitle("Nuova Prenotazione")
+        # fine layout per l'inserimento dei campi della prenotazione
 
+    #funzione per tenere il tipo di campo selezionato inizialmente nel campo relativo al tipo campo
     def get_form_entry(self, tipo):
         self.v_layout.addWidget(QLabel("<b>{}</b>".format(tipo)))
         current_text_edit = QLineEdit(self)
@@ -88,6 +93,7 @@ class VistaInserisciPrenotazione(QWidget):
             current_text_edit.setReadOnly(True)
         self.info[tipo] = current_text_edit
 
+    #permette la scelta di una delle ore nella lista passata in argomento
     def get_combo(self, lista):
         self.v_layout.addWidget(QLabel("Ora inizio"))
         combo_model = QStandardItemModel(self.combo_ora)
@@ -97,6 +103,7 @@ class VistaInserisciPrenotazione(QWidget):
         self.combo_ora.setModel(combo_model)
         self.v_layout.addWidget(self.combo_ora)
 
+    #funzione per la creazione dei radio button relativi al numero del campo
     def radio(self):
         self.h_layout =QHBoxLayout()
         self.radiobuttons1 = QRadioButton("1")
@@ -109,6 +116,7 @@ class VistaInserisciPrenotazione(QWidget):
 
         self.v_layout.addLayout(self.h_layout)
 
+    #funzione che permette di aggiungere una prenotazione
     def add_prenotazione(self):
         from calendario.Calendario import Calendario
         Calendario.vista_prenotazione = False
