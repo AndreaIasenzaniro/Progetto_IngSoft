@@ -39,9 +39,9 @@ class VistaListaPrenotazioni(QWidget):
         buttons_layout.addWidget(btn_esci)
         h_layout.addLayout(buttons_layout)
         self.setLayout(h_layout)
-        #self.resize(1100, 600)
         self.controller.save_data()
 
+    #funzione che elimia la prenotazione selezionata
     def elimina_prenotazione_click(self):
         try:
             self.selected = self.list_view.selectedIndexes()[0].row()
@@ -51,6 +51,7 @@ class VistaListaPrenotazioni(QWidget):
                                          "Sicuro di voler disdire la prenotazione? <p>OPERAZIONE IRREVERSIBILE",
                                          QMessageBox.Yes |
                                          QMessageBox.No, QMessageBox.No)
+            #se si clissa YES sul messaggio di errore si procede all'eliminazione
             if reply == QMessageBox.Yes:
                 self.controller.elimina_prenotazione_by_id(controller.get_id_prenotazione())
                 riga = self.selected
@@ -69,9 +70,9 @@ class VistaListaPrenotazioni(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona un movimento da eliminare.', QMessageBox.Ok,
                                  QMessageBox.Ok)
 
+    #funzione che modifica la prenotazione selezionata
     def modifica_prenotazione_click(self):
         try:
-            #self.close()
             self.selected = self.list_view.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lista_selezionata[self.selected]
             self.modifica_prenotazione = VistaModificaPrenotazione(prenotazione_selezionata, self.controller, self.update_mod)
@@ -79,13 +80,14 @@ class VistaListaPrenotazioni(QWidget):
         except:
             QMessageBox.critical(self, 'Errore', 'Per favore, seleziona una prenotazione da visualizzare.', QMessageBox.Ok,QMessageBox.Ok)
 
+    #funzione che ritorna l'elemento che si trova ad un determinato indice della lista
     def get_lista_index(self, index, lista):
         return lista[index]
 
     def closeEvent(self, event):
         self.controller.save_data()
 
-    #Create table
+    #crea la tabella
     def createTable(self):
         self.tableWidget = QTableWidget()
         self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)

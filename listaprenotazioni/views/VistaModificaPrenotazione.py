@@ -68,6 +68,7 @@ class VistaModificaPrenotazione(QWidget):
         self.setLayout(self.v_layout)
         self.setWindowTitle("Modifica Prenotazione")
 
+    #creatore universale di QLineEdit
     def get_form_entry(self, campo, tipo):
         self.v_layout.addWidget(QLabel(tipo))
         current_text_edit = QLineEdit(self)
@@ -75,6 +76,7 @@ class VistaModificaPrenotazione(QWidget):
         self.v_layout.addWidget(current_text_edit)
         self.info[tipo] = current_text_edit
 
+    #combo per inserimento orario inizio
     def get_combo(self, lista):
         self.v_layout.addWidget(QLabel("Ora inizio"))
         combo_model = QStandardItemModel(self.combo_ora)
@@ -84,6 +86,7 @@ class VistaModificaPrenotazione(QWidget):
         self.combo_ora.setModel(combo_model)
         self.v_layout.addWidget(self.combo_ora)
 
+    #creatore radio button per numero campo
     def radio(self):
         self.h_layout =QHBoxLayout()
         self.radiobuttons1 = QRadioButton("1")
@@ -96,7 +99,7 @@ class VistaModificaPrenotazione(QWidget):
 
         self.v_layout.addLayout(self.h_layout)
 
-
+    #da qui in poi è uguale a VistaInserisciPrenotazione
     def add_prenotazione(self):
         nome = self.info["Nome cliente"].text()
         cognome = self.info["Cognome cliente"].text()

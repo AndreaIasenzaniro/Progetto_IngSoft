@@ -47,6 +47,7 @@ class VistaInserisciPrenotazione(QWidget):
         self.data_label = QLabel("Data")
         self.v_layout.addWidget(self.data_label)
         self.line_data = QLineEdit()
+        self.line_data.setReadOnly(True)
         self.v_layout.addWidget(self.line_data)
         #bottone data che al click ci apre il calendario per scegliere una data
         self.btn_data = QPushButton("Inserisci data")
@@ -120,27 +121,24 @@ class VistaInserisciPrenotazione(QWidget):
     def add_prenotazione(self):
         from calendario.Calendario import Calendario
         Calendario.vista_prenotazione = False
+        #assegnamento dei campi con testo
         nome = self.info["Nome cliente"].text()
         cognome = self.info["Cognome cliente"].text()
         documento = self.info["Documento"].text()
         tipo_campo = self.info["Tipo campo"].text()
+        #assegnamento ora inizio in base a quella scelta
         ora_inizio = self.combo_ora.currentText()
+        #assegnamento numero campo in base al radiobutton selezionato
         if self.radiobuttons1.isChecked():
             numero_campo = self.radiobuttons1.text()
         elif self.radiobuttons2.isChecked():
             numero_campo=self.radiobuttons2.text()
         else:
             numero_campo=""
-
+        #assegnamento della data
         data_unix = self.data_selezionata()
-        print("ddddddddddddddddddd {}".format(self.data_selezionata()))
-        '''
-        try:
-            data_formattata = datetime.strptime(data, '%d/%m/%Y')
-            data2_timestamp = datetime.timestamp(data_formattata)
-        except:
-            QMessageBox.critical(self, 'Errore', 'Errore, hai inserito un giorno già passato o una domenica (la domenica il centro è chiuso',
-                                 QMessageBox.Ok, QMessageBox.Ok)'''
+
+        #formattazione della data di oggi per vari confronti
         today = datetime.today()
         today_formattato = today.strftime("%d/%m/%Y")
         today_formattato_per_unix= datetime.strptime(today_formattato,'%d/%m/%Y')
@@ -148,45 +146,45 @@ class VistaInserisciPrenotazione(QWidget):
 
         orario_today = str(today.hour) + ":" + str(today.minute)
 
+        #controlliamo che tutti i campi siano inseriti
         if nome == "" or cognome == "" or documento == "" or ora_inizio=="" or numero_campo=="" or data_unix is None:
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci tutte le informazioni richieste', QMessageBox.Ok, QMessageBox.Ok)
+        #controlliamo la data inserita
         elif data_unix=="Errore":
             QMessageBox.critical(self, 'Errore', 'Hai inserito una data passata o una domenica',
                                  QMessageBox.Ok, QMessageBox.Ok)
+        #controlliamo che se la data è quella odierna l'orario sia un orario accettabile
         elif data_unix == today_unix:
             if ora_inizio < orario_today:
                 QMessageBox.critical(self, 'Errore', 'Errore hai inserito la data di oggi con un orario già passato',
                                      QMessageBox.Ok, QMessageBox.Ok)
             else:
-                print("Nessun campo d'inserimento vuoto")
+
                 self.campo = Campo(tipo_campo, numero_campo)
-                print("Campo creato")
+
                 self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.data, ora_inizio)
-                print("Prenotazione creata")
+
+                #se la lista è vuota prenotiamo il campo e aggiorniamo i movimenti della cassa
                 if not self.c.get_lista_prenotazioni():
-                    print("La lista è vuota")
-                    self.campo.prenota()
-                    self.controller.aggiungi_prenotazione(self.prenotazione)
-                    self.aggiungi_movimento()
-                    self.callback()
-                    self.controller.save_data()
-                    self.close()
+                    self.crea_parametri()
+
+                #se la lista non è vuota
                 else:
                     for prenotazione_esistente in self.c.get_lista_prenotazioni():
-                        print("Scorro la lista")
+                        #controlliamo che la prenotazione che si vuole fare sia valida, non vada in conflitto con altre
                         if self.confronta(prenotazione_esistente.data, self.prenotazione.data):
                             if self.confronta(prenotazione_esistente.campo.tipo, self.prenotazione.campo.tipo):
                                 if self.confronta(prenotazione_esistente.campo.numero, self.prenotazione.campo.numero):
                                     if prenotazione_esistente.ora_inizio <= self.prenotazione.ora_inizio \
                                             and self.prenotazione.ora_inizio < prenotazione_esistente.ora_fine:
-                                        print("Errore coincidenza ora inizio")
+                                        #l'ora di inizio è compresa in un'altra fascia oraria
                                         QMessageBox.critical(self, 'Errore',
                                                              "Impossibile effettuare la prenotazione, poichè l'inizio dell'evento è compreso in un altro evento già prenotato",
                                                              QMessageBox.Ok, QMessageBox.Ok)
                                         break
                                     elif self.prenotazione.ora_fine > prenotazione_esistente.ora_inizio \
                                             and self.prenotazione.ora_fine < prenotazione_esistente.ora_fine:
-                                        print("Errore coincidenza ora fine")
+                                        #l'ora di fine è compresa in un'altra fascia oraria
                                         QMessageBox.critical(self, 'Errore',
                                                              "Impossibile effettuare la prenotazione, poichè la fine dell'evento è compreso in un altro evento già prenotato",
                                                              QMessageBox.Ok, QMessageBox.Ok)
@@ -195,38 +193,33 @@ class VistaInserisciPrenotazione(QWidget):
                                         if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                             print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                             self.crea_parametri()
-                                            print("Creato al passo 1")
                                         else:
                                             pass
                                 else:
                                     if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                         print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                         self.crea_parametri()
-                                        print("Creato al passo 2")
                                     else:
                                         pass
                             else:
                                 if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                     print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                     self.crea_parametri()
-                                    print("Creato al passo 3")
                                 else:
                                     pass
                         else:
                             if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                 print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                 self.crea_parametri()
-                                print("Creato al passo 4")
                             else:
                                 pass
+        #se la data selezionata è diversa da quella odierna
         elif data_unix != today_unix:
-            print("Nessun campo d'inserimento vuoto")
             self.campo=Campo(tipo_campo, numero_campo)
-            print("Campo creato")
             self.prenotazione = Prenotazione(nome, cognome, documento, self.campo, self.data, ora_inizio)
-            print("Prenotazione creata")
+
+            #se la lista è vuota
             if not self.c.get_lista_prenotazioni():
-                print("La lista è vuota")
                 self.campo.prenota()
                 self.controller.aggiungi_prenotazione(self.prenotazione)
                 self.aggiungi_movimento()
@@ -235,79 +228,71 @@ class VistaInserisciPrenotazione(QWidget):
                 self.close()
             else:
                 for prenotazione_esistente in self.c.get_lista_prenotazioni():
-                    print("Scorro la lista")
                     if self.confronta(prenotazione_esistente.data, self.prenotazione.data):
                         if self.confronta(prenotazione_esistente.campo.tipo, self.prenotazione.campo.tipo):
                             if self.confronta(prenotazione_esistente.campo.numero, self.prenotazione.campo.numero):
                                 if prenotazione_esistente.ora_inizio <= self.prenotazione.ora_inizio \
                                     and self.prenotazione.ora_inizio < prenotazione_esistente.ora_fine:
-                                    print("Errore coincidenza ora inizio")
                                     QMessageBox.critical(self, 'Errore', "Impossibile effettuare la prenotazione, poichè l'inizio dell'evento è compreso in un altro evento già prenotato",QMessageBox.Ok, QMessageBox.Ok)
                                     break
                                 elif self.prenotazione.ora_fine > prenotazione_esistente.ora_inizio \
                                     and self.prenotazione.ora_fine < prenotazione_esistente.ora_fine:
-                                    print("Errore coincidenza ora fine")
                                     QMessageBox.critical(self, 'Errore',"Impossibile effettuare la prenotazione, poichè la fine dell'evento è compreso in un altro evento già prenotato",QMessageBox.Ok, QMessageBox.Ok)
                                     break
                                 else:
                                     if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                         print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                         self.crea_parametri()
-                                        print("Creato al passo 1")
                                     else:
                                         pass
                             else:
                                 if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                     print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                     self.crea_parametri()
-                                    print("Creato al passo 2")
                                 else:
                                     pass
                         else:
                             if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                                 print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                                 self.crea_parametri()
-                                print("Creato al passo 3")
                             else:
                                 pass
                     else:
                         if self.verifica_ultimo_elemento_lista(prenotazione_esistente):
                             print(prenotazione_esistente.nome + prenotazione_esistente.cognome)
                             self.crea_parametri()
-                            print("Creato al passo 4")
                         else:
                             pass
 
-
-    def aggiungi_data(self):
-        self.data_da_calendario = QCalendarWidget()
-        self.data_da_calendario.setGridVisible(True)
-        self.data_da_calendario.show()
-
+    #ritorna la data nel formato timestamp
     def data_selezionata(self):
-        #vedere se bisogna fare queste successive 4 righe anche in VistaAbbonamento e VistaCertificato, perche il .today
         #ritorna anche i secondi nel timestamp
         oggi = datetime.today()
         oggi_formattato = oggi.strftime("%d/%m/%Y")
         oggi_formattato_per_unix = datetime.strptime(oggi_formattato, '%d/%m/%Y')
         oggi_unix = datetime.timestamp(oggi_formattato_per_unix)
-        print("Oggi: " + str(oggi_unix))
+
         try:
+            #assegnamento della data selezionata sul calendario
             data_selezionata = self.calendario.selectedDate()
+            #formattazione della data in un formato leggibile dall'utente
             self.data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
             data_selezionata_formattata = datetime.strptime(self.data, '%d/%m/%Y')
             data_timestamp = datetime.timestamp(data_selezionata_formattata)
-            print("Data selezionata: " + str(data_timestamp))
+            #se la data è selezionata è maggiore o uguale all'odierna e non è una domenica ritorniamo il timestamp
             if oggi_unix <= data_timestamp and data_selezionata.dayOfWeek() != 7:
                 self.calendario.close()
                 return data_timestamp
+            #se non è stata selezionata una data
             elif data_timestamp is None:
                 return None
+            #se la data selezionata è già passata
             elif data_timestamp < oggi_unix:
                 return("Errore")
         except:
             pass
 
+    #funzione per mostrare il calendario
     def visualizza_calendario(self):
         self.window = QWidget()
         self.v1_layout = QVBoxLayout()
@@ -320,12 +305,14 @@ class VistaInserisciPrenotazione(QWidget):
         self.window.setLayout(self.v1_layout)
         self.window.show()
 
+    #chiude il calendario e salva la data selezionata
     def chiudi_calendario(self):
         self.window.close()
         data_selezionata = self.calendario.selectedDate()
         self.data = "{}/{}/{}".format(data_selezionata.day(), data_selezionata.month(), data_selezionata.year())
         self.line_data.setText("{}".format(self.data))
 
+    #applica la prenotazione di un campo e aggiunge i movimenti in cassa
     def crea_parametri(self):
         self.campo.prenota()
         self.controller.aggiungi_prenotazione(self.prenotazione)
@@ -334,18 +321,22 @@ class VistaInserisciPrenotazione(QWidget):
         self.controller.save_data()
         self.close()
 
+    #funzione che confronta se la nuova prenotazione è uguale ad una esistente. In particolare la usiamo per confrontare
+    #uno ad uno i campi delle due prenotazioni
     def confronta(self,prenotazione_esistente, nuova_prenotazione):
         if prenotazione_esistente == nuova_prenotazione:
             return True
         else:
             return None
 
+    #verifichiamo se siamo arrivati all'ultimo elemento della lista
     def verifica_ultimo_elemento_lista(self, prenotazione_corrente):
         if prenotazione_corrente == self.c.get_prenotazione_by_index(len(self.c.get_lista_prenotazioni()) - 1):
             return True
         else:
             return None
 
+    #creiamo e aggiungiamo il movimento nella lista dei movimenti
     def aggiungi_movimento(self):
         self.movimento = Movimento(self.data, "Prenotazione campo da " + self.info["Tipo campo"].text() + " - ID prenotazione: " + str(self.prenotazione.id),"Incasso", float(self.prenotazione.prezzi_campi()))
         self.movimento.isEntrata = True
