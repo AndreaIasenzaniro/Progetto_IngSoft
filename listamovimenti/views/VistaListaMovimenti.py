@@ -112,7 +112,7 @@ class VistaListaMovimenti(QWidget):
         self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
         self.tableWidget.setRowCount(len(self.controller.get_lista_movimenti()))
         self.tableWidget.setColumnCount(4)
-        columns = ['Data operaizone', 'Causale', 'Descrizione', 'Importo']
+        columns = ['Data operazione', 'Causale', 'Descrizione', 'Importo']
         self.tableWidget.setHorizontalHeaderLabels(columns)
         header = self.tableWidget.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
